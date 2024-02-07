@@ -25,6 +25,32 @@
             ],
             "price_range": 3,
             "rating": 4.2
+        },
+        {
+            "name": "Mcdo",
+            "id": "53ec122d27aafe77d8c37b8",
+            "address": "310 Rue Saint-Roch, Québec, QC G1K 6S2",
+            "tel": "(418) 522-4373",
+            "location": {
+               "type": "Point",
+               "coordinates": [
+                   -71.2180951, 46.8178912
+               ]
+            },
+            "opening_hours": {
+            "monday": "12h-24h"
+      
+            },
+            "pictures": [
+            "picture.com"
+           
+            ],
+            "genres": [
+            "casual"
+          
+            ],
+            "price_range": 3,
+            "rating": 4.2
         }
     ],
     "total": 1
