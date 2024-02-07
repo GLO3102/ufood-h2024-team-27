@@ -28,25 +28,25 @@
 
         <div class="col-6 d-flex flex-wrap row-gap-3 justify-content-evenly align-items-center">
           <div class="card rounded-4 border-0 shadow" style="width: 15em">
-            <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="...">
+            <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="..." draggable=false>
             <div class="card-body">
               <h3 class="card-title">Restaurant</h3>
             </div>
           </div>
           <div class="card rounded-4 border-0 shadow" style="width: 15em">
-            <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="...">
+            <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="..." draggable=false>
             <div class="card-body">
               <h3 class="card-title">Restaurant</h3>
             </div>
           </div>
           <div class="card rounded-4 border-0 shadow" style="width: 15em">
-            <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="...">
+            <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="..." draggable=false>
             <div class="card-body">
               <h3 class="card-title">Restaurant</h3>
             </div>
           </div>
           <div class="card rounded-4 border-0 shadow" style="width: 15em">
-            <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="...">
+            <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="..." draggable=false>
             <div class="card-body">
               <h3 class="card-title">Restaurant</h3>
             </div>
