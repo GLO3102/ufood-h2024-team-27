@@ -6,22 +6,27 @@ import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LTooltip, LPopup } from "@vue-leaflet/vue-leaflet"
 import {ref} from "vue";
 
-function getLocation(after=()=>null) {
+let map=null
+let zoom = ref(16)
+let center = ref([47.41322, -1.219482]) // set default value
+let here = ref(center.value)
+
+function getLocation(after=()=>null) { // absolute garbage but it's fine
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((geo)=>{
       center.value=[geo.coords.latitude, geo.coords.longitude];
       here.value = [...center.value]
+      map.setView(center.value) // what
       after();
     });
   } 
   // do nothing if geo is not available
 }
 
-let zoom = ref(16)
-let center = ref([47.41322, -1.219482]) // set default value
-let here = ref(center.value)
-getLocation() // try to get real life data, worst case we fallback on default
-
+function mapReady(arg){
+  map=arg
+  getLocation()
+}
 </script>
 
 
@@ -31,7 +36,7 @@ getLocation() // try to get real life data, worst case we fallback on default
     <div>GLO-3102 Restaurant page</div>
     <div style="width: 100%">
       <main>
-        <l-map ref="map" v-model:zoom="zoom" :center="center">
+        <l-map ref="map" v-model:zoom="zoom" :center="center" @ready="mapReady">
           <l-tile-layer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             layer-type="base"
