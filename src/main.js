@@ -5,9 +5,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.js";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "../src/assets/scss/custom.css";
+import 'leaflet/dist/leaflet.css';
 
 const app = createApp(App);
 
 app.use(bootstrap);
 app.use(router);
 app.mount("#app");
+
