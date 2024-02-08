@@ -1,57 +1,409 @@
 {
-    "items": [
-        {
-            "name": "La Barberie",
-            "id": "53ec122d27aafe77d8c37b8",
-            "address": "310 Rue Saint-Roch, Québec, QC G1K 6S2",
-            "tel": "(418) 522-4373",
-            "location": {
-               "type": "Point",
-               "coordinates": [
-                   -71.2180951, 46.8178912
-               ]
-            },
-            "opening_hours": {
-            "monday": "12h-24h"
-      
-            },
-            "pictures": [
-            "picture.com"
-           
-            ],
-            "genres": [
-            "casual"
-          
-            ],
-            "price_range": 3,
-            "rating": 4.2
-        },
-        {
-            "name": "Mcdo",
-            "id": "53ec122d27aafe77d8c37b8",
-            "address": "310 Rue Saint-Roch, Québec, QC G1K 6S2",
-            "tel": "(418) 522-4373",
-            "location": {
-               "type": "Point",
-               "coordinates": [
-                   -71.2180951, 46.8178912
-               ]
-            },
-            "opening_hours": {
-            "monday": "12h-24h"
-      
-            },
-            "pictures": [
-            "picture.com"
-           
-            ],
-            "genres": [
-            "casual"
-          
-            ],
-            "price_range": 3,
-            "rating": 4.2
-        }
-    ],
-    "total": 1
+  "items": [
+    {
+      "opening_hours": {
+        "sunday": "11:00-22:00",
+        "monday": "11:00-21:00",
+        "tuesday": "11:00-21:00",
+        "wednesday": "11:00-21:00",
+        "thursday": "11:00-22:00",
+        "friday": "11:00-22:00",
+        "saturday": "11:00-22:00"
+      },
+      "pictures": [
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/e64cf5a1-7f70-49a7-a8a6-61a73be69755.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/fdb1ff83-3ad1-4c32-8903-0caf4e3ce9c8.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/f2130df3-7116-4f14-9499-d3f839238f9c.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/568e369f-9101-4cfb-a295-f99118bd52a9.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/b5af6798-eda6-485b-b9f0-d65920d8cd29.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/dce0a63f-d48e-4424-8f0d-95964605361a.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/f802c3de-99fa-4747-9040-66feaf4e933a.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/a8272466-3ee9-463f-a56d-3e266d4af422.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/79a2af07-42fc-4b82-a5f4-ec7516daa9ea.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/c1a6f5b7-fd95-4656-a306-4bcd8ea83cf2.jpg"
+      ],
+      "name": "Restaurant Patates Plus",
+      "place_id": "ChIJsfRiYkufuEwRFvkmyiaO_Ak",
+      "tel": "(418) 842-1323",
+      "address": "1111 Boulevard Pie-XI N, Québec, QC G3K 2S8, Canada",
+      "price_range": 2,
+      "rating": 0.24871273770308167,
+      "genres": [
+        "fast-food"
+      ],
+      "location": {
+        "coordinates": [
+          -71.419804,
+          46.856753
+        ],
+        "type": "Point"
+      },
+      "id": "5f31fc7155d7790550c08b02"
+    },
+    {
+      "opening_hours": {
+        "sunday": null,
+        "monday": "11:00-19:00",
+        "tuesday": "11:00-19:00",
+        "wednesday": "11:00-19:00",
+        "thursday": "11:00-19:00",
+        "friday": "11:00-19:00",
+        "saturday": "11:00-19:00"
+      },
+      "pictures": [
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/aeec1a5d-4509-40bd-ab7f-ce9649c5cf7b.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/6f6ce4ae-4562-40b2-9ff1-0d8cb18243f5.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/404c293b-587e-4a76-bf5e-99a20007dd48.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/fc82e795-5732-4604-8310-6ec74b071edb.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/21e09526-dd17-4b3f-b6dc-88367075ef54.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/6267aaed-b4b6-4ff7-9645-3c741fa05878.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/e50cb8c9-3a15-4aec-835c-3d325cbbf528.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/2177555a-f9e3-4699-a465-120afe5b21e2.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/19838053-3f80-4d6e-923f-e5c7689498df.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/ada9d61d-48c9-4b4c-aa04-3faa94907d47.jpg"
+      ],
+      "name": "Restaurant Bachir",
+      "place_id": "ChIJQfECNnmWuEwR2ANFOKliVV0",
+      "tel": "(418) 523-8383",
+      "address": "54 Boulevard René-Lévesque O, Québec, QC G1R 2A4, Canada",
+      "price_range": 2,
+      "rating": 3.0956021296710956,
+      "genres": [
+        "libanais"
+      ],
+      "location": {
+        "coordinates": [
+          -71.2262501,
+          46.804668
+        ],
+        "type": "Point"
+      },
+      "id": "5f31fcaf55d7790550c08b11"
+    },
+    {
+      "opening_hours": {
+        "sunday": "05:00-00:00",
+        "monday": "05:00-00:00",
+        "tuesday": "05:00-00:00",
+        "wednesday": "05:00-00:00",
+        "thursday": "05:00-00:00",
+        "friday": "05:00-00:00",
+        "saturday": "05:00-00:00"
+      },
+      "pictures": [
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/63c74f31-bccc-4862-9658-f620a2b90af7.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/38a22c52-b597-42d0-a2c4-11c597bac58b.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/2a143fd2-8da2-4a4e-bb5d-49e79cdce770.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/6a2a242b-a805-4756-b38a-551b89be4ed4.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/56948a8b-9710-4e17-96d7-c9f035e819ce.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/e939b11c-a37e-420f-8dce-8d04a3b6252d.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/cddc8429-d9e8-414b-8dcd-f66ead2f369a.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/4c08624b-678f-4565-9c29-372182053a2d.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/1d445ae6-e3b8-48c4-afc6-1a989f6efb39.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/061c4dc9-2544-4724-a9c9-780a0c76a9a2.jpg"
+      ],
+      "name": "McDonald's",
+      "place_id": "ChIJKwafiIyRuEwRn2KBXnK3TpM",
+      "tel": "(418) 831-0110",
+      "address": "1825 Route des Rivières, Saint-Nicolas, QC G7A 1C8, Canada",
+      "price_range": 1,
+      "rating": 2.217962421782479,
+      "genres": [
+        "fast-food",
+        "hamburgers"
+      ],
+      "location": {
+        "coordinates": [
+          -71.2908333,
+          46.7102778
+        ],
+        "type": "Point"
+      },
+      "id": "5f31fc7f55d7790550c08b05"
+    },
+    {
+      "opening_hours": {
+        "sunday": "11:00-17:00",
+        "monday": "11:00-20:00",
+        "tuesday": "11:00-20:00",
+        "wednesday": "11:00-20:00",
+        "thursday": "11:00-20:00",
+        "friday": "11:00-20:00",
+        "saturday": "11:00-22:00"
+      },
+      "pictures": [
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/132640c1-2c39-4262-9b9f-bc1895baed11.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/9686cb3f-da0e-447f-a4b1-28bf7a975e53.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/13f5a570-2ef0-477e-a018-c954a36633c7.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/60f3afb9-b54f-41eb-a5a8-dac7fdf8e896.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/348d9c07-da54-429c-8560-5c044e4a1ff6.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/62202db6-572d-4e89-a2cd-9908f212f088.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/a1885f8d-ac74-4441-a612-05963b18c6a3.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/4108014a-eaa7-4150-a295-7e4da4658f2b.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/d60e6c04-5eae-4359-bd90-529bb27f8144.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/17191c3d-3389-40eb-a1e6-9d2128017fce.jpg"
+      ],
+      "name": "La Galette Libanaise",
+      "place_id": "ChIJn6QEoteVuEwRqew2L3x2XM0",
+      "tel": "(418) 914-7927",
+      "address": "641 Grande Allée E, Québec, QC G1R 2K4, Canada",
+      "price_range": 1,
+      "rating": 2.336631960180157,
+      "genres": [
+        "libanais"
+      ],
+      "location": {
+        "coordinates": [
+          -71.2162163,
+          46.8062148
+        ],
+        "type": "Point"
+      },
+      "id": "5f31fc9c55d7790550c08b0c"
+    },
+    {
+      "opening_hours": {
+        "sunday": null,
+        "monday": null,
+        "tuesday": null,
+        "wednesday": "11:00-15:00",
+        "thursday": "11:00-15:00",
+        "friday": "11:00-15:00",
+        "saturday": "11:00-15:00"
+      },
+      "pictures": [
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/ed9bb468-fa33-470f-8c50-ec0911c0bf3b.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/9152af50-9136-415e-8f4d-65a8a2d1b2e6.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/ebd18aca-f241-4a94-8aa5-f70cb99f9583.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/cff0fad5-077e-40f3-bf7b-e954214bb108.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/ae6252cf-f0ed-4400-b721-825ae73a7197.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/d5435bc5-272a-4651-adc7-6719dd05391d.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/10b26da4-ca0d-4ed5-a6e2-0ac5fd159e8b.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/c0082a59-8ceb-444a-bda3-e5e130cd21ba.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/532c918c-b09c-4f2e-905c-1744af954f51.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/59267ebc-35c3-40b5-8e10-9a213abbc285.jpg"
+      ],
+      "name": "L'Îlot - Galerie Art'chipel",
+      "place_id": "ChIJmT5P57uVuEwRtgn07xeUIgk",
+      "tel": "(418) 254-2545",
+      "address": "5743 Rue Saint-Louis, Lévis, QC G6V 4E2, Canada",
+      "price_range": 2,
+      "rating": 2.2150429708728785,
+      "genres": [
+        "ambiance",
+        "café"
+      ],
+      "location": {
+        "coordinates": [
+          -71.18319009999999,
+          46.8057709
+        ],
+        "type": "Point"
+      },
+      "id": "5f31fc8f55d7790550c08b09"
+    },
+    {
+      "opening_hours": {
+        "sunday": "11:00-20:00",
+        "monday": "11:00-20:30",
+        "tuesday": "11:00-20:00",
+        "wednesday": "11:00-20:30",
+        "thursday": "11:00-22:00",
+        "friday": "11:00-22:00",
+        "saturday": "11:00-22:00"
+      },
+      "pictures": [
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/f12d653a-e4ab-43ce-9406-4a09f62c93b1.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/98bdf440-e61b-463f-af0c-965e7b012ca8.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/b247a725-4a91-45c6-a821-9c6119868339.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/a8f554fd-789f-4165-9ab2-ff015a24f2b3.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/ec5b1cec-ff7a-4bef-a39a-cbad6d3b6fe3.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/e1886cb9-7d53-4117-9b03-7f79c606d550.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/a55004b5-2d32-42f4-ba1b-657bcc0b56f3.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/ec8c7eae-b114-4a4f-abf7-d8a1f1ebfdbd.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/cdb967be-12d0-4a17-8afe-b1aac26f4c1a.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/838cd69b-b0e4-4b5c-90f7-fd669bdeaa4e.jpg"
+      ],
+      "name": "PFK",
+      "place_id": "ChIJISQttGBWuEwRorzYV2Yo3Yc",
+      "tel": "(418) 387-3520",
+      "address": "750 Boulevard Vachon N, Sainte-Marie, QC G6E 1M2, Canada",
+      "price_range": 1,
+      "rating": 1.7303937241943215,
+      "genres": [
+        "fast-food"
+      ],
+      "location": {
+        "coordinates": [
+          -71.0284704,
+          46.4479391
+        ],
+        "type": "Point"
+      },
+      "id": "5f31fc6d55d7790550c08b01"
+    },
+    {
+      "opening_hours": {
+        "sunday": null,
+        "monday": null,
+        "tuesday": "16:00-22:00",
+        "wednesday": "16:00-22:00",
+        "thursday": "16:00-22:00",
+        "friday": "16:00-23:00",
+        "saturday": "16:00-23:00"
+      },
+      "pictures": [
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/89080a6b-cb6a-482d-9f65-fd590f0b6d47.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/b0034730-d557-49f2-afa7-7cd8f9d98c12.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/4a4c679c-e231-4207-adcd-fd25d3f55c1e.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/2e27643b-df90-4960-a0c8-e36660e22777.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/1d467cca-1bdc-43dd-ad65-9db84136f8e1.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/9a9f03b5-58bc-4c10-bbef-37d34716aed9.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/2889a607-66fe-4dfc-93be-a978a706c127.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/a837186d-af44-47c9-9b43-3ffb3bf05802.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/8f149197-6456-4cf2-9152-f795d5a11af2.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/8ff25832-e233-4118-ab15-13f54ad57206.jpg"
+      ],
+      "name": "Erawan",
+      "place_id": "ChIJq1JpFKOWuEwR8T7baE7kKvA",
+      "tel": "(418) 688-6038",
+      "address": "1432 Avenue Maguire, Québec, QC G1T 1Z3, Canada",
+      "price_range": 2,
+      "rating": 3.80294573643411,
+      "genres": [
+        "asiatique"
+      ],
+      "location": {
+        "coordinates": [
+          -71.2502579,
+          46.78012380000001
+        ],
+        "type": "Point"
+      },
+      "id": "5f32007be4657c2040ba0e2f"
+    },
+    {
+      "opening_hours": {
+        "sunday": "17:00-22:00",
+        "monday": null,
+        "tuesday": null,
+        "wednesday": "17:00-22:00",
+        "thursday": "17:00-22:00",
+        "friday": "17:00-22:00",
+        "saturday": "17:00-22:00"
+      },
+      "pictures": [
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/a94cb429-e868-404d-8a18-a70c772b5592.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/74608943-654d-4621-ae42-003aefcefb79.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/3273a2fb-d486-4c52-8555-5a49f85f78d7.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/7f51cda2-bab5-40f4-b614-018f7455c1fb.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/94e367ed-7fc7-4ad9-88dc-91151fe27b11.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/369b6d17-8927-4b0f-8311-4e3ebadf2cdd.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/fbb2dd40-0c7e-4f28-8c16-66704805ab6e.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/12aa3044-d57e-4c6a-8011-02da054ea924.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/fa784c1b-d344-4a0f-b450-6f9d7196c8ef.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/f270784e-d915-4b13-b007-6a98ff3246f1.jpg"
+      ],
+      "name": "iX Pour Bistro",
+      "place_id": "ChIJpawtvB-WuEwRCyjcllMXGW8",
+      "tel": "(418) 914-8525",
+      "address": "1104 18e Rue, Québec, QC G1J 1Z1, Canada",
+      "price_range": 3,
+      "rating": 4.739809889676919,
+      "genres": [
+        "bistro",
+        "ambiance"
+      ],
+      "location": {
+        "coordinates": [
+          -71.2283214,
+          46.83446199999999
+        ],
+        "type": "Point"
+      },
+      "id": "5f31fc6555d7790550c08aff"
+    },
+    {
+      "opening_hours": {
+        "sunday": "08:00-20:00",
+        "monday": "08:00-20:00",
+        "tuesday": "08:00-20:00",
+        "wednesday": "08:00-20:00",
+        "thursday": "08:00-20:00",
+        "friday": "08:00-20:00",
+        "saturday": "08:00-20:00"
+      },
+      "pictures": [
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/7df93b85-b653-4ccc-a43f-76c478bd031a.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/38aee384-dbf3-45c8-8122-ccee4155131d.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/aa6872ed-75a4-4c22-b73b-0dbd4f8f07f5.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/92945961-4daa-49f4-a641-6f78f69865fc.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/9573fffe-4636-4594-8282-8dd69b52dc80.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/204f0ce7-9d15-4108-923c-f112f8796de7.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/c7f57bc6-8568-4812-95f6-cb7b7c529c18.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/e8cb4df5-d38d-4f9f-a225-e6c31b6add2b.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/7e186e8c-c1dd-4ebd-b34a-144889ad5d8e.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/5227d440-9c7d-43a4-b27f-8c1afa0983b5.jpg"
+      ],
+      "name": "A&W Canada",
+      "place_id": "ChIJlY-yGf6UuEwR23jDMcWxUdU",
+      "tel": "(418) 835-8338",
+      "address": "108 Route du Président-Kennedy, Lévis, QC G6V 6C9, Canada",
+      "price_range": 1,
+      "rating": 2.5376741387091934,
+      "genres": [
+        "fast-food",
+        "hamburgers"
+      ],
+      "location": {
+        "coordinates": [
+          -71.1678331,
+          46.788801
+        ],
+        "type": "Point"
+      },
+      "id": "5f31fca255d7790550c08b0d"
+    },
+    {
+      "opening_hours": {
+        "sunday": null,
+        "monday": null,
+        "tuesday": null,
+        "wednesday": "17:00-23:00",
+        "thursday": "17:00-23:00",
+        "friday": "17:00-23:00",
+        "saturday": "17:00-23:00"
+      },
+      "pictures": [
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/e5a7eaf9-242d-44d7-ab34-4d650e5c736d.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/75dd5ed6-a1b4-4101-831d-2ffeae9e830b.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/cdba7033-d74d-48fd-bd4b-343c691e2898.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/93cf05f6-579c-4097-8711-7527a47604c6.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/545fcd1c-c340-4fd1-aba4-5986ae280784.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/2f4e19ab-af93-4258-bb02-ff53fa663f88.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/3bc0b80c-b44b-44ff-b72a-3811823eca69.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/7ce1b029-aca5-4a67-80d7-47379eb32622.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/10cf6ca1-37ce-4043-9461-a14b66479e25.jpg",
+        "https://ufood.s3-us-west-2.amazonaws.com/pictures/53f153d0-accd-4c2c-964c-145da934dcf5.jpg"
+      ],
+      "name": "Restaurant Battuto",
+      "place_id": "ChIJ1yV0DnCWuEwRfRQWl1lNqhQ",
+      "tel": "(418) 614-4414",
+      "address": "527 Boulevard Langelier, Québec, QC G1K 5P7, Canada",
+      "price_range": 3,
+      "rating": 2.4016056737588642,
+      "genres": [
+        "italien"
+      ],
+      "location": {
+        "coordinates": [
+          -71.2298721,
+          46.8103922
+        ],
+        "type": "Point"
+      },
+      "id": "5f31fcab55d7790550c08b10"
+    }
+  ],
+  "total": 130
 }
