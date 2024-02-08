@@ -40,14 +40,14 @@
           <input type="range" class="form-range" min="0" max="2" id="customRange2">
         </div>
 
-        <div class="col-6 d-flex flex-wrap gap-3 justify-content-center align-items-top">
-          <div class="card rounded-4 border-0 shadow" style="width: 12em; height: 15em">
-            <img src="https://img.cdn4dd.com/cdn-cgi/image/fit=cover,width=1000,height=300,format=auto,quality=80/https://doordash-static.s3.amazonaws.com/media/store/header/fd84883e-19df-4a26-afd1-9b3616e922fa.jpg" class="card-img-top object-fit-cover p-3 rounded-5" style="height:12em" alt="..." draggable=false>
-            <div class="card-body pt-2">
-              <div class="d-flex justify-content-between align-items-center">
-                <h5 class="card-title mb-0">La Barberie</h5>
-                <button class="btn btn-outline-primary rounded-circle" type="button"><i class="fa-regular fa-heart fa-sm"></i></button>
-              </div>
+        <div class="col-6 d-flex flex-wrap gap-3 justify-content-center align-items-top" id="cards">
+          <div class="card rounded-4 border-0 shadow" style="width: 12em" v-for="item in items" :key=item.name >
+            <img :src="item.pictures[0]" class="card-img-top object-fit-cover rounded-5 p-3" style="width:100%; height:12em" alt="..." draggable=false>
+            <div class="card-body pt-1">
+<!--              <div class="d-flex justify-content-between align-items-center">-->
+                <h5 class="card-title text-truncate text-sm-start">{{item.name}}</h5>
+<!--                <button class="btn btn-outline-primary rounded-circle" type="button"><i class="fa-regular fa-heart fa-sm"></i></button>-->
+<!--              </div>-->
             </div>
           </div>
         </div>
@@ -169,6 +169,14 @@
 <style>
 
 </style>
-<script setup>
+<script>
+import restaurants from "../assets/restaurants.json"
 
+export default {
+  data() {
+    return {
+      items: restaurants.items
+    }
+  }
+}
 </script>
