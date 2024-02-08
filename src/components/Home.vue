@@ -1,54 +1,54 @@
+<script setup>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+</script>
 <template>
   <div>
     <h1>Catchphrase here + logo</h1>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-3">
-          <div class="input-group">
-            <input type="text" class="form-control" aria-label="Text input with dropdown button">
-            <button class="btn btn-primary" type="button" id="button-addon1">Button</button>
+          <div class="input-group mb-3">
+            <button class="btn border-end-0 border rounded-start-4" type="button" id="button-addon1"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <input type="text" class="form-control border-start-0 rounded-end-4" aria-label="Text input with dropdown button">
           </div>
-          <ul class="list-group mt-3">
-            <li class="list-group-item">An item</li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-            <li class="list-group-item">A fourth item</li>
-            <li class="list-group-item">And a fifth one</li>
-          </ul>
-          <label for="customRange1" class="form-label">Price range</label>
-          <input type="range" class="form-range bv-no-focus-ring" id="customRange1">
-          <ul class="list-group mt-3">
-            <li class="list-group-item">An item</li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-            <li class="list-group-item">A fourth item</li>
-            <li class="list-group-item">And a fifth one</li>
-          </ul>
+          <h3>Filters</h3>
+          <hr/>
+          <h4>Category</h4>
+          <button type="button" class="btn btn-outline-primary rounded-pill m-1">fast-food</button>
+          <button type="button" class="btn btn-outline-primary rounded-pill m-1">pasta</button>
+          <button type="button" class="btn btn-outline-primary rounded-pill m-1">vegan</button>
+          <button type="button" class="btn btn-outline-primary rounded-pill m-1">healthy</button>
+          <hr/>
+
+          <h4>Rating</h4>
+          <button type="button" class="btn btn-outline-primary rounded-pill m-1">
+            1 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+          </button>
+          <button type="button" class="btn btn-outline-primary rounded-pill m-1">
+            2 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+          </button>
+          <button type="button" class="btn btn-outline-primary rounded-pill m-1">
+            3 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+          </button>
+          <button type="button" class="btn btn-outline-primary rounded-pill m-1">
+            4 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+          </button>
+          <button type="button" class="btn btn-outline-primary rounded-pill m-1">
+            5 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+          </button>
+          <hr/>
+
+          <h4>Price range</h4>
+          <label for="customRange2" class="form-label"><i class="fa-solid fa-dollar-sign"></i></label>
+          <input type="range" class="form-range" min="0" max="2" id="customRange2">
         </div>
 
         <div class="col-6 d-flex flex-wrap row-gap-3 justify-content-evenly align-items-center">
-          <div class="card rounded-4 border-0 shadow" style="width: 15em">
+          <div class="card rounded-4 border-0 shadow" style="width: 14em">
             <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="..." draggable=false>
             <div class="card-body">
-              <h3 class="card-title">Restaurant</h3>
-            </div>
-          </div>
-          <div class="card rounded-4 border-0 shadow" style="width: 15em">
-            <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="..." draggable=false>
-            <div class="card-body">
-              <h3 class="card-title">Restaurant</h3>
-            </div>
-          </div>
-          <div class="card rounded-4 border-0 shadow" style="width: 15em">
-            <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="..." draggable=false>
-            <div class="card-body">
-              <h3 class="card-title">Restaurant</h3>
-            </div>
-          </div>
-          <div class="card rounded-4 border-0 shadow" style="width: 15em">
-            <img src="https://picsum.photos/200" class="card-img-top p-3 rounded-5" alt="..." draggable=false>
-            <div class="card-body">
-              <h3 class="card-title">Restaurant</h3>
+              <h5 class="card-title text-sm-start">La Barberie</h5>
+              <button class="btn" type="button"><i class="fa-regular fa-heart"></i></button>
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@
               </tr>
             </tbody>
           </table>
-          <button class="btn btn-primary" type="button">Add friends</button>
+          <button class="btn btn-primary rounded-4" type="button">Add friends</button>
         </div>
       </div>
     </div>
@@ -90,5 +90,3 @@
 <style>
 
 </style>
-<script setup>
-</script>

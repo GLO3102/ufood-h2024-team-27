@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-light">
+  <nav class="navbar navbar-expand-sm bg-secondary">
     <div class="container-lg">
       <router-link class="navbar-brand mb-0 h1" to="/">
         <img
@@ -162,10 +162,6 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 * {
   font-family: "poppins", sans-serif;
-}
-
-.navbar {
-  background: #db6327;
 }
 
 .navbar-nav .nav-item {
