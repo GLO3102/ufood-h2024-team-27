@@ -1,12 +1,20 @@
 <template>
   <div>
-    <h1>Catchphrase here + logo</h1>
+    <div class="container-fluid">
+      <div class="row bg-secondary">
+        <h1>UFood</h1>
+        Eat, Share, Repeat
+      </div>
+      <div class="row bg-secondary justify-content-end mb-3">
+        <img src="../assets/ufood_alligator_export.svg" class="float-end" style="width: 30%" alt="...">
+      </div>
+    </div>
     <div class="container">
-      <div class="row">
-        <div class="col-3">
+      <div class="row justify-content-center">
+        <div class="col">
           <div class="input-group mb-3">
-            <button class="btn border-end-0 border rounded-start-pill" type="button" id="button-addon1"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <input type="text" class="form-control border-start-0 rounded-end-pill ps-0" aria-label="Text input with dropdown button">
+            <input type="text" class="form-control position-relative rounded-pill z-1 pe-5" aria-label="Search bar" placeholder="Search...">
+            <button class="btn btn-primary btn-sm position-absolute z-2 end-0 rounded-circle m-1" type="button" id="button-addon1"><i class="fa-solid fa-magnifying-glass fa-xs"></i></button>
           </div>
           <h3>Filters</h3>
           <hr/>
@@ -40,19 +48,19 @@
           <input type="range" class="form-range" min="0" max="2" id="customRange2">
         </div>
 
-        <div class="col-6 d-flex flex-wrap gap-3 justify-content-center align-items-top" id="cards">
-          <div class="card rounded-4 border-primary-subtle shadow" style="width: 12em" v-for="item in items" :key=item.name >
+        <div class="col-lg-6 d-flex flex-wrap gap-3 justify-content-center align-items-top mb-" id="cards">
+          <div class="card position-relative rounded-4 border-primary-subtle shadow" style="width: 12em" v-for="item in items" :key=item.name >
+            <button class="btn btn-light text-primary position-absolute top-0 end-0 rounded-circle m-1" type="button">
+              <i class="fa-regular fa-heart fa-sm"></i>
+            </button>
             <img :src="item.pictures[0]" class="card-img-top object-fit-cover rounded-5 p-3" style="width:100%; height:12em" alt="..." draggable=false>
             <div class="card-body pt-1">
-<!--              <div class="d-flex justify-content-between align-items-center">-->
                 <h6 class="card-title text-truncate text-sm-start">{{item.name}}</h6>
-<!--                <button class="btn btn-outline-primary rounded-circle" type="button"><i class="fa-regular fa-heart fa-sm"></i></button>-->
-<!--              </div>-->
             </div>
           </div>
         </div>
 
-        <div class="col-3">
+        <div class="col">
           <h2 class="text-center">Friends</h2>
           <table class="table">
             <thead>
@@ -123,7 +131,7 @@
           <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
           </a>
-          <p class="text-muted">© 2022</p>
+          <p class="text-muted">© 2024</p>
         </div>
 
         <div class="col mb-3">

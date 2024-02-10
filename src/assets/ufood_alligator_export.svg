@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="5.7571in" height="2.5333in" version="1.1" viewBox="0 0 146.23 64.346" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(-28.544 -133.51)">
+  <g fill="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width=".529">
+   <path d="m32.221 169.8 11.013 11.013a7.3773 7.3773 180 0 0 10.433-1e-5l11.013-11.013-16.23-16.23z"/>
+   <path d="m64.681 169.8 11.013 11.013a7.3773 7.3773 180 0 0 10.433 0l11.013-11.013-16.23-16.23z"/>
+   <path d="m97.141 169.8 11.013 11.013a7.3773 7.3773 8.8256e-7 0 0 10.433 0l11.013-11.013-16.23-16.23z"/>
+  </g>
+  <path d="m120.92 146.09c17.121 0 30.394 4.5129 39.817 13.538 9.3571 9.0253 14.036 21.767 14.036 38.225h-23.492c0-8.8925-2.5881-15.794-7.7644-20.705-5.1763-4.8444-12.477-7.2662-21.9-7.2662h-93.073v-23.791z" fill="#198754" stroke-linecap="round" stroke-linejoin="round" stroke-width=".529"/>
+  <g>
+   <circle transform="matrix(0,1,1,0,0,0)" cx="145.94" cy="117.12" r="12.436" fill="#fff"/>
+   <circle transform="matrix(0,1,1,0,0,0)" cx="145.94" cy="113.55" r="4.0652" fill="#198754"/>
+   <circle transform="matrix(0,1,1,0,0,0)" cx="145.94" cy="135.55" r="12.436" fill="#fff"/>
+   <circle transform="matrix(0,1,1,0,0,0)" cx="145.94" cy="131.98" r="4.0652" fill="#198754"/>
+  </g>
+ </g>
+</svg>

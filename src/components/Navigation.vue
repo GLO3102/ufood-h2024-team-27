@@ -5,8 +5,7 @@
         <img
           class="d-inline-block align-top"
           src="@/assets/ufood_logo_1_export.svg"
-          width="160"
-          height="100"
+          width="50"
         />
       </router-link>
       <button
@@ -94,7 +93,7 @@ export default {
   data() {
     return {
       user: {
-        
+
         isLoggedIn: false,
         name: "",
       },
