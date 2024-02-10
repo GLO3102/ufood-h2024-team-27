@@ -5,8 +5,8 @@
       <div class="row">
         <div class="col-3">
           <div class="input-group mb-3">
-            <button class="btn border-end-0 border rounded-start-4" type="button" id="button-addon1"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <input type="text" class="form-control border-start-0 rounded-end-4" aria-label="Text input with dropdown button">
+            <button class="btn border-end-0 border rounded-start-pill" type="button" id="button-addon1"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <input type="text" class="form-control border-start-0 rounded-end-pill ps-0" aria-label="Text input with dropdown button">
           </div>
           <h3>Filters</h3>
           <hr/>
@@ -41,11 +41,11 @@
         </div>
 
         <div class="col-6 d-flex flex-wrap gap-3 justify-content-center align-items-top" id="cards">
-          <div class="card rounded-4 border-0 shadow" style="width: 12em" v-for="item in items" :key=item.name >
+          <div class="card rounded-4 border-primary-subtle shadow" style="width: 12em" v-for="item in items" :key=item.name >
             <img :src="item.pictures[0]" class="card-img-top object-fit-cover rounded-5 p-3" style="width:100%; height:12em" alt="..." draggable=false>
             <div class="card-body pt-1">
 <!--              <div class="d-flex justify-content-between align-items-center">-->
-                <h5 class="card-title text-truncate text-sm-start">{{item.name}}</h5>
+                <h6 class="card-title text-truncate text-sm-start">{{item.name}}</h6>
 <!--                <button class="btn btn-outline-primary rounded-circle" type="button"><i class="fa-regular fa-heart fa-sm"></i></button>-->
 <!--              </div>-->
             </div>
