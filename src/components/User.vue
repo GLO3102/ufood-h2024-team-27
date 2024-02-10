@@ -65,15 +65,20 @@
       <div class="col-8 d-flex flex-wrap justify-content-center mb-2">
         <h2>Recently Viewed Restaurants</h2>
       </div>
-      <div v-if="visitedRestaurantDetails.length === 0" class="col-8 d-flex justify-content-center align-items-center">
-      <!-- Display a button if no visited restaurants are present -->
-      <button @click="goHome" class="btn btn-primary">No recents, go back to home page</button>
-    </div>
-    <div
-      v-else
-      class="col-8 d-flex flex-wrap gap-3 justify-content-center align-items-top"
-      id="cards"
-    >
+      <div
+        v-if="visitedRestaurantDetails.length === 0"
+        class="col-8 d-flex justify-content-center align-items-center"
+      >
+        <!-- Display a button if no visited restaurants are present -->
+        <button @click="goHome" class="btn btn-primary">
+          No recents, go back to home page
+        </button>
+      </div>
+      <div
+        v-else
+        class="col-8 d-flex flex-wrap gap-3 justify-content-center align-items-top"
+        id="cards"
+      >
         <div
           :class="[
             'card rounded-4 border-0 shadow bg-secondary',
@@ -112,7 +117,7 @@ import restaurantsData from "@/assets/restaurants.json";
 export default {
   data() {
     return {
-      user: usersData.items[0], 
+      user: usersData.items[0],
       restaurants: restaurantsData.items,
     };
   },
@@ -132,14 +137,14 @@ export default {
           }
           return null;
         })
-        .filter((restaurant) => restaurant != null); 
+        .filter((restaurant) => restaurant != null);
     },
   },
-  methods:{
-    goHome(){
-      this.$router.push('/');
-    }
-  }
+  methods: {
+    goHome() {
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 
