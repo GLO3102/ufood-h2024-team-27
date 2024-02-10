@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container-fluid">
+    <header class="container-fluid">
       <div class="row bg-secondary">
         <h1>UFood</h1>
         Eat, Share, Repeat
@@ -8,7 +8,7 @@
       <div class="row bg-secondary justify-content-end mb-3">
         <img src="../assets/ufood_alligator_export.svg" class="float-end" style="width: 30%" alt="...">
       </div>
-    </div>
+    </header>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col">
@@ -48,18 +48,17 @@
           <input type="range" class="form-range" min="0" max="2" id="customRange2">
         </div>
 
-        <div class="col-lg-6 d-flex flex-wrap gap-3 justify-content-center align-items-top mb-" id="cards">
+        <div class="col-lg-6 d-flex flex-wrap gap-3 justify-content-center align-items-top mb-3" id="cards">
           <div class="card position-relative rounded-4 border-primary-subtle shadow" style="width: 12em" v-for="item in items" :key=item.name >
             <button class="btn btn-light text-primary position-absolute top-0 end-0 rounded-circle m-1" type="button">
               <i class="fa-regular fa-heart fa-sm"></i>
             </button>
-            <img :src="item.pictures[0]" class="card-img-top object-fit-cover rounded-5 p-3" style="width:100%; height:12em" alt="..." draggable=false>
+            <img :src="item.pictures[0]" class="card-img-top object-fit-cover rounded-5 p-3" style="aspect-ratio: 1/1" alt="..." draggable=false>
             <div class="card-body pt-1">
                 <h6 class="card-title text-truncate text-sm-start">{{item.name}}</h6>
             </div>
           </div>
         </div>
-
         <div class="col">
           <h2 class="text-center">Friends</h2>
           <table class="table">
@@ -88,7 +87,9 @@
               </tr>
             </tbody>
           </table>
-          <button class="btn btn-primary rounded-pill mb-2" type="button">Add friends</button>
+          <div class="text-center">
+            <button class="btn btn-primary rounded-pill mb-2" type="button">Add friends</button>
+          </div>
 
           <h2 class="text-center pt-4">Top-rated</h2>
           <table class="table align-middle">
@@ -102,7 +103,7 @@
             <tr>
               <td>
                 <img src="https://picsum.photos/200" class="rounded-circle m-1" style="width:2em; height:2em" alt="...">
-                Zbeub resto
+                Restaurant Patates Plus
               </td>
               <td class="text-end">4.8</td>
             </tr>
