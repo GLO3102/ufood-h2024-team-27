@@ -114,8 +114,7 @@ let here = ref(center.value)*/
 
 <template>
   <div>
-    
-    <div class="container text-center mt-3">
+    <div class="container text-center mt-4">
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="max-width: 75rem;">
   <div class="carousel-inner">
     <div class="carousel-item" v-for="(picture, index) in restaurant.pictures" :class="{ active: index === 0 }" :key="index">
@@ -136,7 +135,7 @@ let here = ref(center.value)*/
     <div class="container my-5">
       <div class="row gy-4">
 
-        <div class="col-lg-4">
+        <div class="col-lg-3 offset-lg-1">
           <div class="card border-primary-subtle shadow">
             <div class="card-body">
               <h5 class="card-title">About us</h5>
@@ -151,7 +150,7 @@ let here = ref(center.value)*/
           </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-3">
           <div class="card border-primary-subtle shadow">
             <div class="card-body">
               <h5 class="card-title">Contact</h5>
@@ -162,7 +161,7 @@ let here = ref(center.value)*/
           </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-3">
           <div class="card border-primary-subtle shadow">
             <div class="card-body">
               <h5 class="card-title">Opening hours</h5>
@@ -181,7 +180,7 @@ let here = ref(center.value)*/
       </div>
     </div>
 
-    <div style="width: 100%; display: flex; justify-content: center;">
+    <div class="mb-4" style="width: 100%; display: flex; justify-content: center;">
       <div id="map" style="width: 75%; height: 550px;" @load="initMap"></div>
       <!--<main style="width: 600px; height: 400px;">
         <l-map ref="map" v-model:zoom="zoom" :center="center" @ready="mapReady">
