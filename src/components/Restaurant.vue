@@ -2,29 +2,29 @@
 // doc: https://developer.mapquest.com/documentation/mapquest-js/v1.3/
 
 // this took me an embarassingly long time to figure out ;-;
-import {onMounted} from "vue";
+import {onMounted, ref} from "vue";
 onMounted(()=>initMap())
 
-// could read from json if we wanted
-let suppliedPos = [46.82645, -71.24556]; // centre videotron
-let suppliedName = "Centre Vidéotron";
+// read The Data
+import restaurantsData from "@/assets/restaurants.json";
+const restaurant = ref(restaurantsData.items[2]);
+
+const restPos = [...restaurant.value.location.coordinates]; //[46.82645, -71.24556]; // centre videotron
+const restName = restaurant.value.name;
 
 L.mapquest.key = "SCeop25saVUhKgzAdwuB9IXjs21FyYKT"; // very safe 
 
 //var popup = L.popup();
-var currPos = [0,0];
 var map = null;
 function initMap(){
   // the old, dumb way to get location data
   //navigator.geolocation.getCurrentPosition(createMap);
   //L.mapquest.geocoding().reverse(e.latlng, generatePopupContent); // to find the user's current address
-
   createMap();
 
-  function createMap(pos=null){
-    //currPos = [pos.coords.latitude, pos.coords.longitude]
+  function createMap(){
     map = L.mapquest.map('map', {
-      center: currPos, //[37.7749, -122.4194], // san francisco, california
+      center: [0,0],
       layers: L.mapquest.tileLayer('map'),
       zoom: 16
     });
@@ -34,7 +34,9 @@ function initMap(){
   }
 
   function setDirections(){
-    currPos = map.getCenter();
+    let startPos = map.getCenter();
+    let endPos = L.latLng(restPos[1],restPos[0])
+
     var directions = L.mapquest.directions();
     directions.setLayerOptions({
       startMarker: {
@@ -43,7 +45,7 @@ function initMap(){
       },
       endMarker: {
         draggable: false,
-        title: suppliedName
+        title: restName
       },
       routeRibbon: {
         draggable: false
@@ -51,14 +53,13 @@ function initMap(){
     });
 
     directions.route({
-      start: currPos,//'350 5th Ave, New York, NY 10118',
-      end: suppliedPos//'One Liberty Plaza, New York, NY 10006'
+      start: startPos,
+      end: endPos
     });
   }
-  
-  //L.mapquest.geocoding().geocode('Quebec, QC'); // go to place
 
-  /* // make it tell you what the address is of the thing you clicked
+  /* 
+  // make it tell you what the address is of the thing you clicked
   map.on('click', function(e) {
     popup.setLatLng(e.latlng).openOn(this);
     L.mapquest.geocoding().reverse(e.latlng, generatePopupContent);
@@ -108,14 +109,55 @@ let here = ref(center.value)*/
 
 <template>
   <div>
-    <h1>Restaurant</h1>
-    <div>GLO-3102 Restaurant page</div>
-    <div style="width: 100%">
-      <div id="map" style="width: 700px; height: 700px;" @load="initMap"></div>
-      
-      <!--
-      <main>
-        
+    <div>Restaurant : {{restaurant.name}}</div>
+    
+    <div class="container my-5">
+      <div class="row gy-4">
+
+        <div class="col-lg-4">
+          <div class="card border-primary-subtle shadow">
+            <div class="card-body">
+              <h5 class="card-title">About us</h5>
+              <p class="card-text">Prix : {{ restaurant.price_range }}</p>
+              <p class="card-text">Type of food : {{ restaurant.genres }}</p>
+              <p class="card-text">Rating : {{ restaurant.rating }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card border-primary-subtle shadow">
+            <div class="card-body">
+              <h5 class="card-title">Contact</h5>
+              <p class="card-text">Address: {{ restaurant.address }}</p>
+              <p class="card-text">Telephone: {{ restaurant.tel }}</p>
+              <p class="card-text">Email: {{ restaurant.email }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card border-primary-subtle shadow">
+            <div class="card-body">
+              <h5 class="card-title">Opening hours</h5>
+              <ul class="list-unstyled">
+                <li>Dimanche: {{ restaurant.opening_hours.sunday }}</li>
+                <li>Lundi: {{ restaurant.opening_hours.monday }}</li>
+                <li>Mardi: {{ restaurant.opening_hours.tuesday }}</li>
+                <li>Mercredi: {{ restaurant.opening_hours.wednesday }}</li>
+                <li>Jeudi: {{ restaurant.opening_hours.thursday }}</li>
+                <li>Vendredi: {{ restaurant.opening_hours.friday }}</li>
+                <li>Samedi: {{ restaurant.opening_hours.saturday }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="width: 100%; display: flex; justify-content: center;">
+      <div id="map" style="width: 75%; height: 550px;" @load="initMap"></div>
+      <!--<main style="width: 600px; height: 400px;">
         <l-map ref="map" v-model:zoom="zoom" :center="center" @ready="mapReady">
           <l-tile-layer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -128,63 +170,9 @@ let here = ref(center.value)*/
           </l-marker>
         </l-map>
       </main>-->
-
-      <!-- https://www.maps.ie/create-google-map/ -->
-      <!--<iframe
-        width="100%"
-        height="600"
-        frameborder="0"
-        scrolling="no"
-        marginheight="0"
-        marginwidth="0"
-        src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
-        <a href="https://www.maps.ie/population/"
-          >Population Estimator map</a>
-        </iframe>-->
-
-      <!--<MglMap
-        :mapboxGl="mapbox - gl"
-        :accessToken="accessToken"
-        :mapStyle.sync="mapStyle"
-        @load="onMapLoaded"
-      />-->
     </div>
   </div>
 </template>
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
-main {
-  height: 100vh;
-  width: 100vw;
-}
 </style>
-
-
-
-<!--<script>
-	import "mapbox-gl/dist/mapbox-gl.css";
-  import Mapbox from "mapbox-gl";
-  import { MglMap } from "vue-mapbox";
-  export default {
-  components: {
-    MglMap
-  },
-  data() {
-    return {
-      accessToken: ACCESS_TOKEN, // your access token. Needed if you using Mapbox maps
-      mapStyle: MAP_STYLE // your map style
-    };
-  },
-
-  created() {
-    // We need to set mapbox-gl library here in order to use it in template
-    this.mapbox = Mapbox;
-  }
-};
-</script>-->
-

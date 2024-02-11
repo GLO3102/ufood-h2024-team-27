@@ -30,7 +30,7 @@
             ></router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link disabled" to="/restaurant"
+            <router-link class="nav-link active" to="/restaurant"
               >Restaurants <i class="fa-solid fa-burger"></i
             ></router-link>
           </li>
