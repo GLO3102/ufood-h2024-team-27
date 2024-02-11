@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="container-fluid">
+    <header class="container-fluid mb-5">
       <h1 class="fw-bold text-light mb-0">UFood</h1>
       <p class="ps-2 mb-5 fs-2 fw-bold">Eat, Share, Repeat</p>
       <div class="row justify-content-center align-items-center mb-5">
@@ -52,7 +52,7 @@
               <h3 class="fs-4">Price range</h3>
               <div class="d-flex justify-content-between">
                 <label for="price-range" class="form-label"><i class="fa-solid fa-dollar-sign"></i></label>
-                <label for="price-range ps-1" class="form-label">
+                <label for="price-range" class="form-label text-center" style="flex:1">
                   <i class="fa-solid fa-dollar-sign"></i>
                   <i class="fa-solid fa-dollar-sign"></i>
                 </label>
@@ -76,8 +76,8 @@
       </div>
     </header>
     <main class="container-fluid">
-      <div class="row" id="close-by">
-        <h2 class="p-5 text-center">Restaurants</h2>
+      <div class="row mb-5" id="restaurants-section">
+        <h2 class="text-center fs-1 fw-bold">Restaurants</h2>
       </div>
       <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-3">
         <div class="card border-0" v-for="item in items" :key=item.name style="cursor:pointer">
@@ -90,7 +90,7 @@
               <div class="text-truncate fw-bold" style="overflow: hidden">
                 <span>{{item.name}}</span>
               </div>
-              <span style="white-space: nowrap">
+              <span class="ps-2" style="white-space: nowrap">
                 <i v-for="icon in ratingToIcons(item.price_range)" :key="icon" class="fa-solid fa-dollar-sign"></i>
               </span>
             </div>
@@ -99,53 +99,6 @@
         </div>
       </div>
     </main>
-    <div class="container">
-      <footer class="row row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
-        <div class="col mb-3">
-          <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-          </a>
-          <p class="text-muted">© 2024</p>
-        </div>
-
-        <div class="col mb-3">
-
-        </div>
-
-        <div class="col mb-3">
-          <h5>Section</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-          </ul>
-        </div>
-
-        <div class="col mb-3">
-          <h5>Section</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-          </ul>
-        </div>
-
-        <div class="col mb-3">
-          <h5>Section</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-          </ul>
-        </div>
-      </footer>
-    </div>
   </div>
 </template>
 <style>
@@ -163,6 +116,12 @@ h1 {
   height: 55px;
   border-radius: 50%;
   margin-top: 4px;
+}
+
+#restaurants-section {
+  background-image: linear-gradient(to left, var(--bs-secondary), var(--bs-primary));
+  background-clip: text;
+  color: transparent;
 }
 
 </style>
