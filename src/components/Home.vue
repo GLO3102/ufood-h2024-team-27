@@ -2,14 +2,14 @@
   <div>
     <header class="container-fluid">
       <h1 class="fw-bold text-light mb-0">UFood</h1>
-      <h2 class="ps-2 mb-5">Eat, Share, Repeat</h2>
-      <div class="row justify-content-center align-items-center">
+      <p class="ps-2 mb-5 fs-2 fw-bold">Eat, Share, Repeat</p>
+      <div class="row justify-content-center align-items-center mb-5">
         <div class="col-10">
           <div class="input-group mb-0">
             <button class="btn btn-primary rounded-start-pill p-3" type="button" data-bs-toggle="modal" data-bs-target="#filters">
               <i class="fa-solid fa-sliders fa-l"></i>
             </button>
-            <input type="text" class="form-control fs-5 z-0 rounded-end-pill py-3" id="home-search-bar" aria-label="Search bar" placeholder="Search...">
+            <input type="text" class="form-control fs-5 z-0 rounded-end-pill py-3 pe-5" id="home-search-bar" aria-label="Search bar" placeholder="Search...">
             <button class="btn btn-primary z-1" type="button" id="button-search-home">
               <i class="fa-solid fa-magnifying-glass fa-l"></i>
             </button>
@@ -24,139 +24,83 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              test test
+              <h3 class="fs-4">Category</h3>
+              <button type="button" class="btn btn-outline-primary rounded-pill m-1">fast-food</button>
+              <button type="button" class="btn btn-outline-primary rounded-pill m-1">pasta</button>
+              <button type="button" class="btn btn-outline-primary rounded-pill m-1">vegan</button>
+              <button type="button" class="btn btn-outline-primary rounded-pill m-1">healthy</button>
+              <hr/>
+
+              <h3 class="fs-4">Rating</h3>
+              <button type="button" class="btn btn-outline-primary rounded-pill">
+                1 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+              </button>
+              <button type="button" class="btn btn-outline-primary rounded-pill m-1">
+                2 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+              </button>
+              <button type="button" class="btn btn-outline-primary rounded-pill m-1">
+                3 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+              </button>
+              <button type="button" class="btn btn-outline-primary rounded-pill m-1">
+                4 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+              </button>
+              <button type="button" class="btn btn-outline-primary rounded-pill m-1">
+                5 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+              </button>
+              <hr/>
+
+              <h3 class="fs-4">Price range</h3>
+              <div class="d-flex justify-content-between">
+                <label for="price-range" class="form-label"><i class="fa-solid fa-dollar-sign"></i></label>
+                <label for="price-range ps-1" class="form-label">
+                  <i class="fa-solid fa-dollar-sign"></i>
+                  <i class="fa-solid fa-dollar-sign"></i>
+                </label>
+                <label for="price-range" class="form-label">
+                  <i class="fa-solid fa-dollar-sign"></i>
+                  <i class="fa-solid fa-dollar-sign"></i>
+                  <i class="fa-solid fa-dollar-sign"></i>
+                </label>
+              </div>
+              <input type="range" class="form-range px-1" min="0" max="2" id="price-range">
             </div>
             <div class="modal-footer d-flex justify-content-between">
-              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Reset all</button>
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Search</button>
+              <button type="button" class="btn btn-light rounded-pill">Reset all</button>
+              <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">Search</button>
             </div>
           </div>
-
         </div>
       </div>
       <div class="row justify-content-end">
-        <img src="../assets/ufood_alligator_export.svg" class="img-fluid" alt="Ufood Alligator" style="max-width: 18rem">
+        <img src="../assets/ufood_alligator_export.svg" class="img-fluid" alt="Ufood Alligator" style="max-width: 20rem">
       </div>
     </header>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control position-relative rounded-pill z-1 pe-5" aria-label="Search bar" placeholder="Search...">
-            <button class="btn btn-primary btn-sm position-absolute z-2 end-0 rounded-circle m-1" type="button" id="button-addon1"><i class="fa-solid fa-magnifying-glass fa-xs"></i></button>
-          </div>
-          <h3>Filters</h3>
-          <hr/>
-          <h4>Category</h4>
-          <button type="button" class="btn btn-outline-primary rounded-pill m-1">fast-food</button>
-          <button type="button" class="btn btn-outline-primary rounded-pill m-1">pasta</button>
-          <button type="button" class="btn btn-outline-primary rounded-pill m-1">vegan</button>
-          <button type="button" class="btn btn-outline-primary rounded-pill m-1">healthy</button>
-          <hr/>
-
-          <h4>Rating</h4>
-          <button type="button" class="btn btn-outline-primary rounded-pill m-1">
-            1 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+    <main class="container-fluid">
+      <div class="row" id="close-by">
+        <h2 class="p-5 text-center">Restaurants</h2>
+      </div>
+      <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-3">
+        <div class="card border-0" v-for="item in items" :key=item.name style="cursor:pointer">
+          <img :src="item.pictures[0]" class="card-img-top object-fit-cover rounded-4 position-relative" style="aspect-ratio: 1/1" alt="..." draggable=false>
+          <button class="btn btn-light text-primary position-absolute end-0 rounded-circle me-3 mt-1" type="button">
+            <i class="fa-regular fa-heart fa-sm"></i>
           </button>
-          <button type="button" class="btn btn-outline-primary rounded-pill m-1">
-            2 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-          </button>
-          <button type="button" class="btn btn-outline-primary rounded-pill m-1">
-            3 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-          </button>
-          <button type="button" class="btn btn-outline-primary rounded-pill m-1">
-            4 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-          </button>
-          <button type="button" class="btn btn-outline-primary rounded-pill m-1">
-            5 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-          </button>
-          <hr/>
-
-          <h4>Price range</h4>
-          <label for="customRange2" class="form-label"><i class="fa-solid fa-dollar-sign"></i></label>
-          <input type="range" class="form-range" min="0" max="2" id="customRange2">
-        </div>
-
-        <div class="col-lg-6 d-flex flex-wrap gap-3 justify-content-center align-items-top mb-3" id="cards">
-          <div class="card position-relative rounded-4 border-primary-subtle shadow" style="width: 12em" v-for="item in items" :key=item.name >
-            <button class="btn btn-light text-primary position-absolute top-0 end-0 rounded-circle m-1" type="button">
-              <i class="fa-regular fa-heart fa-sm"></i>
-            </button>
-            <img :src="item.pictures[0]" class="card-img-top object-fit-cover rounded-5 p-3" style="aspect-ratio: 1/1" alt="..." draggable=false>
-            <div class="card-body pt-1">
-                <h6 class="card-title text-truncate text-sm-start">{{item.name}}</h6>
+          <div class="card-body pt-1 pe-1 ps-0">
+            <div class="d-flex justify-content-between">
+              <div class="text-truncate fw-bold" style="overflow: hidden">
+                <span>{{item.name}}</span>
+              </div>
+              <span style="white-space: nowrap">
+                <i v-for="icon in ratingToIcons(item.price_range)" :key="icon" class="fa-solid fa-dollar-sign"></i>
+              </span>
             </div>
+            <span>{{item.genres.join(", ")}}</span>
           </div>
-        </div>
-        <div class="col">
-          <h2 class="text-center">Friends</h2>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th class="text-end" scope="col">pts</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>William</td>
-                <td class="text-end">2350</td>
-              </tr>
-              <tr>
-                <td>Cédric</td>
-                <td class="text-end">1990</td>
-              </tr>
-              <tr>
-                <td>Alex</td>
-                <td class="text-end">1800</td>
-              </tr>
-              <tr>
-                <td>Edwin</td>
-                <td class="text-end">1180</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="text-center">
-            <button class="btn btn-primary rounded-pill mb-2" type="button">Add friends</button>
-          </div>
-
-          <h2 class="text-center pt-4">Top-rated</h2>
-          <table class="table align-middle">
-            <thead>
-            <tr>
-              <th scope="col">Restaurant</th>
-              <th class="text-end" scope="col"><i class="fa-regular fa-star"></i></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>
-                <img src="https://picsum.photos/200" class="rounded-circle m-1" style="width:2em; height:2em" alt="...">
-                Restaurant Patates Plus
-              </td>
-              <td class="text-end">4.8</td>
-            </tr>
-            <tr>
-              <td>
-                <img src="https://picsum.photos/200" class="rounded-circle m-1" style="width:2em; height:2em" alt="...">
-                McDo
-              </td>
-              <td class="text-end">4.5</td>
-            </tr>
-            <tr>
-              <td>
-                <img src="https://picsum.photos/200" class="rounded-circle m-1" style="width:2em; height:2em" alt="...">
-                La Concurrence
-              </td>
-              <td class="text-end">4.3</td>
-            </tr>
-            </tbody>
-          </table>
         </div>
       </div>
-    </div>
+    </main>
     <div class="container">
-      <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+      <footer class="row row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
         <div class="col mb-3">
           <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
@@ -214,10 +158,11 @@ h1 {
 }
 
 #button-search-home {
-  margin-left: -40px;
+  margin-left: -60px;
   width: 55px;
   height: 55px;
   border-radius: 50%;
+  margin-top: 4px;
 }
 
 </style>
@@ -228,6 +173,15 @@ export default {
   data() {
     return {
       items: restaurants.items
+    }
+  },
+  methods: {
+    ratingToIcons(rating) {
+      const icons = [];
+      for (let i = 0; i < rating; i++) {
+        icons.push(i);
+      }
+      return icons;
     }
   }
 }
