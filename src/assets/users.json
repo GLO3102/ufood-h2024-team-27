@@ -10,7 +10,7 @@
         "rating":5,
         "pfp": "https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg",
         "bio": "Miam miam",
-        "visitedRestaurants":[{ "id": "5f31fc7155d7790550c08b02", "visits" : 0},{ "id":  "5f31fcaf55d7790550c08b11", "visits" : 0}]
+        "visitedRestaurants":[{ "id": "5f31fc7155d7790550c08b02", "visits" : 3},{ "id":  "5f31fcaf55d7790550c08b11", "visits" : 4}]
   
       }
     ]

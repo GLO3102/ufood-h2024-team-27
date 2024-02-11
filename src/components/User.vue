@@ -61,15 +61,18 @@
         </div>
       </div>
     </div>
+
     <div class="row d-flex justify-content-center mb-4">
       <div class="col-8 d-flex flex-wrap justify-content-center mb-2">
         <h2>Recently Viewed Restaurants</h2>
+        <button @click="changeState" class="btn btn-primary">
+          Click here to trigger/untrigger visits
+        </button>
       </div>
       <div
-        v-if="visitedRestaurantDetails.length === 0"
+        v-if="state.isActive === false"
         class="col-8 d-flex justify-content-center align-items-center"
       >
-        <!-- Display a button if no visited restaurants are present -->
         <button @click="goHome" class="btn btn-primary">
           No recents, go back to home page
         </button>
@@ -119,6 +122,7 @@ export default {
     return {
       user: usersData.items[0],
       restaurants: restaurantsData.items,
+      state: { isActive: true },
     };
   },
   computed: {
@@ -143,6 +147,10 @@ export default {
   methods: {
     goHome() {
       this.$router.push("/");
+    },
+
+    changeState() {
+      this.state.isActive = !this.state.isActive;
     },
   },
 };
