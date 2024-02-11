@@ -1,12 +1,41 @@
 <template>
   <div>
     <header class="container-fluid">
-      <div class="row bg-secondary">
-        <h1>UFood</h1>
-        Eat, Share, Repeat
+      <h1 class="fw-bold text-light mb-0">UFood</h1>
+      <h2 class="ps-2 mb-5">Eat, Share, Repeat</h2>
+      <div class="row justify-content-center align-items-center">
+        <div class="col-10">
+          <div class="input-group mb-0">
+            <button class="btn btn-primary rounded-start-pill p-3" type="button" data-bs-toggle="modal" data-bs-target="#filters">
+              <i class="fa-solid fa-sliders fa-l"></i>
+            </button>
+            <input type="text" class="form-control fs-5 z-0 rounded-end-pill py-3" id="home-search-bar" aria-label="Search bar" placeholder="Search...">
+            <button class="btn btn-primary z-1" type="button" id="button-search-home">
+              <i class="fa-solid fa-magnifying-glass fa-l"></i>
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="row bg-secondary justify-content-end mb-3">
-        <img src="../assets/ufood_alligator_export.svg" class="float-end" style="width: 30%" alt="...">
+      <div class="modal fade" id="filters">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="filters" tabindex="-1">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5">Filters</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              test test
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Reset all</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Search</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="row justify-content-end">
+        <img src="../assets/ufood_alligator_export.svg" class="img-fluid" alt="Ufood Alligator" style="max-width: 18rem">
       </div>
     </header>
     <div class="container">
@@ -176,6 +205,20 @@
   </div>
 </template>
 <style>
+header {
+  background-image: linear-gradient(var(--bs-secondary), var(--bs-primary));
+}
+
+h1 {
+  font-size: 6rem !important;
+}
+
+#button-search-home {
+  margin-left: -40px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
 
 </style>
 <script>
