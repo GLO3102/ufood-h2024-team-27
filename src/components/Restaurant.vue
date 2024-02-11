@@ -2,7 +2,7 @@
 // the LeafletMap corner
 // https://github.com/vue-leaflet/vue-leaflet/blob/master/src/playground/views/ for usable components
 import "leaflet/dist/leaflet.css";
-
+import restaurantsData from "@/assets/restaurants.json";
 import { LMap, LTileLayer, LMarker, LTooltip, LPopup } from "@vue-leaflet/vue-leaflet"
 import {ref} from "vue";
 
@@ -10,6 +10,7 @@ let map=null
 let zoom = ref(16)
 let center = ref([47.41322, -1.219482]) // set default value
 let here = ref(center.value)
+const restaurant = ref(restaurantsData.items[2]);
 
 function getLocation(after=()=>null) { // absolute garbage but it's fine
   if (navigator.geolocation) {
@@ -32,10 +33,55 @@ function mapReady(arg){
 
 <template>
   <div>
-    <h1>Restaurant</h1>
-    <div>GLO-3102 Restaurant page</div>
-    <div style="width: 100%">
-      <main>
+    <div>Restaurant : {{restaurant.name}}</div>
+    
+    <div class="container my-5">
+    <div class="row gy-4">
+
+      <div class="col-lg-4">
+        <div class="card border-primary-subtle shadow">
+          <div class="card-body">
+            <h5 class="card-title">About us</h5>
+            <p class="card-text">Prix : {{ restaurant.price_range }}</p>
+            <p class="card-text">Type of food : {{ restaurant.genres }}</p>
+            <p class="card-text">Rating : {{ restaurant.rating }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card border-primary-subtle shadow">
+          <div class="card-body">
+            <h5 class="card-title">Contact</h5>
+            <p class="card-text">Address: {{ restaurant.address }}</p>
+            <p class="card-text">Telephone: {{ restaurant.tel }}</p>
+            <p class="card-text">Email: {{ restaurant.email }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card border-primary-subtle shadow">
+          <div class="card-body">
+            <h5 class="card-title">Opening hours</h5>
+            <ul class="list-unstyled">
+              <li>Dimanche: {{ restaurant.opening_hours.sunday }}</li>
+              <li>Lundi: {{ restaurant.opening_hours.monday }}</li>
+              <li>Mardi: {{ restaurant.opening_hours.tuesday }}</li>
+              <li>Mercredi: {{ restaurant.opening_hours.wednesday }}</li>
+              <li>Jeudi: {{ restaurant.opening_hours.thursday }}</li>
+              <li>Vendredi: {{ restaurant.opening_hours.friday }}</li>
+              <li>Samedi: {{ restaurant.opening_hours.saturday }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    
+    <div style="width: 100%; display: flex; justify-content: center;">
+      <main style="width: 600px; height: 400px;">
         <l-map ref="map" v-model:zoom="zoom" :center="center" @ready="mapReady">
           <l-tile-layer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
