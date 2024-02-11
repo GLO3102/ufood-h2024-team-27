@@ -16,6 +16,11 @@ L.mapquest.key = "SCeop25saVUhKgzAdwuB9IXjs21FyYKT"; // very safe
 
 //var popup = L.popup();
 var map = null;
+
+function displayPriceRange(priceRange) {
+  return '$'.repeat(priceRange);
+}
+
 function initMap(){
   // the old, dumb way to get location data
   //navigator.geolocation.getCurrentPosition(createMap);
@@ -109,8 +114,25 @@ let here = ref(center.value)*/
 
 <template>
   <div>
-    <div>Restaurant : {{restaurant.name}}</div>
     
+    <div class="container text-center mt-3">
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="max-width: 75rem;">
+  <div class="carousel-inner">
+    <div class="carousel-item" v-for="(picture, index) in restaurant.pictures" :class="{ active: index === 0 }" :key="index">
+      <img :src="picture" class="d-block w-100 carousel-image" :alt="`Image ${index + 1}`">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
+
     <div class="container my-5">
       <div class="row gy-4">
 
@@ -118,9 +140,13 @@ let here = ref(center.value)*/
           <div class="card border-primary-subtle shadow">
             <div class="card-body">
               <h5 class="card-title">About us</h5>
-              <p class="card-text">Prix : {{ restaurant.price_range }}</p>
-              <p class="card-text">Type of food : {{ restaurant.genres }}</p>
-              <p class="card-text">Rating : {{ restaurant.rating }}</p>
+              <p class="card-text"><b><u>Price range</u></b> <br>{{ displayPriceRange(restaurant.price_range) }} </p> 
+              <div> <b><u>Genres</u></b>
+              <ul class="list-unstyled">
+                <li v-for="genre in restaurant.genres" :key="genre">{{ genre }}</li>
+              </ul>
+            </div>
+              <p class="card-text"><b><u>Rating</u></b> <br>{{ restaurant.rating }}</p>
             </div>
           </div>
         </div>
@@ -129,9 +155,9 @@ let here = ref(center.value)*/
           <div class="card border-primary-subtle shadow">
             <div class="card-body">
               <h5 class="card-title">Contact</h5>
-              <p class="card-text">Address: {{ restaurant.address }}</p>
-              <p class="card-text">Telephone: {{ restaurant.tel }}</p>
-              <p class="card-text">Email: {{ restaurant.email }}</p>
+              <p class="card-text"><b><u>Address</u></b> <br>{{ restaurant.address }}</p>
+              <p class="card-text"><b><u>Phone</u></b> <br>{{ restaurant.tel }}</p>
+              <p class="card-text"><b><u>Email</u></b> <br>McDonaldsDesRivieres@mcdo.ca</p>
             </div>
           </div>
         </div>
@@ -175,4 +201,8 @@ let here = ref(center.value)*/
 </template>
 
 <style>
+.carousel-image {
+  height: 35rem;
+  object-fit: cover;
+}
 </style>
