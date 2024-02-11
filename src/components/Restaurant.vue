@@ -132,6 +132,10 @@ let here = ref(center.value)*/
 </div>
 </div>
 
+<div class="container my-4">
+      <h2 class="text-center mb-4" style="color: rgb(223, 19, 35); text-shadow: 2px 2px 4px rgba(254, 193, 13, 0.462);">Welcome to {{ restaurant.name }}</h2>
+    </div>
+
     <div class="container my-5">
       <div class="row gy-4">
 
@@ -163,7 +167,7 @@ let here = ref(center.value)*/
 
         <div class="col-lg-3">
           <div class="card border-primary-subtle shadow">
-            <div class="card-body">
+            <div class="card-body mb-3">
               <h5 class="card-title">Opening hours</h5>
               <ul class="list-unstyled">
                 <li>Dimanche: {{ restaurant.opening_hours.sunday }}</li>
