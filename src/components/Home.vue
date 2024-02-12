@@ -91,7 +91,7 @@
                 <span>{{item.name}}</span>
               </div>
               <span class="ps-2" style="white-space: nowrap">
-                <i v-for="icon in ratingToIcons(item.price_range)" :key="icon" class="fa-solid fa-dollar-sign"></i>
+                <i v-for="icon in item.price_range" :key="icon" class="fa-solid fa-dollar-sign"></i>
               </span>
             </div>
             <span>{{item.genres.join(", ")}}</span>
@@ -134,14 +134,5 @@ export default {
       items: restaurants.items
     }
   },
-  methods: {
-    ratingToIcons(rating) {
-      const icons = [];
-      for (let i = 0; i < rating; i++) {
-        icons.push(i);
-      }
-      return icons;
-    }
-  }
 }
 </script>

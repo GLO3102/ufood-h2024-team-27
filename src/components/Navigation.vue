@@ -2,81 +2,44 @@
   <nav class="navbar navbar-expand-md bg-secondary">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">
-        <img
-          class="d-inline-block align-top"
-          src="@/assets/ufood_logo_1_export.svg"
-          width="50"
-        />
+        <img class="d-inline-block align-top" src="@/assets/ufood_logo_1_export.svg" width="50" />
       </router-link>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarScroll"
-        aria-controls="navbarScroll"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+              aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarScroll">
-        <ul
-          class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-          style="--bs-scroll-height: 200px"
-        >
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px">
           <li class="nav-item">
-            <router-link class="nav-link active" to="/"
-              >Home <i class="fa-solid fa-house"></i
-            ></router-link>
+            <router-link class="nav-link active" to="/">
+              Home <i class="fa-solid fa-house"></i>
+            </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link active" to="/restaurant"
-              >Restaurants <i class="fa-solid fa-burger"></i
-            ></router-link>
+            <router-link class="nav-link active" to="/restaurant">
+              Restaurants <i class="fa-solid fa-burger"></i>
+            </router-link>
           </li>
           <li class="nav-item">
-            <router-link
-              class="nav-link"
-              :to="user.isLoggedIn ? '/user' : '/login'"
-              @click="login"
-            >
-              {{ user.isLoggedIn ? user.name : "Log In" }}
-              <i class="fa-solid fa-user"></i
-            ></router-link>
+            <router-link class="nav-link" :to="user.isLoggedIn ? '/user' : '/login'" @click="login">
+              {{ user.isLoggedIn ? user.name : "Log In" }}<i class="fa-solid fa-user"></i>
+            </router-link>
           </li>
           <li class="nav-item logout" v-if="user.isLoggedIn">
-            <router-link class="nav-link" to="/logout" @click="logout"
-              >LogOut <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <router-link class="nav-link" to="/logout" @click="logout">
+              LogOut <i class="fa fa-sign-out" aria-hidden="true"></i>
             </router-link>
           </li>
         </ul>
         <form class="d-flex" role="search">
-          <input
-            v-model="searchQuery"
-            type="text"
-            class="form-control mr-2 navbar-search-input"
-            placeholder="Find a restaurant..."
-            aria-label="Search anything"
-            @focus="dropdownVisible = true"
-            @blur="hideDropdown"
-            ref="searchInput"
-          />
-          <button
-            class="btn btn-outline-none my-2 my-sm-0 navbar-search-btn"
-            type="submit"
-          >
+          <input v-model="searchQuery" type="text" class="form-control mr-2 navbar-search-input rounded-pill"
+                 placeholder="Find a restaurant..." aria-label="Search anything" @focus="dropdownVisible = true"
+                 @blur="hideDropdown" ref="searchInput" />
+          <button class="btn btn-outline-none my-2 my-sm-0 navbar-search-btn" type="submit">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
-          <div
-            v-if="filteredItems.length && searchQuery && dropdownVisible"
-            class="dropdown-menu show w-100"
-          >
-            <a
-              v-for="item in filteredItems"
-              :key="item.id"
-              class="dropdown-item"
-              @click="selectItem(item)"
-            >
+          <div v-if="filteredItems.length && searchQuery && dropdownVisible" class="dropdown-menu show w-100">
+            <a v-for="item in filteredItems" :key="item.id" class="dropdown-item" @click="selectItem(item)">
               {{ item.name }}
             </a>
           </div>
@@ -89,35 +52,36 @@
 <script>
 import restaurantsData from "@/assets/restaurants.json";
 import usersData from "@/assets/users.json";
+
 export default {
   data() {
     return {
       user: {
 
         isLoggedIn: false,
-        name: "",
+        name: ""
       },
       searchQuery: "",
       items: restaurantsData.items,
 
-      dropdownVisible: false,
+      dropdownVisible: false
     };
   },
-  created(){
+  created() {
     this.setUser();
   },
   computed: {
     filteredItems() {
       return this.items.filter((restaurant) =>
-        restaurant.name.toLowerCase().includes(this.searchQuery.toLowerCase()),
+        restaurant.name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
-    },
+    }
   },
 
   watch: {
     searchQuery(newValue) {
       this.dropdownVisible = newValue.length > 0;
-    },
+    }
   },
   methods: {
     selectItem(item) {
@@ -125,7 +89,7 @@ export default {
       this.$router.push({ path: "/restaurant" });
     },
 
-    setUser(){
+    setUser() {
       const user = usersData.items[0];
       this.user.name = `${user.firstname} ${user.lastname}`;
       this.user.isLoggedIn = true;
@@ -133,12 +97,12 @@ export default {
 
     logout() {
       this.user.isLoggedIn = false;
-      this.$router.push('/')
+      this.$router.push("/");
     },
 
     login() {
       this.user.isLoggedIn = true;
-      this.$router.push('/user')
+      this.$router.push("/user");
     },
 
     hideDropDown(event) {
@@ -157,25 +121,18 @@ export default {
       ) {
         this.dropdownVisible = false;
       }
-    },
+    }
   },
   mounted() {
     document.addEventListener("click", this.handleClickOutside);
   },
   beforeDestroy() {
     document.removeEventListener("click", this.handleClickOutside);
-  },
+  }
 };
 </script>
 
 <style>
-/*
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-* {
-  font-family: "poppins", sans-serif;
-}
-*/
-
 .dropdown-menu {
   position: absolute;
   top: 100%;
