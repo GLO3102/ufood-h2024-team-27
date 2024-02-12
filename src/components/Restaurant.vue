@@ -192,7 +192,7 @@ let here = ref(center.value)*/
     </div>
 
     <div class="mb-4" style="width: 100%; display: flex; justify-content: center;">
-      <div id="map" style="width: 75%; height: 550px;" @load="initMap"></div>
+      <div id="map" class="rounded-4" style="width: 75%; height: 550px;" @load="initMap"></div>
     </div>
   </div>
 </template>
