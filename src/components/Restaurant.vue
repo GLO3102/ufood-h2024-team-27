@@ -14,7 +14,7 @@ const restaurant = ref(restaurantsData.items[2]);
 const restPos = [...restaurant.value.location.coordinates]; //[46.82645, -71.24556]; // centre videotron
 const restName = restaurant.value.name;
 
-L.mapquest.key = "SCeop25saVUhKgzAdwuB9IXjs21FyYKT"; // very safe
+L.mapquest.key = "KpCMIAhgKEi3ZR28LT38ofIjaDbt21mZ"; // very safe
 
 //var popup = L.popup();
 var map = null;
