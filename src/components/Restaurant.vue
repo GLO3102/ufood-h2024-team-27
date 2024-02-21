@@ -1,8 +1,12 @@
+/* eslint-disable */
+
 <script setup>
 // doc: https://developer.mapquest.com/documentation/mapquest-js/v1.3/
 
 // this took me an embarassingly long time to figure out ;-;
 import {onMounted, ref} from "vue";
+import { apiAddToFavoritesList } from "@/api.js";
+
 onMounted(()=>initMap())
 
 // read The Data
@@ -12,7 +16,7 @@ const restaurant = ref(restaurantsData.items[2]);
 const restPos = [...restaurant.value.location.coordinates]; //[46.82645, -71.24556]; // centre videotron
 const restName = restaurant.value.name;
 
-L.mapquest.key = "SCeop25saVUhKgzAdwuB9IXjs21FyYKT"; // very safe 
+L.mapquest.key = "SCeop25saVUhKgzAdwuB9IXjs21FyYKT"; // very safe
 
 //var popup = L.popup();
 var map = null;
@@ -63,52 +67,19 @@ function initMap(){
     });
   }
 
-  /* 
-  // make it tell you what the address is of the thing you clicked
-  map.on('click', function(e) {
-    popup.setLatLng(e.latlng).openOn(this);
-    L.mapquest.geocoding().reverse(e.latlng, generatePopupContent);
-  });
-
-  function generatePopupContent(error, response) {
-    var location = response.results[0].locations[0];
-    var street = location.street;
-    var city = location.adminArea5;
-    var state = location.adminArea3;
-    popup.setContent(street + ', ' + city + ', ' + state);
+  const addToFavorites = async () => {
+    try{
+    const listId = apiGetFavoritesLists()[0].id;
+    const restaurantId = apiGetRestaurant().id;
+    await apiAddToFavoritesList(listId, restaurantId);
+    alert("Added to favorites!");
+    } catch (error) {
+      alert("An error occurred while adding to favorites");
+    }
   }
-  */
 }
 
-// BEFORE MAPQUEST - KEPT AS FALLBACK
-// the LeafletMap corner
-// https://github.com/vue-leaflet/vue-leaflet/blob/master/src/playground/views/ for usable components
 
-//import "leaflet/dist/leaflet.css";
-//import { LMap, LTileLayer, LMarker, LTooltip, LPopup } from "@vue-leaflet/vue-leaflet"
-//import {ref} from "vue";
-
-/*let map=null
-let zoom = ref(16)
-let center = ref([47.41322, -1.219482]) // set default value
-let here = ref(center.value)*/
-
-/*function getLocation(after=()=>null) { // absolute garbage but it's fine
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((geo)=>{
-      center.value=[geo.coords.latitude, geo.coords.longitude];
-      here.value = [...center.value]
-      map.setView(center.value) // what
-      after();
-    });
-  } 
-  // do nothing if geo is not available
-}*/
-
-/*function mapReady(arg){
-  map=arg
-  getLocation()
-}*/
 </script>
 
 
@@ -134,6 +105,11 @@ let here = ref(center.value)*/
 
 <div class="container my-4">
       <h2 class="text-center mb-4" style="color: rgb(223, 19, 35); text-shadow: 2px 2px 4px rgba(254, 193, 13, 0.462);">Welcome to {{ restaurant.name }}</h2>
+    </div>
+
+    <div class="text-center">
+    <button class="btn btn-primary rounded-3 me-2" @click="addToFavorites">Add to favorites</button>
+    <button class="btn btn-primary rounded-3" @click="addToVisited">Add a visit</button>
     </div>
 
     <div class="container my-5">
