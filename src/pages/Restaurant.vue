@@ -5,7 +5,7 @@
 
 // this took me an embarassingly long time to figure out ;-;
 import {onMounted, ref} from "vue";
-import { apiAddToFavoritesList } from "@/api.js";
+import { apiAddToFavoritesList } from "@/api/api.js";
 
 onMounted(()=>initMap())
 

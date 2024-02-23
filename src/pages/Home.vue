@@ -99,6 +99,7 @@
         </div>
       </div>
     </main>
+    <GenreButton genre="libanais"></GenreButton>
   </div>
 </template>
 <style>
@@ -127,12 +128,17 @@ h1 {
 </style>
 <script>
 import restaurants from "../assets/restaurants.json"
+import GenreButton from "../components/GenreButton.vue";
 
 export default {
-  data() {
-    return {
-      items: restaurants.items
-    }
-  },
+    components: [
+        GenreButton
+    ],
+    data() {
+        return {
+            items: restaurants.items
+        };
+    },
+    components: { GenreButton }
 }
 </script>
