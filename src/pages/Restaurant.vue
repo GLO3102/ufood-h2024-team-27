@@ -1,16 +1,28 @@
-/* eslint-disable */
-
 <script setup>
+/* eslint-disable */
 // doc: https://developer.mapquest.com/documentation/mapquest-js/v1.3/
 
-// this took me an embarassingly long time to figure out ;-;
 import {onMounted, ref} from "vue";
-import { apiAddToFavoritesList } from "@/api/api.js";
+import { useRoute } from "vue-router";
+import * as Api from "@/api/api.js";
+
+let restaurantInfo = ref(null);
+
+onMounted(async () => {
+  try {
+    const route = useRoute();
+    const restaurantId = route.params.restaurantId;
+    restaurantInfo.value = await Api.apiGetRestaurant(restaurantId);
+    console.log(restaurantInfo.value);
+  } catch (error) {
+      console.error("Error while fetching restaurant info: ", error);
+  }
+});
 
 onMounted(()=>initMap())
 
-// read The Data
 import restaurantsData from "@/assets/restaurants.json";
+import { apiGetRestaurant } from "@/api/api";
 const restaurant = ref(restaurantsData.items[2]);
 
 const restPos = [...restaurant.value.location.coordinates]; //[46.82645, -71.24556]; // centre videotron
@@ -26,9 +38,6 @@ function roundedRating(rating){
 }
 
 function initMap(){
-  // the old, dumb way to get location data
-  //navigator.geolocation.getCurrentPosition(createMap);
-  //L.mapquest.geocoding().reverse(e.latlng, generatePopupContent); // to find the user's current address
   createMap();
 
   function createMap(){
@@ -67,16 +76,16 @@ function initMap(){
     });
   }
 
-  const addToFavorites = async () => {
-    try{
-    const listId = apiGetFavoritesLists()[0].id;
-    const restaurantId = apiGetRestaurant().id;
-    await apiAddToFavoritesList(listId, restaurantId);
-    alert("Added to favorites!");
-    } catch (error) {
-      alert("An error occurred while adding to favorites");
-    }
-  }
+//   const addToFavorites = async () => {
+//     try{
+//     const listId = apiGetFavoritesLists()[0].id;
+//     const restaurantId = apiGetRestaurant().id;
+//     await apiAddToFavoritesList(listId, restaurantId);
+//     alert("Added to favorites!");
+//     } catch (error) {
+//       alert("An error occurred while adding to favorites");
+//     }
+//   }
 }
 
 
@@ -88,7 +97,7 @@ function initMap(){
     <div class="container text-center mt-4">
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="max-width: 75rem;">
   <div class="carousel-inner">
-    <div class="carousel-item" v-for="(picture, index) in restaurant.pictures" :class="{ active: index === 0 }" :key="index">
+    <div class="carousel-item" v-if="restaurantInfo" v-for="(picture, index) in restaurantInfo.pictures" :class="{ active: index === 0 }" :key="index">
       <img :src="picture" class="d-block w-100 carousel-image" :alt="`Image ${index + 1}`">
     </div>
   </div>
@@ -104,7 +113,7 @@ function initMap(){
 </div>
 
 <div class="container my-4">
-      <h2 class="text-center mb-4" style="color: rgb(223, 19, 35); text-shadow: 2px 2px 4px rgba(254, 193, 13, 0.462);">Welcome to {{ restaurant.name }}</h2>
+      <h2 class="text-center mb-4 fs-1 fw-bold text-primary" v-if="restaurantInfo">Welcome to {{ restaurantInfo.name }}</h2>
     </div>
 
     <div class="text-center">
@@ -117,15 +126,15 @@ function initMap(){
 
         <div class="col-lg-3 offset-lg-1">
           <div class="card border-primary-subtle shadow">
-            <div class="card-body">
+            <div class="card-body" v-if="restaurantInfo">
               <h5 class="card-title">About us</h5>
-              <p class="card-text"><b><u>Price range</u></b> <br><i class="fa-solid fa-dollar-sign" v-for="i in restaurant.price_range" :key="i"></i></p>
+              <p class="card-text"><b><u>Price range</u></b> <br><i class="fa-solid fa-dollar-sign" v-for="i in restaurantInfo.price_range" :key="i"></i></p>
               <div> <b><u>Genres</u></b>
-              <ul class="list-unstyled">
-                <li v-for="genre in restaurant.genres" :key="genre">{{ genre }}</li>
+              <ul class="list-unstyled" v-if="restaurantInfo">
+                <li v-for="genre in restaurantInfo.genres" :key="genre">{{ genre }}</li>
               </ul>
             </div>
-              <p class="card-text"><b><u>Rating</u></b> <br><i class="fa-solid fa-star" v-for="i in roundedRating(restaurant.rating)" :key="i"></i></p>
+              <p class="card-text" v-if="restaurantInfo"><b><u>Rating</u></b> <br><i class="fa-solid fa-star" v-for="i in roundedRating(restaurantInfo.rating)" :key="i"></i></p>
             </div>
           </div>
         </div>
@@ -134,9 +143,9 @@ function initMap(){
           <div class="card border-primary-subtle shadow">
             <div class="card-body">
               <h5 class="card-title">Contact</h5>
-              <p class="card-text"><b><u>Address</u></b> <br>{{ restaurant.address }}</p>
-              <p class="card-text"><b><u>Phone</u></b> <br>{{ restaurant.tel }}</p>
-              <p class="card-text"><b><u>Email</u></b> <br>McDonaldsDesRivieres@mcdo.ca</p>
+              <p class="card-text" v-if="restaurantInfo"><b><u>Address</u></b> <br>{{ restaurantInfo.address }}</p>
+              <p class="card-text" v-if="restaurantInfo"><b><u>Phone</u></b> <br>{{ restaurantInfo.tel }}</p>
+              <p class="card-text" v-if="restaurantInfo"><b><u>Email</u></b> <br>{{ restaurantInfo.email }}</p>
             </div>
           </div>
         </div>
@@ -145,14 +154,14 @@ function initMap(){
           <div class="card border-primary-subtle shadow">
             <div class="card-body mb-3">
               <h5 class="card-title">Opening hours</h5>
-              <ul class="list-unstyled">
-                <li>Dimanche: {{ restaurant.opening_hours.sunday }}</li>
-                <li>Lundi: {{ restaurant.opening_hours.monday }}</li>
-                <li>Mardi: {{ restaurant.opening_hours.tuesday }}</li>
-                <li>Mercredi: {{ restaurant.opening_hours.wednesday }}</li>
-                <li>Jeudi: {{ restaurant.opening_hours.thursday }}</li>
-                <li>Vendredi: {{ restaurant.opening_hours.friday }}</li>
-                <li>Samedi: {{ restaurant.opening_hours.saturday }}</li>
+              <ul class="list-unstyled" v-if="restaurantInfo">
+                <li>Dimanche: {{ restaurantInfo.opening_hours.sunday }}</li>
+                <li>Lundi: {{ restaurantInfo.opening_hours.monday }}</li>
+                <li>Mardi: {{ restaurantInfo.opening_hours.tuesday }}</li>
+                <li>Mercredi: {{ restaurantInfo.opening_hours.wednesday }}</li>
+                <li>Jeudi: {{ restaurantInfo.opening_hours.thursday }}</li>
+                <li>Vendredi: {{ restaurantInfo.opening_hours.friday }}</li>
+                <li>Samedi: {{ restaurantInfo.opening_hours.saturday }}</li>
               </ul>
             </div>
           </div>
