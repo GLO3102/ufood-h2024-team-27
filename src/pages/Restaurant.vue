@@ -1,80 +1,86 @@
-<script setup>
+<script>
 /* eslint-disable */
 // doc: https://developer.mapquest.com/documentation/mapquest-js/v1.3/
 
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import * as Api from "@/api/api.js";
 
-let restaurantInfo = ref(null);
 
-onMounted(async () => {
-  try {
+export default{
+  name: "RestaurantComponent",
+  setup() {
+    const restaurantInfo = ref(null);
     const route = useRoute();
-    const restaurantId = route.params.restaurantId;
-    restaurantInfo.value = await Api.apiGetRestaurant(restaurantId);
-    console.log(restaurantInfo.value);
-  } catch (error) {
-      console.error("Error while fetching restaurant info: ", error);
-  }
-});
+    const L = window.L;
+    let map = null;
 
-onMounted(()=>initMap())
+    L.mapquest.key = "KpCMIAhgKEi3ZR28LT38ofIjaDbt21mZ";
 
-import restaurantsData from "@/assets/restaurants.json";
-import { apiGetRestaurant } from "@/api/api";
-const restaurant = ref(restaurantsData.items[2]);
-
-const restPos = [...restaurant.value.location.coordinates]; //[46.82645, -71.24556]; // centre videotron
-const restName = restaurant.value.name;
-
-L.mapquest.key = "KpCMIAhgKEi3ZR28LT38ofIjaDbt21mZ"; // very safe
-
-//var popup = L.popup();
-var map = null;
-
-function roundedRating(rating){
-  return Math.round(rating)
-}
-
-function initMap(){
-  createMap();
-
-  function createMap(){
-    map = L.mapquest.map('map', {
-      center: [0,0],
-      layers: L.mapquest.tileLayer('map'),
-      zoom: 16
-    });
-    map.on("locationfound", setDirections);
-    map.on("locationerror", ()=>console.error("Could not find user location"));
-    map.locate({setView:true});
-  }
-
-  function setDirections(){
-    let startPos = map.getCenter();
-    let endPos = L.latLng(restPos[1],restPos[0])
-
-    var directions = L.mapquest.directions();
-    directions.setLayerOptions({
-      startMarker: {
-        draggable: false,
-        title: "Current position"
-      },
-      endMarker: {
-        draggable: false,
-        title: restName
-      },
-      routeRibbon: {
-        draggable: false
+    async function loadRestaurantInfo(restaurantId) {
+      try {
+        restaurantInfo.value = await Api.apiGetRestaurant(restaurantId);
+        if (restaurantInfo.value) {
+          const restPos = [...restaurantInfo.value.location.coordinates];
+          const restName = restaurantInfo.value.name;
+          initMap(restPos, restName);
+        }
+      } catch (error) {
+          console.error("Error while fetching restaurant info: ", error);
       }
+    }
+
+    onMounted(() => {
+      loadRestaurantInfo(route.params.restaurantId);
     });
 
-    directions.route({
-      start: startPos,
-      end: endPos
+    watch(() => route.params.restaurantId, (newRestaurantId) => {
+      loadRestaurantInfo(newRestaurantId);
     });
-  }
+
+    function roundedRating(rating){
+      return Math.round(rating)
+    }
+
+    function initMap(restPos, restName) {
+      createMap();
+
+      function createMap(){
+        map = L.mapquest.map('map', {
+          center: [0,0],
+          layers: L.mapquest.tileLayer('map'),
+          zoom: 16
+        });
+        map.on("locationfound", setDirections);
+        map.on("locationerror", ()=>console.error("Could not find user location"));
+        map.locate({setView:true});
+      }
+
+      function setDirections(){
+        let startPos = map.getCenter();
+        let endPos = L.latLng(restPos[1],restPos[0])
+
+        var directions = L.mapquest.directions();
+        directions.setLayerOptions({
+          startMarker: {
+            draggable: false,
+            title: "Current position"
+          },
+          endMarker: {
+            draggable: false,
+            title: restName
+          },
+          routeRibbon: {
+            draggable: false
+          }
+        });
+
+        directions.route({
+          start: startPos,
+          end: endPos
+        });
+      }
+    }
 
 //   const addToFavorites = async () => {
 //     try{
@@ -86,9 +92,15 @@ function initMap(){
 //       alert("An error occurred while adding to favorites");
 //     }
 //   }
-}
 
-
+    return {
+      restaurantInfo,
+      L,
+      map,
+      roundedRating
+    };
+  },
+};
 </script>
 
 
