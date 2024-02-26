@@ -151,13 +151,12 @@ export default{
           </div>
         </div>
 
-        <div class="col-lg-3">
+        <div class="col-lg-3 d-flex">
           <div class="card border-primary-subtle shadow">
             <div class="card-body">
               <h5 class="card-title">Contact</h5>
               <p class="card-text" v-if="restaurantInfo"><b><u>Address</u></b> <br>{{ restaurantInfo.address }}</p>
               <p class="card-text" v-if="restaurantInfo"><b><u>Phone</u></b> <br>{{ restaurantInfo.tel }}</p>
-              <p class="card-text" v-if="restaurantInfo"><b><u>Email</u></b> <br>{{ restaurantInfo.email }}</p>
             </div>
           </div>
         </div>
