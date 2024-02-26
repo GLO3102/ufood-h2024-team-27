@@ -1,85 +1,106 @@
+<script>
 /* eslint-disable */
-
-<script setup>
 // doc: https://developer.mapquest.com/documentation/mapquest-js/v1.3/
 
-// this took me an embarassingly long time to figure out ;-;
-import {onMounted, ref} from "vue";
-import { apiAddToFavoritesList } from "@/api/api.js";
+import {onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import * as Api from "@/api/api.js";
 
-onMounted(()=>initMap())
 
-// read The Data
-import restaurantsData from "@/assets/restaurants.json";
-const restaurant = ref(restaurantsData.items[2]);
+export default{
+  name: "RestaurantComponent",
+  setup() {
+    const restaurantInfo = ref(null);
+    const route = useRoute();
+    const L = window.L;
+    let map = null;
 
-const restPos = [...restaurant.value.location.coordinates]; //[46.82645, -71.24556]; // centre videotron
-const restName = restaurant.value.name;
+    L.mapquest.key = "KpCMIAhgKEi3ZR28LT38ofIjaDbt21mZ";
 
-L.mapquest.key = "KpCMIAhgKEi3ZR28LT38ofIjaDbt21mZ"; // very safe
-
-//var popup = L.popup();
-var map = null;
-
-function roundedRating(rating){
-  return Math.round(rating)
-}
-
-function initMap(){
-  // the old, dumb way to get location data
-  //navigator.geolocation.getCurrentPosition(createMap);
-  //L.mapquest.geocoding().reverse(e.latlng, generatePopupContent); // to find the user's current address
-  createMap();
-
-  function createMap(){
-    map = L.mapquest.map('map', {
-      center: [0,0],
-      layers: L.mapquest.tileLayer('map'),
-      zoom: 16
-    });
-    map.on("locationfound", setDirections);
-    map.on("locationerror", ()=>console.error("Could not find user location"));
-    map.locate({setView:true});
-  }
-
-  function setDirections(){
-    let startPos = map.getCenter();
-    let endPos = L.latLng(restPos[1],restPos[0])
-
-    var directions = L.mapquest.directions();
-    directions.setLayerOptions({
-      startMarker: {
-        draggable: false,
-        title: "Current position"
-      },
-      endMarker: {
-        draggable: false,
-        title: restName
-      },
-      routeRibbon: {
-        draggable: false
+    async function loadRestaurantInfo(restaurantId) {
+      try {
+        restaurantInfo.value = await Api.apiGetRestaurant(restaurantId);
+        if (restaurantInfo.value) {
+          const restPos = [...restaurantInfo.value.location.coordinates];
+          const restName = restaurantInfo.value.name;
+          initMap(restPos, restName);
+        }
+      } catch (error) {
+          console.error("Error while fetching restaurant info: ", error);
       }
-    });
-
-    directions.route({
-      start: startPos,
-      end: endPos
-    });
-  }
-
-  const addToFavorites = async () => {
-    try{
-    const listId = apiGetFavoritesLists()[0].id;
-    const restaurantId = apiGetRestaurant().id;
-    await apiAddToFavoritesList(listId, restaurantId);
-    alert("Added to favorites!");
-    } catch (error) {
-      alert("An error occurred while adding to favorites");
     }
-  }
-}
 
+    onMounted(() => {
+      loadRestaurantInfo(route.params.restaurantId);
+    });
 
+    watch(() => route.params.restaurantId, (newRestaurantId) => {
+      loadRestaurantInfo(newRestaurantId);
+    });
+
+    function roundedRating(rating){
+      return Math.round(rating)
+    }
+
+    function initMap(restPos, restName) {
+      createMap();
+
+      function createMap(){
+        map = L.mapquest.map('map', {
+          center: [0,0],
+          layers: L.mapquest.tileLayer('map'),
+          zoom: 16
+        });
+        map.on("locationfound", setDirections);
+        map.on("locationerror", ()=>console.error("Could not find user location"));
+        map.locate({setView:true});
+      }
+
+      function setDirections(){
+        let startPos = map.getCenter();
+        let endPos = L.latLng(restPos[1],restPos[0])
+
+        var directions = L.mapquest.directions();
+        directions.setLayerOptions({
+          startMarker: {
+            draggable: false,
+            title: "Current position"
+          },
+          endMarker: {
+            draggable: false,
+            title: restName
+          },
+          routeRibbon: {
+            draggable: false
+          }
+        });
+
+        directions.route({
+          start: startPos,
+          end: endPos
+        });
+      }
+    }
+
+//   const addToFavorites = async () => {
+//     try{
+//     const listId = apiGetFavoritesLists()[0].id;
+//     const restaurantId = apiGetRestaurant().id;
+//     await apiAddToFavoritesList(listId, restaurantId);
+//     alert("Added to favorites!");
+//     } catch (error) {
+//       alert("An error occurred while adding to favorites");
+//     }
+//   }
+
+    return {
+      restaurantInfo,
+      L,
+      map,
+      roundedRating
+    };
+  },
+};
 </script>
 
 
@@ -88,7 +109,7 @@ function initMap(){
     <div class="container text-center mt-4">
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="max-width: 75rem;">
   <div class="carousel-inner">
-    <div class="carousel-item" v-for="(picture, index) in restaurant.pictures" :class="{ active: index === 0 }" :key="index">
+    <div class="carousel-item" v-if="restaurantInfo" v-for="(picture, index) in restaurantInfo.pictures" :class="{ active: index === 0 }" :key="index">
       <img :src="picture" class="d-block w-100 carousel-image" :alt="`Image ${index + 1}`">
     </div>
   </div>
@@ -104,7 +125,7 @@ function initMap(){
 </div>
 
 <div class="container my-4">
-      <h2 class="text-center mb-4" style="color: rgb(223, 19, 35); text-shadow: 2px 2px 4px rgba(254, 193, 13, 0.462);">Welcome to {{ restaurant.name }}</h2>
+      <h2 class="text-center mb-4 fs-1 fw-bold text-primary" v-if="restaurantInfo">Welcome to {{ restaurantInfo.name }}</h2>
     </div>
 
     <div class="text-center">
@@ -117,15 +138,15 @@ function initMap(){
 
         <div class="col-lg-3 offset-lg-1">
           <div class="card border-primary-subtle shadow">
-            <div class="card-body">
+            <div class="card-body" v-if="restaurantInfo">
               <h5 class="card-title">About us</h5>
-              <p class="card-text"><b><u>Price range</u></b> <br><i class="fa-solid fa-dollar-sign" v-for="i in restaurant.price_range" :key="i"></i></p>
+              <p class="card-text"><b><u>Price range</u></b> <br><i class="fa-solid fa-dollar-sign" v-for="i in restaurantInfo.price_range" :key="i"></i></p>
               <div> <b><u>Genres</u></b>
-              <ul class="list-unstyled">
-                <li v-for="genre in restaurant.genres" :key="genre">{{ genre }}</li>
+              <ul class="list-unstyled" v-if="restaurantInfo">
+                <li v-for="genre in restaurantInfo.genres" :key="genre">{{ genre }}</li>
               </ul>
             </div>
-              <p class="card-text"><b><u>Rating</u></b> <br><i class="fa-solid fa-star" v-for="i in roundedRating(restaurant.rating)" :key="i"></i></p>
+              <p class="card-text" v-if="restaurantInfo"><b><u>Rating</u></b> <br><i class="fa-solid fa-star" v-for="i in roundedRating(restaurantInfo.rating)" :key="i"></i></p>
             </div>
           </div>
         </div>
@@ -134,9 +155,9 @@ function initMap(){
           <div class="card border-primary-subtle shadow">
             <div class="card-body">
               <h5 class="card-title">Contact</h5>
-              <p class="card-text"><b><u>Address</u></b> <br>{{ restaurant.address }}</p>
-              <p class="card-text"><b><u>Phone</u></b> <br>{{ restaurant.tel }}</p>
-              <p class="card-text"><b><u>Email</u></b> <br>McDonaldsDesRivieres@mcdo.ca</p>
+              <p class="card-text" v-if="restaurantInfo"><b><u>Address</u></b> <br>{{ restaurantInfo.address }}</p>
+              <p class="card-text" v-if="restaurantInfo"><b><u>Phone</u></b> <br>{{ restaurantInfo.tel }}</p>
+              <p class="card-text" v-if="restaurantInfo"><b><u>Email</u></b> <br>{{ restaurantInfo.email }}</p>
             </div>
           </div>
         </div>
@@ -145,14 +166,14 @@ function initMap(){
           <div class="card border-primary-subtle shadow">
             <div class="card-body mb-3">
               <h5 class="card-title">Opening hours</h5>
-              <ul class="list-unstyled">
-                <li>Dimanche: {{ restaurant.opening_hours.sunday }}</li>
-                <li>Lundi: {{ restaurant.opening_hours.monday }}</li>
-                <li>Mardi: {{ restaurant.opening_hours.tuesday }}</li>
-                <li>Mercredi: {{ restaurant.opening_hours.wednesday }}</li>
-                <li>Jeudi: {{ restaurant.opening_hours.thursday }}</li>
-                <li>Vendredi: {{ restaurant.opening_hours.friday }}</li>
-                <li>Samedi: {{ restaurant.opening_hours.saturday }}</li>
+              <ul class="list-unstyled" v-if="restaurantInfo">
+                <li>Dimanche: {{ restaurantInfo.opening_hours.sunday }}</li>
+                <li>Lundi: {{ restaurantInfo.opening_hours.monday }}</li>
+                <li>Mardi: {{ restaurantInfo.opening_hours.tuesday }}</li>
+                <li>Mercredi: {{ restaurantInfo.opening_hours.wednesday }}</li>
+                <li>Jeudi: {{ restaurantInfo.opening_hours.thursday }}</li>
+                <li>Vendredi: {{ restaurantInfo.opening_hours.friday }}</li>
+                <li>Samedi: {{ restaurantInfo.opening_hours.saturday }}</li>
               </ul>
             </div>
           </div>

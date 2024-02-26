@@ -86,7 +86,8 @@ export default {
   methods: {
     selectItem(item) {
       //this.$router.push({ path: `/restaurants/${item.id}` });
-      this.$router.push({ path: "/restaurant" });
+      this.$router.push({name: "Restaurant", params: {restaurantId: item.id}});
+      // this.$router.push({ path: "/restaurant" });
     },
 
     setUser() {
