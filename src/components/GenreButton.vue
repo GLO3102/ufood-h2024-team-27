@@ -40,30 +40,30 @@ export default {
                 "japonais": "#FF6347"
             },
             icons: {
-                "fast-food": "fa-hamburger",
-                "libanais": "fa-flag",
+                "fast-food": "fa-hotdog",
+                "libanais": "fa-egg",
                 "hamburgers": "fa-hamburger",
                 "ambiance": "fa-glass-cheers",
-                "café": "fa-coffee",
-                "asiatique": "fa-utensils",
+                "café": "fa-mug-hot",
+                "asiatique": "fa-bowl-rice",
                 "bistro": "fa-utensils",
                 "italien": "fa-pizza-slice",
-                "happy hour": "fa-glass-cheers",
-                "mexicain": "fa-pepper-hot",
+                "happy hour": "fa-champagne-glasses",
+                "mexicain": "fa-fire",
                 "végétarien": "fa-carrot",
-                "steakhouse": "fa-steak",
-                "grec": "fa-olive",
-                "fruits de mer": "fa-fish",
+                "steakhouse": "fa-hamburger",
+                "grec": "fa-wheat-awn",
+                "fruits de mer": "fa-shrimp",
                 "vietnamien": "fa-leaf",
                 "pizzeria": "fa-pizza-slice",
                 "boulangerie": "fa-bread-slice",
                 "desserts": "fa-ice-cream",
                 "charcuterie": "fa-bacon",
                 "indien": "fa-pepper-hot",
-                "européen": "fa-utensils",
+                "européen": "fa-cheese",
                 "cuisine moléculaire": "fa-flask",
                 "santé": "fa-apple-alt",
-                "japonais": "fa-sushi"
+                "japonais": "fa-fish-fins"
             }
         }
     },
@@ -71,9 +71,8 @@ export default {
         cssProps() {
             return {
                 "--button-color": this.colors[this.genre] || "#CCCCCC",
-                "--button-icon": this.icons[this.genre] || "fa-question"
             }
-        }
+        },
     }
 }
 </script>
@@ -82,5 +81,6 @@ export default {
 #custom {
     color: var(--button-color);
     border-color: var(--button-color);
+    text-transform: capitalize;
 }
 </style>

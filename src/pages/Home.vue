@@ -98,10 +98,27 @@
           </div>
         </div>
       </div>
+      <RestaurantCards :restaurants="this.items" carousel></RestaurantCards>
     </main>
-    <GenreButton genre="libanais"></GenreButton>
   </div>
 </template>
+
+<script>
+import restaurants from "@/assets/restaurants.json"
+import RestaurantCards from "@/components/RestaurantCards.vue";
+
+export default {
+    data() {
+        return {
+            items: restaurants.items
+        };
+    },
+    components: {
+      RestaurantCards
+    }
+}
+</script>
+
 <style>
 header {
   background-image: linear-gradient(var(--bs-secondary), var(--bs-primary));
@@ -126,19 +143,3 @@ h1 {
 }
 
 </style>
-<script>
-import restaurants from "../assets/restaurants.json"
-import GenreButton from "../components/GenreButton.vue";
-
-export default {
-    components: [
-        GenreButton
-    ],
-    data() {
-        return {
-            items: restaurants.items
-        };
-    },
-    components: { GenreButton }
-}
-</script>
