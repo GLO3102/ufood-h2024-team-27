@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <UserInfo :userInfo="userInfo" />
+    <FavLists :listsFavs="listsOfFavs" />
     <div class="row d-flex justify-content-center mb-4">
       <div class="col-8 text-center mb-2">
         <h2>Recently Viewed Restaurants</h2>
@@ -55,18 +56,21 @@
 <script>
 import usersData from "@/assets/users.json";
 import restaurantsData from "@/assets/restaurants.json";
-import UserInfo from "@/components/UserInfo.vue";
+import UserInfo from "@/components/Users_Info.vue";
 import * as api from "@/api/api.js";
+import FavLists from "@/components/Users_FavLists.vue";
 
 export default {
   name: "User",
   components: {
-    UserInfo,
+    UserInfo,FavLists,
   },
   data() {
     return {
       userId: "637171c38e48e46f6a859622",
       userInfo: [],
+      visitedRestaurants: [],
+      listsOfFavs: [],
       restaurants: restaurantsData.items,
       state: { isActive: true },
     };
@@ -82,8 +86,9 @@ export default {
     },
   },
   async created() {
-    this.userInfo = await api.apiGetUser(this.userId);
-    console.log(this.userInfo);
+    (this.userInfo = await api.apiGetUser(this.userId)),
+      (this.visitedRestaurants = await api.apiGetVisits(this.userId)),
+      (this.listsOfFavs = await api.apiGetUserFavorites(this.userId))
   },
 };
 </script>
