@@ -9,8 +9,8 @@
             <button class="btn btn-primary rounded-start-pill p-3" type="button" data-bs-toggle="modal" data-bs-target="#filters">
               <i class="fa-solid fa-sliders fa-l"></i>
             </button>
-            <input type="text" class="form-control fs-5 z-0 rounded-end-pill py-3 pe-5" id="home-search-bar" aria-label="Search bar" placeholder="Search...">
-            <button class="btn btn-primary z-1" type="button" id="button-search-home">
+            <input type="text" v-model="searchInput" class="form-control fs-5 z-0 rounded-end-pill py-3 pe-5" id="home-search-bar" aria-label="Search bar" placeholder="Search...">
+            <button @click="search(searchInput);" class="btn btn-primary z-1" type="button" id="button-search-home">
               <i class="fa-solid fa-magnifying-glass fa-l"></i>
             </button>
           </div>
@@ -79,42 +79,51 @@
       <div class="row mb-5" id="restaurants-section">
         <h2 class="text-center fs-1 fw-bold">Restaurants</h2>
       </div>
-      <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-3">
-        <div class="card border-0" v-for="item in items" :key=item.name style="cursor:pointer">
-          <img :src="item.pictures[0]" class="card-img-top object-fit-cover rounded-4 position-relative" style="aspect-ratio: 1/1" alt="..." draggable=false>
-          <button class="btn btn-light text-primary position-absolute end-0 rounded-circle me-3 mt-1" type="button">
-            <i class="fa-regular fa-heart fa-sm"></i>
-          </button>
-          <div class="card-body pt-1 pe-1 ps-0">
-            <div class="d-flex justify-content-between">
-              <div class="text-truncate fw-bold" style="overflow: hidden">
-                <span>{{item.name}}</span>
-              </div>
-              <span class="ps-2" style="white-space: nowrap">
-                <i v-for="icon in item.price_range" :key="icon" class="fa-solid fa-dollar-sign"></i>
-              </span>
-            </div>
-            <span>{{item.genres.join(", ")}}</span>
-          </div>
-        </div>
+      <RestaurantCards :restaurants="this.restaurants"></RestaurantCards>
+
+      <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-light rounded-4"
+        v-if="this.total > this.limit * (this.page + 1)"
+        @click="showMore()">Show more results</button>
       </div>
-      <RestaurantCards :restaurants="this.items" carousel></RestaurantCards>
     </main>
   </div>
 </template>
 
 <script>
-import restaurants from "@/assets/restaurants.json"
 import RestaurantCards from "@/components/RestaurantCards.vue";
+import { apiGetRestaurants } from "@/api/api";
 
 export default {
-    data() {
-        return {
-            items: restaurants.items
-        };
-    },
     components: {
       RestaurantCards
+    },
+    data() {
+      return {
+        restaurants: [],
+        total: 0,
+        limit: 24,
+        page: 0,
+        searchInput: ''
+      }
+    },
+    async created() {
+      this.page = 0;
+      const data = await apiGetRestaurants({limit: this.limit, page: this.page});
+      this.total = data.total;
+      this.restaurants = data.items;
+    },
+    methods: {
+      async search(input) {
+        this.page = 0;
+        const data = await apiGetRestaurants({q: input, limit: this.limit, page: this.page});
+        this.restaurants = data.items;
+      },
+      async showMore() {
+        this.page++;
+        const data = await apiGetRestaurants({limit: this.limit, page: this.page});
+        this.restaurants = [...this.restaurants, ...data.items];
+      }
     }
 }
 </script>
