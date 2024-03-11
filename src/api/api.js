@@ -137,7 +137,7 @@ export async function apiGetFavoritesList(listId){ // see the thing is, lists an
     return await _get(address, headers);
 }
 // POST favorites
-export async function apiCreateFavoritesList(listName,ownerAddress=null){ // remember to stop using owner once auth tokens are added
+export async function apiCreateFavoritesList(listName,ownerAddress='marc@ufood.com'){ // remember to stop using owner once auth tokens are added
     const address = URL + optUnsecure + "favorites";
     const headers = {'authorization': null, // add in tp3
                      'content-type': "application/json"};

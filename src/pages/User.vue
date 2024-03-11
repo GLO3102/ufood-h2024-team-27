@@ -63,11 +63,12 @@ import FavLists from "@/components/Users_FavLists.vue";
 export default {
   name: "User",
   components: {
-    UserInfo,FavLists,
+    UserInfo,
+    FavLists,
   },
   data() {
     return {
-      userId: "637171c38e48e46f6a859622",
+      userId: "618b311822b4a0000478ab1b",
       userInfo: [],
       visitedRestaurants: [],
       listsOfFavs: [],
@@ -86,9 +87,21 @@ export default {
     },
   },
   async created() {
-    (this.userInfo = await api.apiGetUser(this.userId)),
-      (this.visitedRestaurants = await api.apiGetVisits(this.userId)),
-      (this.listsOfFavs = await api.apiGetUserFavorites(this.userId))
+    try {
+      this.userInfo = await api.apiGetUser(this.userId);
+      this.visitedRestaurants = await api.apiGetVisits(this.userId);
+      const response = await api.apiGetUserFavorites(this.userId);
+
+      if (response && response.items) {
+        this.listsOfFavs = response.items.map((item) => ({
+          listId: item.id, // Assuming 'id' is the correct property
+          name: item.name, // Assuming 'name' is the correct property
+          restaurants: item.restaurants, // Assuming 'restaurants' is the correct property
+        }));
+      }
+    } catch (error) {
+      console.error("Error fetching favs", error);
+    }
   },
 };
 </script>

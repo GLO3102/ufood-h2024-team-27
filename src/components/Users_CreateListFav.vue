@@ -27,7 +27,12 @@
                 <label for="createList" class="col-form-label"
                   >List Name:</label
                 >
-                <input type="text" class="form-control" id="recipient-name" />
+                <input
+                  v-model="listName"
+                  type="text"
+                  class="form-control"
+                  id="recipient-name"
+                />
               </div>
             </form>
           </div>
@@ -39,7 +44,9 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Create List</button>
+            <button @click="createList" type="button" class="btn btn-primary" data-bs-dismiss="modal">
+              Create List
+            </button>
           </div>
         </div>
       </div>
@@ -48,11 +55,14 @@
 </template>
 
 <script>
+import * as api from "@/api/api.js";
 export default {
+  name: "CreateListFav",
   data() {
     return {
       name: "",
       nameState: null,
+      listName: "",
     };
   },
   methods: {
@@ -74,6 +84,10 @@ export default {
       if (!this.checkFormValidity()) {
         return;
       }
+    },
+    async createList() {
+      console.log(this.listName);
+      await api.apiCreateFavoritesList(this.listName);
     },
   },
 };

@@ -1,27 +1,25 @@
 <template>
-  <div>Your Lists of Favorites :
+  <div>
+    <h2>Your Lists of Favorites :</h2>
     <CreateList />
     <div :key="listFav.listId" v-for="listFav in listsFavs">
-        <FavList />
+      <FavList :listFav="listFav" />
     </div>
   </div>
-
 </template>
 
 <script>
 import CreateList from "@/components/Users_CreateListFav.vue";
-import FavList from "@/components/Users_FavList.vue"
+import FavList from "@/components/Users_FavList.vue";
 export default {
   name: "FavLists",
-  components: {CreateList,FavList},
+  components: { CreateList, FavList },
   data() {
-    return {
-        
-    }
+    return {};
   },
   props: {
-    listsFavs : Array
+    listsFavs: Array,
   },
   methods: {},
-}
+};
 </script>

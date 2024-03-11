@@ -1,0 +1,66 @@
+<template>
+  <div>
+    <div v-if="restaurant">
+      <img
+        :src="restaurant.pictures[0]"
+        class="card-img-top object-fit-cover rounded-4 position-relative"
+        style="aspect-ratio: 1/1"
+        alt="restaurant thumbnail"
+        draggable="false"
+      />
+      
+      <div class="card-body pt-1 pe-1 ps-0 text-truncate">
+        <div class="d-flex justify-content-between">
+          <div class="text-truncate fw-bold" style="overflow: hidden">
+            <span>{{ restaurant.name }}</span>
+          </div>
+          <span class="ps-2" style="white-space: nowrap">
+            <button
+        class="btn btn-light text-primary "
+        type="button"
+        @click="deleteResto"
+      >
+      <i class="fa fa-trash" ></i>
+      </button>
+          </span>
+        </div>
+        <span>
+          {{
+            restaurant.genres
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join(", ")
+          }}
+        </span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import * as api from "@/api/api.js";
+
+export default {
+  name: "FavRestaurant",
+  props: {
+    restaurantId: Object,
+  },
+  data() {
+    return {
+      restaurant: null,
+    };
+  },
+  async created() {
+    try {
+      this.restaurant = await api.apiGetRestaurant(this.restaurantId.id);
+    } catch (error) {
+      console.error("Error fetching restaurant details:", error);
+    }
+  },
+  methods: {
+    
+  }
+};
+</script>
+
+<style>
+</style>
