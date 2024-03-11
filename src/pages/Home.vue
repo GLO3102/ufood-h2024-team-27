@@ -6,7 +6,7 @@
       <div class="row justify-content-center align-items-center mb-5">
         <div class="col-10">
           <div class="input-group mb-0">
-            <button class="btn btn-primary rounded-start-pill p-3" type="button" data-bs-toggle="modal" data-bs-target="#filters">
+            <button class="btn btn-primary rounded-start-pill p-3" type="button" data-bs-toggle="modal" data-bs-target="#search-filter">
               <i class="fa-solid fa-sliders fa-l"></i>
             </button>
             <input type="text" v-model="searchInput" class="form-control fs-5 z-0 rounded-end-pill py-3 pe-5" id="home-search-bar" aria-label="Search bar" placeholder="Search...">
@@ -16,61 +16,7 @@
           </div>
         </div>
       </div>
-      <div class="modal fade" id="filters">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="filters" tabindex="-1">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2 class="modal-title fs-5">Filters</h2>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <h3 class="fs-4">Category</h3>
-              <button type="button" class="btn btn-outline-primary rounded-pill m-1">fast-food</button>
-              <button type="button" class="btn btn-outline-primary rounded-pill m-1">pasta</button>
-              <button type="button" class="btn btn-outline-primary rounded-pill m-1">vegan</button>
-              <button type="button" class="btn btn-outline-primary rounded-pill m-1">healthy</button>
-              <hr/>
-
-              <h3 class="fs-4">Rating</h3>
-              <button type="button" class="btn btn-outline-primary rounded-pill">
-                1 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-              </button>
-              <button type="button" class="btn btn-outline-primary rounded-pill m-1">
-                2 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-              </button>
-              <button type="button" class="btn btn-outline-primary rounded-pill m-1">
-                3 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-              </button>
-              <button type="button" class="btn btn-outline-primary rounded-pill m-1">
-                4 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-              </button>
-              <button type="button" class="btn btn-outline-primary rounded-pill m-1">
-                5 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-              </button>
-              <hr/>
-
-              <h3 class="fs-4">Price range</h3>
-              <div class="d-flex justify-content-between">
-                <label for="price-range" class="form-label"><i class="fa-solid fa-dollar-sign"></i></label>
-                <label for="price-range" class="form-label text-center" style="flex:1">
-                  <i class="fa-solid fa-dollar-sign"></i>
-                  <i class="fa-solid fa-dollar-sign"></i>
-                </label>
-                <label for="price-range" class="form-label">
-                  <i class="fa-solid fa-dollar-sign"></i>
-                  <i class="fa-solid fa-dollar-sign"></i>
-                  <i class="fa-solid fa-dollar-sign"></i>
-                </label>
-              </div>
-              <input type="range" class="form-range px-1" min="0" max="2" id="price-range">
-            </div>
-            <div class="modal-footer d-flex justify-content-between">
-              <button type="button" class="btn btn-light rounded-pill">Reset all</button>
-              <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">Search</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <SearchFilter></SearchFilter>
       <div class="row justify-content-end">
         <img src="../assets/ufood_alligator_export.svg" class="img-fluid" alt="Ufood Alligator" style="max-width: 20rem">
       </div>
@@ -92,11 +38,13 @@
 
 <script>
 import RestaurantCards from "@/components/RestaurantCards.vue";
+import SearchFilter from "@/components/Search/SearchFilter.vue";
 import { apiGetRestaurants } from "@/api/api";
 
 export default {
     components: {
-      RestaurantCards
+      RestaurantCards,
+      SearchFilter
     },
     data() {
       return {
