@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import RestaurantCards from "@/components/RestaurantCards.vue";
+import RestaurantCards from "@/components/Home/RestaurantCards.vue";
 import SearchFilter from "@/components/Search/SearchFilter.vue";
 import { apiGetRestaurants } from "@/api/api";
 

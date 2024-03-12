@@ -1,5 +1,9 @@
 <template>
     <div>
+      <!--
+        <router-link :to="{name: 'Restaurant', params: {restaurantId: restaurant.id}}"
+            style="text-decoration: none; color: inherit;">
+      -->
       <div class="card border-0" style="cursor:pointer">
         <div v-if="carousel" :id="'carousel-'+restaurant.id" class="carousel slide">
           <div class="carousel-inner rounded-4">
@@ -19,36 +23,56 @@
             <span class="visually-hidden">Next</span>
           </button>
         </div>
-        <img v-else :src="restaurant.pictures[0]" class="card-img-top object-fit-cover rounded-4 position-relative" style="aspect-ratio: 1/1" alt="restaurant thumbnail" draggable=false>
-        <button class="btn btn-light text-primary position-absolute end-0 rounded-circle me-3 mt-1" type="button">
-          <i class="fa-regular fa-heart fa-sm"></i>
-        </button>
-        <div class="card-body pt-1 pe-1 ps-0 text-truncate">
+
+        <img v-else :src="restaurant.pictures[0]"
+        class="card-img-top object-fit-cover rounded-4 position-relative"
+        style="aspect-ratio: 1/1"
+        alt="restaurant thumbnail" draggable=false
+        @click="this.$router.push({name: 'Restaurant', params: {restaurantId: restaurant.id}})">
+        
+        <VisitedButton :id="restaurant.id" :initial="false" class="position-absolute top-0 start-0 mt-1 ms-1"/>
+        <FavoriteButton :id="restaurant.id" :initial="false" class="position-absolute top-0 end-0 mt-1 me-1" />
+
+        <div class="card-body pt-1 pe-1 ps-0 text-truncate" @click="this.$router.push({name: 'Restaurant', params: {restaurantId: restaurant.id}})">
           <div class="d-flex justify-content-between">
             <div class="text-truncate fw-bold" style="overflow: hidden">
               <span>{{restaurant.name}}</span>
             </div>
             <span class="ps-2" style="white-space: nowrap">
+              {{ roundRating(restaurant.rating) }} <i class="fa-solid fa-star fa-sm"></i>
+            </span>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <div class="text-truncate" style="overflow: hidden">
+              {{restaurant.genres.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(", ")}}
+            </div>
+            <span class="ps-2" style="white-space: nowrap">
               <i v-for="icon in restaurant.price_range" :key="icon" class="fa-solid fa-dollar-sign"></i>
             </span>
           </div>
-          <span>
-            {{restaurant.genres.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(", ")}}
-          </span>
         </div>
       </div>
     </div>
-    
 </template>
 
 <script>
-    export default {
-        name: 'RestaurantCard',
-        props: {
-            restaurant: Object,
-            carousel: Boolean
-        }
-    }
+import FavoriteButton from "./FavoriteButton.vue"
+import VisitedButton from "./VisitedButton.vue"
+
+  export default {
+    name: 'RestaurantCard',
+    props: {
+      restaurant: Object,
+      carousel: Boolean
+    },
+    methods: {
+      roundRating(rating) {
+        return Math.round(rating * 10) / 10;
+      }
+    },
+    components: {FavoriteButton, VisitedButton}
+  }
 </script>
 
 <style scoped>
