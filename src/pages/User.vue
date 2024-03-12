@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <UserInfo :userInfo="userInfo" />
-    <FavLists :listsFavs="listsOfFavs" />
+    <FavLists
+      :listsFavs="listsOfFavs"
+      @deleteRestaurant="deleteRestaurant"
+      @createList="createList"
+      @deleteList="deleteList"
+    />
     <div class="row d-flex justify-content-center mb-4">
       <div class="col-8 text-center mb-2">
         <h2>Recently Viewed Restaurants</h2>
@@ -56,9 +61,9 @@
 <script>
 import usersData from "@/assets/users.json";
 import restaurantsData from "@/assets/restaurants.json";
-import UserInfo from "@/components/Users_Info.vue";
+import UserInfo from "@/components/Users/Users_Info.vue";
 import * as api from "@/api/api.js";
-import FavLists from "@/components/Users_FavLists.vue";
+import FavLists from "@/components/Users/Users_FavLists.vue";
 
 export default {
   name: "User",
@@ -72,7 +77,6 @@ export default {
       userInfo: [],
       visitedRestaurants: [],
       listsOfFavs: [],
-      restaurants: restaurantsData.items,
       state: { isActive: true },
     };
   },
@@ -85,6 +89,44 @@ export default {
     changeState() {
       this.state.isActive = !this.state.isActive;
     },
+    async deleteRestaurant(restId, listId) {
+      try {
+        console.log("Deleting restaurant", restId, "from list", listId);
+        await api.apiRemoveFromFavoritesList(listId, restId);
+        let list = this.listsOfFavs.find((list) => list.listId === listId);
+        if (list) {
+          list.restaurants = list.restaurants.filter(
+            (restaurant) => restaurant.id !== restId,
+          );
+        }
+      } catch (error) {
+        console.error("Error while deleting restaurant");
+      }
+    },
+    async createList(listName) {
+      try {
+        const newList = await api.apiCreateFavoritesList(listName);
+        if (newList) {
+          this.listsOfFavs.push({
+            listId: newList.id,
+            name: newList.name,
+            restaurants: [],
+          });
+        }
+      } catch (error) {
+        console.error("Error creating new favorites list:", error);
+      }
+    },
+    async deleteList(listId) {
+      try {
+        await api.apiDeleteFavoritesList(listId);
+        this.listsOfFavs = this.listsOfFavs.filter(
+          (list) => list.listId !== listId,
+        );
+      } catch (error) {
+        console.error("Error while deleting list", error);
+      }
+    },
   },
   async created() {
     try {
@@ -94,9 +136,9 @@ export default {
 
       if (response && response.items) {
         this.listsOfFavs = response.items.map((item) => ({
-          listId: item.id, // Assuming 'id' is the correct property
-          name: item.name, // Assuming 'name' is the correct property
-          restaurants: item.restaurants, // Assuming 'restaurants' is the correct property
+          listId: item.id,
+          name: item.name,
+          restaurants: item.restaurants,
         }));
       }
     } catch (error) {

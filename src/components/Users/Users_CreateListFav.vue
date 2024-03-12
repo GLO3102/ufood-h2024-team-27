@@ -44,9 +44,7 @@
             >
               Close
             </button>
-            <button @click="createList" type="button" class="btn btn-primary" data-bs-dismiss="modal">
-              Create List
-            </button>
+            <CreateListBtn :listName="this.listName" @createList="$emit('createList', this.listName)" />
           </div>
         </div>
       </div>
@@ -56,6 +54,7 @@
 
 <script>
 import * as api from "@/api/api.js";
+import CreateListBtn from './Users_CreateListBtn.vue'
 export default {
   name: "CreateListFav",
   data() {
@@ -64,6 +63,9 @@ export default {
       nameState: null,
       listName: "",
     };
+  },
+  components: {
+    CreateListBtn,
   },
   methods: {
     checkFormValidity() {
@@ -85,10 +87,7 @@ export default {
         return;
       }
     },
-    async createList() {
-      console.log(this.listName);
-      await api.apiCreateFavoritesList(this.listName);
-    },
+    
   },
 };
 </script>
