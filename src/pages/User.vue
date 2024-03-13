@@ -8,40 +8,10 @@
       @deleteList="deleteList"
       @modifyListName="modifyListName"
     />
-    <div class="row d-flex justify-content-center mb-4">
-      <div class="col-8 text-center mb-2">
+    <div>
         <h2>Recently Visited Restaurants</h2>
-      </div>
-
-      <div
-        class="col-8 d-flex flex-wrap gap-3 justify-content-center align-items-top"
-        id="cards"
-      >
-        <div
-          :class="[
-            'card rounded-4 border-primary-subtle shadow ',
-            { active: index === 0 },
-          ]"
-          style="width: 12em"
-        >
-          <img
-            :src="restaurant.pictures[0]"
-            class="card-img-top object-fit-cover rounded-5 p-3"
-            style="width: 100%; height: 12em"
-            alt="..."
-            draggable="false"
-          />
-          <div class="card-body pt-1">
-            <h5 class="card-title text-truncate text-sm-start fs-6">
-              {{ restaurant.name }}
-            </h5>
-            <p class="card-text">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-              {{ restaurant.visits }}
-            </p>
-          </div>
-        </div>
-      </div>
+      
+      <VisitedRestaurants :visitedRestaurants="visitedRestaurants" />
     </div>
   </div>
 </template>
@@ -50,12 +20,14 @@
 import UserInfo from "@/components/Users/Users_Info.vue";
 import * as api from "@/api/api.js";
 import FavLists from "@/components/Users/Users_FavLists.vue";
+import VisitedRestaurants from '@/components/Users/Users_VisitedRestaurants.vue';
 
 export default {
   name: "User",
   components: {
     UserInfo,
     FavLists,
+    VisitedRestaurants,
   },
   data() {
     return {
@@ -134,7 +106,17 @@ export default {
   async created() {
     try {
       this.userInfo = await api.apiGetUser(this.userId);
-      this.visitedRestaurants = await api.apiGetVisits(this.userId);
+      const rep = await api.apiGetVisits(this.userId);
+      if (rep && rep.items){
+        this.visitedRestaurants = rep.items.map((item)=> ({
+          id: item.id,
+          restaurant_id: item.restaurant_id,
+          comment: item.comment,
+          rating: item.rating,
+          date: item.date,
+        }));
+      }
+      console.log(this.visitedRestaurants)
       const response = await api.apiGetUserFavorites(this.userId);
 
       if (response && response.items) {
