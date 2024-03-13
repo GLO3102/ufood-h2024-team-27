@@ -1,21 +1,19 @@
 <template>
     <div>
-        <i class="fa-comment-dots fa-xl p-2 text-light d-inline-block" style="line-height: 25px;"
-        :class="{'fa-solid': this.active, 'fa-regular': !this.active}"
-        @click.stop="onClick"></i>
+        <i class="fa-solid fa-map-pin fa-xl p-2 text-light d-inline-block" style="line-height: 25px;"
+        @click.stop="onClick"
+        data-bs-toggle="modal"
+        :data-bs-target="'#visit-modal-' + id"></i>
     </div>
 </template>
 
 <script>
-    export default {
+export default {
         name: 'FavoriteButton',
         props: {
-            id: String,
-            initial: Boolean
-        },
-        data() {
-            return {
-                active: this.initial
+            id: {
+                type: Number,
+                required: true
             }
         },
         methods: {

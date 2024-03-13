@@ -1,11 +1,7 @@
 <template>
     <div>
-      <!--
-        <router-link :to="{name: 'Restaurant', params: {restaurantId: restaurant.id}}"
-            style="text-decoration: none; color: inherit;">
-      -->
-      <div class="card border-0" style="cursor:pointer">
-        <div v-if="carousel" :id="'carousel-'+restaurant.id" class="carousel slide">
+      <div class="card border-0" style="cursor: pointer;">
+        <div v-if="carousel" :id="'restaurant-card-carousel-' + id" class="carousel slide">
           <div class="carousel-inner rounded-4">
             <div class="carousel-item active">
               <img :src="restaurant.pictures[0]" class="card-img-top object-fit-cover position-relative" style="aspect-ratio: 1/1" alt="Main picture" draggable="false">
@@ -14,11 +10,11 @@
               <img :src="picture" class="card-img-top object-fit-cover position-relative" style="aspect-ratio: 1/1" alt="picture" draggable="false">
             </div>
           </div>
-          <button class="carousel-control-prev" type="button" :data-bs-target="'#carousel-'+restaurant.id" data-bs-slide="prev">
+          <button class="carousel-control-prev" type="button" :data-bs-target="carouselId" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
-          <button class="carousel-control-next" type="button" :data-bs-target="'#carousel-'+restaurant.id" data-bs-slide="next">
+          <button class="carousel-control-next" type="button" :data-bs-target="carouselId" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
@@ -30,8 +26,9 @@
         alt="restaurant thumbnail" draggable=false
         @click="this.$router.push({name: 'Restaurant', params: {restaurantId: restaurant.id}})">
         
-        <VisitedButton :id="restaurant.id" :initial="false" class="position-absolute top-0 start-0 mt-1 ms-1"/>
-        <FavoriteButton :id="restaurant.id" :initial="false" class="position-absolute top-0 end-0 mt-1 me-1" />
+        <VisitedButton :id="id" :initial="false" class="position-absolute top-0 start-0 mt-1 ms-1"/>
+
+        <FavoriteButton :id="id" :initial="false" class="position-absolute top-0 end-0 mt-1 me-1" />
 
         <div class="card-body pt-1 pe-1 ps-0 text-truncate" @click="this.$router.push({name: 'Restaurant', params: {restaurantId: restaurant.id}})">
           <div class="d-flex justify-content-between">
@@ -53,16 +50,22 @@
           </div>
         </div>
       </div>
+      <VisitModal :id="id" :restaurant="restaurant"/>
     </div>
 </template>
 
 <script>
 import FavoriteButton from "./FavoriteButton.vue"
 import VisitedButton from "./VisitedButton.vue"
+import VisitModal from "./VisitModal.vue"
 
   export default {
     name: 'RestaurantCard',
     props: {
+      id: {
+        type: Number,
+        required: true
+      },
       restaurant: Object,
       carousel: Boolean
     },
@@ -71,7 +74,7 @@ import VisitedButton from "./VisitedButton.vue"
         return Math.round(rating * 10) / 10;
       }
     },
-    components: {FavoriteButton, VisitedButton}
+    components: {FavoriteButton, VisitedButton, VisitModal}
   }
 </script>
 

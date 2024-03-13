@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" id="search-filter">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="search-filter" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" tabindex="-1">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title fs-5">Filters</h2>

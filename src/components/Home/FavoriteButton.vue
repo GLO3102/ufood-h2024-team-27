@@ -10,7 +10,7 @@
     export default {
         name: 'FavoriteButton',
         props: {
-            id: String,
+            id: Number,
             initial: Boolean
         },
         data() {

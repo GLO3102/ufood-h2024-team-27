@@ -1,7 +1,7 @@
 <template>
     <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-3">
-        <div v-for="restaurant in restaurants" :key="restaurant.id">
-            <RestaurantCard :restaurant="restaurant" :carousel="carousel"/>
+        <div v-for="(restaurant, index) in restaurants" :key="restaurant.id">
+            <RestaurantCard :restaurant="restaurant" :id="index" :carousel="carousel"/>
         </div>
     </div>
 </template>
@@ -23,4 +23,4 @@ import RestaurantCard from "./RestaurantCard.vue";
     },
     components: { RestaurantCard }
 }
-</script>./Home/RestaurantCard.vue
+</script>

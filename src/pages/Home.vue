@@ -9,7 +9,7 @@
             <button class="btn btn-primary rounded-start-pill p-3" type="button" data-bs-toggle="modal" data-bs-target="#search-filter">
               <i class="fa-solid fa-sliders fa-l"></i>
             </button>
-            <input type="text" v-model="searchInput" class="form-control fs-5 z-0 rounded-end-pill py-3 pe-5" id="home-search-bar" aria-label="Search bar" placeholder="Search...">
+            <input type="text" v-model="searchInput" class="form-control fs-5 z-0 rounded-end-pill py-3 pe-5" id="home-search-bar" aria-label="Search bar" placeholder="Search..." autocomplete="off">
             <button @click="search(searchInput);" class="btn btn-primary z-1" type="button" id="button-search-home">
               <i class="fa-solid fa-magnifying-glass fa-l"></i>
             </button>
