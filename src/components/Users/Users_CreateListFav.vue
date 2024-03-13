@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import * as api from "@/api/api.js";
 import CreateListBtn from './Users_CreateListBtn.vue'
 export default {
   name: "CreateListFav",

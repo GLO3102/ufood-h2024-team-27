@@ -146,7 +146,7 @@ export async function apiCreateFavoritesList(listName,ownerAddress='marc@ufood.c
     return await _post(address, headers, body);
 }
 // PUT favorites/[id]
-export async function apiEditFavoritesList(listId,newListName,newOwnerAddress=null){ // remember to stop using owner once auth tokens are added
+export async function apiEditFavoritesList(listId,newListName,newOwnerAddress='marc@ufood.com'){ // remember to stop using owner once auth tokens are added
     const address = URL + optUnsecure + "favorites/"+listId;
     const headers = {'authorization': null, // add in tp3
                      'content-type': "application/json"};

@@ -7,6 +7,7 @@
         :listFav="listFav"
         @deleteRestaurant="handleDeleteRestaurant"
         @deleteList="deleteList"
+        @modifyListName="modifyListName"
       />
     </div>
   </div>
@@ -34,7 +35,11 @@ export default {
     deleteList(listId) {
       this.$emit("deleteList", listId);
     },
+    modifyListName(listId, listName) {
+      this.$emit("modifyListName", listId, listName);
+      console.log(listId, listName);
+    },
   },
-  emits: ["deleteRestaurant", "createList", "deleteList"],
+  emits: ["deleteRestaurant", "createList", "deleteList", "modifyListName"],
 };
 </script>

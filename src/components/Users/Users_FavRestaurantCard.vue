@@ -18,13 +18,7 @@
             <BtnDeleteResto @deleteResto="$emit('deleteRestaurant', restaurantId.id)" />
           </span>
         </div>
-        <span>
-          {{
-            restaurant.genres
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join(", ")
-          }}
-        </span>
+      
       </div>
     </div>
   </div>

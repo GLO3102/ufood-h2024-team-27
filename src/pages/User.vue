@@ -6,24 +6,14 @@
       @deleteRestaurant="deleteRestaurant"
       @createList="createList"
       @deleteList="deleteList"
+      @modifyListName="modifyListName"
     />
     <div class="row d-flex justify-content-center mb-4">
       <div class="col-8 text-center mb-2">
-        <h2>Recently Viewed Restaurants</h2>
-        <button @click="changeState" class="btn btn-primary rounded-4">
-          Click here to trigger/untrigger visits
-        </button>
+        <h2>Recently Visited Restaurants</h2>
       </div>
+
       <div
-        v-if="state.isActive === false"
-        class="col-8 d-flex justify-content-center align-items-center"
-      >
-        <button @click="goHome" class="btn btn-primary rounded-4">
-          No recents, go back to home page
-        </button>
-      </div>
-      <div
-        v-else
         class="col-8 d-flex flex-wrap gap-3 justify-content-center align-items-top"
         id="cards"
       >
@@ -33,8 +23,6 @@
             { active: index === 0 },
           ]"
           style="width: 12em"
-          v-for="(restaurant, index) in visitedRestaurantDetails"
-          :key="restaurant.id"
         >
           <img
             :src="restaurant.pictures[0]"
@@ -59,8 +47,6 @@
 </template>
 
 <script>
-import usersData from "@/assets/users.json";
-import restaurantsData from "@/assets/restaurants.json";
 import UserInfo from "@/components/Users/Users_Info.vue";
 import * as api from "@/api/api.js";
 import FavLists from "@/components/Users/Users_FavLists.vue";
@@ -125,6 +111,23 @@ export default {
         );
       } catch (error) {
         console.error("Error while deleting list", error);
+      }
+    },
+    async modifyListName(listId, listName) {
+      try {
+        const modifiedList = await api.apiEditFavoritesList(listId, listName);
+
+        if (modifiedList && modifiedList.id && modifiedList.name) {
+          const index = this.listsOfFavs.findIndex(
+            (list) => list.listId === listId,
+          );
+
+          if (index !== -1) {
+            this.listsOfFavs[index].name = modifiedList.name;
+          }
+        }
+      } catch (error) {
+        console.error("Error while modifying list name", error);
       }
     },
   },
