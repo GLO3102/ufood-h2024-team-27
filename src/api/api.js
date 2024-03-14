@@ -89,13 +89,23 @@ export async function apiGetUserFavorites(userId,params={}){
 }*/
 
 // GET users/[id]/restaurants/visits
-export async function apiGetVisits(userId,params={}){
+export async function apiGetVisits(userId,page){
     const validKeys = ["limit","page"]
-    const address = URL + optUnsecure + "users/" + userId + "/restaurants/visits" + _toQueryParams(params,validKeys);
+    const address = URL + optUnsecure + "users/" + userId + "/restaurants/visits" + "?page=" +page;
     const headers = {'authorization': null} // add in tp3
 
     return await _get(address, headers);
 }
+
+// modified original so i could make it work faster
+//export async function apiGetVisits(userId,params={}){
+  //  const validKeys = ["limit","page"]
+   // const address = URL + optUnsecure + "users/" + userId + "/restaurants/visits" + "?page=2";
+    //const headers = {'authorization': null} // add in tp3
+
+  //  return await _get(address, headers);
+//}
+
 // GET users/[id]/restaurants/visits/[id]
 export async function apiGetVisit(userId,visitId){
     const address = URL + optUnsecure + "users/" + userId + "/restaurants/visits/" + visitId;

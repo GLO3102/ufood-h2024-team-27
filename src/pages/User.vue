@@ -9,9 +9,15 @@
       @modifyListName="modifyListName"
     />
     <div>
-        <h2>Recently Visited Restaurants</h2>
-      
+      <h2>Recently Visited Restaurants</h2>
+
       <VisitedRestaurants :visitedRestaurants="visitedRestaurants" />
+      <PagesVisits
+        :total-items="totalVisits"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        @page-changed="fetchVisits"
+      />
     </div>
   </div>
 </template>
@@ -20,7 +26,8 @@
 import UserInfo from "@/components/Users/Users_Info.vue";
 import * as api from "@/api/api.js";
 import FavLists from "@/components/Users/Users_FavLists.vue";
-import VisitedRestaurants from '@/components/Users/Users_VisitedRestaurants.vue';
+import VisitedRestaurants from "@/components/Users/Users_VisitedRestaurants.vue";
+import PagesVisits from "@/components/Users/Users_PagesVisits.vue";
 
 export default {
   name: "User",
@@ -28,6 +35,7 @@ export default {
     UserInfo,
     FavLists,
     VisitedRestaurants,
+    PagesVisits,
   },
   data() {
     return {
@@ -36,6 +44,9 @@ export default {
       visitedRestaurants: [],
       listsOfFavs: [],
       state: { isActive: true },
+      currentPage: 0,
+      pageSize: 10,
+      totalVisits: 0,
     };
   },
   computed: {},
@@ -102,21 +113,25 @@ export default {
         console.error("Error while modifying list name", error);
       }
     },
+    async fetchVisits(page) {
+      try {
+        this.currentPage = page;
+        const response = await api.apiGetVisits(this.userId,page)
+        if (response && response.items) {
+          this.visitedRestaurants = response.items
+          this.totalVisits = response.total;
+        }
+      } catch (error) {
+        console.error("Error while fetching visits", error);
+      }
+    },
   },
   async created() {
     try {
       this.userInfo = await api.apiGetUser(this.userId);
-      const rep = await api.apiGetVisits(this.userId);
-      if (rep && rep.items){
-        this.visitedRestaurants = rep.items.map((item)=> ({
-          id: item.id,
-          restaurant_id: item.restaurant_id,
-          comment: item.comment,
-          rating: item.rating,
-          date: item.date,
-        }));
-      }
-      console.log(this.visitedRestaurants)
+      this.fetchVisits(this.currentPage);
+
+      console.log(this.visitedRestaurants);
       const response = await api.apiGetUserFavorites(this.userId);
 
       if (response && response.items) {
