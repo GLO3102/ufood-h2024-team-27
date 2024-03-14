@@ -3,20 +3,9 @@
     <header class="container-fluid mb-5">
       <h1 class="fw-bold text-light mb-0">UFood</h1>
       <p class="ps-2 mb-5 fs-2 fw-bold">Eat, Share, Repeat</p>
-      <div class="row justify-content-center align-items-center mb-5">
-        <div class="col-10">
-          <div class="input-group mb-0">
-            <button class="btn btn-primary rounded-start-pill p-3" type="button" data-bs-toggle="modal" data-bs-target="#search-filter">
-              <i class="fa-solid fa-sliders fa-l"></i>
-            </button>
-            <input type="text" v-model="searchInput" class="form-control fs-5 z-0 rounded-end-pill py-3 pe-5" id="home-search-bar" aria-label="Search bar" placeholder="Search..." autocomplete="off">
-            <button @click="search(searchInput);" class="btn btn-primary z-1" type="button" id="button-search-home">
-              <i class="fa-solid fa-magnifying-glass fa-l"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <SearchFilter></SearchFilter>
+
+      <MainSearchBar @search="search"/>
+
       <div class="row justify-content-end">
         <img src="../assets/ufood_alligator_export.svg" class="img-fluid" alt="Ufood Alligator" style="max-width: 20rem">
       </div>
@@ -29,8 +18,9 @@
 
       <div class="d-flex justify-content-center">
         <button type="button" class="btn btn-light rounded-4"
-        v-if="this.total > this.limit * (this.page + 1)"
+        v-if="this.total > this.previousParams.limit * (this.previousParams.page + 1)"
         @click="showMore()">Show more results</button>
+        <span v-if="this.total === 0" class="fs-4">No restaurant found!</span>
       </div>
     </main>
   </div>
@@ -38,38 +28,39 @@
 
 <script>
 import RestaurantCards from "@/components/Home/RestaurantCards.vue";
-import SearchFilter from "@/components/Search/SearchFilter.vue";
+import MainSearchBar from "@/components/Search/MainSearchBar.vue";
 import { apiGetRestaurants } from "@/api/api";
 
 export default {
     components: {
       RestaurantCards,
-      SearchFilter
+      MainSearchBar
     },
     data() {
       return {
         restaurants: [],
-        total: 0,
-        limit: 24,
-        page: 0,
-        searchInput: ''
+        total: null,
+        previousParams: {limit: 24, page: 0}
       }
     },
     async created() {
-      this.page = 0;
-      const data = await apiGetRestaurants({limit: this.limit, page: this.page});
+      const data = await apiGetRestaurants(this.previousParams);
       this.total = data.total;
       this.restaurants = data.items;
     },
     methods: {
-      async search(input) {
-        this.page = 0;
-        const data = await apiGetRestaurants({q: input, limit: this.limit, page: this.page});
+      async search(params) {
+        params.limit = 24;
+        params.page = 0;
+        this.previousParams = params;
+
+        const data = await apiGetRestaurants(params);
         this.restaurants = data.items;
+        this.total = data.total;
       },
       async showMore() {
-        this.page++;
-        const data = await apiGetRestaurants({limit: this.limit, page: this.page});
+        this.previousParams.page += 1;
+        const data = await apiGetRestaurants(this.previousParams);
         this.restaurants = [...this.restaurants, ...data.items];
       }
     }
