@@ -21,37 +21,38 @@
                     </div>
                     <hr/>
 
-                    <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-column gap-2">
-                        <span>Your rating</span>
-                        <Rating :id="'visit-rating-' + id" v-model="rating" :cancel="false">
-                            <template #onicon>
-                                <i class="fa-solid fa-star fa-xl" style="line-height: 25px"></i>
-                            </template>
-                            <template #officon>
-                                <i class="fa-regular fa-star fa-xl" style="line-height: 25px"></i>
-                            </template>
-                        </Rating>
+                    <div class="container">
+                        <div class="row justify-content-center mb-2">
+                            <span>Your rating</span>
+                            <Rating :id="'visit-rating-' + id" v-model="rating" :cancel="false" class="col-5">
+                                <template #onicon>
+                                    <i class="fa-solid fa-star fa-xl" style="line-height: 25px"></i>
+                                </template>
+                                <template #officon>
+                                    <i class="fa-regular fa-star fa-xl" style="line-height: 25px"></i>
+                                </template>
+                            </Rating>
+                        </div>
+                        <div class="row justify-content-center mb-2">
+                            <span>Date visited</span>
+                            <Calendar :input-id="'visit-calendar-' + id" v-model="date" class="col"
+                                show-time
+                                :max-date="new Date()"
+                                hour-format="24"
+                                :manual-input="false"
+                                inline
+                                hide-on-date-time-select>
+                            </Calendar>
+                        </div>
+                        <div class="row">
+                            <label :for="'visit-comment-' + id" class="form-label mt-2">Comment</label>
+                            <textarea :id="'visit-comment-' + id"
+                                v-model="comment"
+                                class="form-control col" rows="5"
+                                placeholder="Write your comment here...">
+                            </textarea>
+                        </div>
                     </div>
-                    <div class="d-flex flex-column">
-                        <span>Date visited</span>
-                        <Calendar :input-id="'visit-calendar-' + id" v-model="date"
-                            show-icon
-                            show-time
-                            :max-date="new Date()"
-                            hour-format="24"
-                            icon-display="input" 
-                            :manual-input="false"
-                            hide-on-date-time-select>
-                        </Calendar>
-                    </div>
-                    </div>
-                    <label :for="'visit-comment-' + id" class="form-label mt-2">Comment</label>
-                    <textarea :id="'visit-comment-' + id"
-                        v-model="comment"
-                        class="form-control" rows="5"
-                        placeholder="Write your comment here...">
-                    </textarea>
                 </div>
 
                 <div class="modal-footer">
@@ -88,7 +89,7 @@ import Rating from "primevue/rating";
             return {
                 date: null,
                 rating: null,
-                comment: null
+                comment: null,
             }
         },
         methods: {
@@ -101,11 +102,13 @@ import Rating from "primevue/rating";
                 this.$emit('submit', {
                     date: this.date.toISOString(),
                     rating: this.rating,
-                    comment: this.comment
+                    comment: this.comment,
+                    restaurant_id: this.restaurant.id
                 });
                 this.date = this.rating = this.comment = null;
             }
-        }
+        },
+        emits: ["submit"]
     }
 </script>
 

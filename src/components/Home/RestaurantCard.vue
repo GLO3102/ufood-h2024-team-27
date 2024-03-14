@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      <VisitModal :id="id" :restaurant="restaurant"/>
+      <VisitModal :id="id" :restaurant="restaurant" @submit="submitVisit"/>
     </div>
 </template>
 
@@ -58,6 +58,7 @@
 import FavoriteButton from "./FavoriteButton.vue"
 import VisitedButton from "./VisitedButton.vue"
 import VisitModal from "./VisitModal.vue"
+import {apiCreateVisit} from "@/api/api.js"
 
   export default {
     name: 'RestaurantCard',
@@ -72,6 +73,15 @@ import VisitModal from "./VisitModal.vue"
     methods: {
       roundRating(rating) {
         return Math.round(rating * 10) / 10;
+      },
+      async submitVisit(form) {
+        await apiCreateVisit(
+          "618b311822b4a0000478ab1b",
+          form.restaurant_id,
+          form.comment,
+          form.rating,
+          form.date
+        );
       }
     },
     components: {FavoriteButton, VisitedButton, VisitModal}
