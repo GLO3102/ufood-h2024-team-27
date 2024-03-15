@@ -25,7 +25,7 @@
         style="aspect-ratio: 1/1"
         alt="restaurant thumbnail" draggable=false
         @click="this.$router.push({name: 'Restaurantv2', params: {restaurantId: restaurant.id}})">
-        
+
         <VisitedButton :id="id" class="position-absolute top-0 start-0 mt-1 ms-1"/>
         <FavoriteButton :id="id" :initial="false" class="position-absolute top-0 end-0 mt-1 me-1" />
 

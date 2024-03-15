@@ -22,11 +22,11 @@
                     <hr/>
                     <label :for="'favorite-select-' + id" class="form-label mt-2">Select your favorite list</label>
                     <select class="form-select" :id="'favorite-select-' + id" aria-label="Select your favorite list" v-model="favorite">
-                        <option selected>Select your favorite list</option>
-                        <option v-if="favorites.length === 0">...</option>
-                        <option v-else v-for="fav in favorites" :key="fav.id" :value="fav"></option>
+                        <option selected :value="null">Select your favorite list</option>
+                        <option v-if="favorites.length === 0" :value="null">...</option>
+                        <option v-else v-for="fav in favorites" :key="fav.id" :value="fav.id">{{ fav.name }}</option>
                     </select>
-                    
+
                 </div>
 
                 <div class="modal-footer">
@@ -63,10 +63,10 @@
         },
         methods: {
             isFavoriteValid() {
-
+                return this.favorite !== null;
             },
             add() {
-
+              this.$emit("add", {favorite_id: this.favorite, restaurant_id: this.restaurant.id} );
             }
         }
     }

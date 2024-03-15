@@ -30,11 +30,6 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link active" to="/restaurant">
-              Restaurants <i class="fa-solid fa-burger"></i>
-            </router-link>
-          </li>
-          <li class="nav-item">
             <router-link
               class="nav-link"
               :to="user.isLoggedIn ? '/user' : '/login'"
@@ -104,7 +99,7 @@ export default {
     };
   },
   props: {
-   
+
   },
   created() {
     this.setUser();

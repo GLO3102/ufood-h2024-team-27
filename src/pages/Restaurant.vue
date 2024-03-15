@@ -23,7 +23,7 @@
     </div>
 
     <div class="text-center">
-    <button class="btn btn-primary rounded-3 me-2" @click="addToFavorites">Add to favorites</button>
+    <button class="btn btn-primary rounded-3 me-2" data-bs-toggle="modal" data-bs-target="">Add to favorites</button>
     <button class="btn btn-primary rounded-3" @click="addToVisited">Add a visit</button>
     </div>
 
@@ -76,19 +76,6 @@
 
     <div class="mb-4" style="width: 100%; display: flex; justify-content: center;">
       <div id="map" style="width: 75%; height: 550px;" @load="initMap"></div>
-      <!--<main style="width: 600px; height: 400px;">
-        <l-map ref="map" v-model:zoom="zoom" :center="center" @ready="mapReady">
-          <l-tile-layer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            layer-type="base"
-            name="OpenStreetMap"
-          ></l-tile-layer>
-
-          <l-marker v-model:lat-lng="here">
-            <l-popup>You are here</l-popup>
-          </l-marker>
-        </l-map>
-      </main>-->
     </div>
   </div>
 </template>
@@ -101,6 +88,9 @@ import * as Api from "@/api/api.js";
 
 export default{
   name: "RestaurantComponent",
+  props: {
+    userId: String,
+  },
   setup() {
     const restaurantInfo = ref(null);
     const route = useRoute();
@@ -129,6 +119,33 @@ export default{
     watch(() => route.params.restaurantId, (newRestaurantId) => {
       loadRestaurantInfo(newRestaurantId);
     });
+
+    async function addToFavorites() {
+      try {
+        const userId = props.userId;
+        if (!userId) {
+          console.error("User ID is not available");
+          alert("You need to be logged in to add favorites!");
+          return;
+        }
+
+        const restaurantId = restaurantInfo.value.id;
+        let listsOfFavs = await Api.apiGetUserFavorites(userId);
+
+        let listId = listsOfFavs.length > 0 ? listsOfFavs[0].id : null;
+
+        if (!listId) {
+          const newList = await Api.apiCreateFavoritesList("My Favorites", userId);
+          listId = newList.id;
+        }
+
+        await Api.apiAddToFavoritesList(listId, restaurantId);
+        alert("Added to favorites!");
+      } catch (error) {
+        console.error("Error while adding to favorites: ", error);
+        alert("Failed to add to favorites!");
+      }
+    }
 
     function roundedRating(rating){
       return Math.round(rating)
@@ -178,7 +195,8 @@ export default{
       restaurantInfo,
       L,
       map,
-      roundedRating
+      roundedRating,
+      addToFavorites
     };
   },
 };

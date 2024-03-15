@@ -1,9 +1,9 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="loaded">
         <div class="row text-center">
             <h1 class="fs-1 fw-bold p-4">{{ restaurant.name }}</h1>
         </div>
-        <div class="rounded d-flex z-1 rounded-5 mb-4" v-if="restaurant.pictures">
+        <div class="rounded d-flex z-1 rounded-5 mb-4">
             <div class="w-50">
                 <img :src="restaurant.pictures[0]"
                 class="w-100 p-1 object-fit-cover rounded-start-5"
@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" mb-4>
+            <div class="col-md-6 mb-4">
                 <div class="card rounded-5">
                     <div class="card-body">
                         <h2 class="card-title">Restaurant infos</h2>
@@ -65,7 +65,7 @@
                             <div class="rating-box">
                                 <div class="rating" :style="'width:' + convertRatingPercentage(restaurant.rating) +'%;'"></div>
                             </div>
-                            <span class="fs-5" v-if="restaurant.rating">{{ restaurant.rating.toFixed(1) }} / 5</span>
+                            <span class="fs-5">{{ restaurant.rating.toFixed(1) }} / 5</span>
                         </div>
                     </div>
                 </div>
@@ -78,25 +78,40 @@
                 </div>
             </div>
         </div>
+
+      <div class="text-center">
+        <button class="btn btn-primary rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#favorite-modal-0">Add to favorites</button>
+        <button class="btn btn-primary rounded-3" data-bs-toggle="modal" data-bs-target="#visit-modal-0">Add a visit</button>
+      </div>
+
+      <FavoriteModal :id="0" :restaurant="restaurant" :favorites="this.favorites" @add="addToFavorites"></FavoriteModal>
+      <VisitModal :id="0"  :restaurant="restaurant" @submit="submitVisit"></VisitModal>
     </div>
 </template>
 
 <script>
-import { apiGetRestaurant } from '@/api/api';
+import { apiGetRestaurant, apiGetUserFavorites, apiAddToFavoritesList, apiCreateVisit } from "@/api/api";
 import GenreButton from "../components/Search/GenreButton.vue";
+import FavoriteModal from "../components/Favorites/FavoriteModal.vue";
+import VisitModal from "../components/Home/VisitModal.vue";
 
     export default {
         name: "Restaurantv2",
         props: ["restaurantId"],
-        components: { GenreButton },
+        components: { GenreButton, FavoriteModal, VisitModal },
         data() {
             return {
-                restaurant: {}
+                restaurant: {},
+              loaded: false,
+              favorites: [],
             }
         },
         async created() {
             const data = await apiGetRestaurant(this.restaurantId);
             this.restaurant = data;
+            const favorites = await apiGetUserFavorites("618b311822b4a0000478ab1b");
+            this.favorites = favorites.items;
+            this.loaded = true;
         },
         methods: {
             roundedCorner(index) {
@@ -110,7 +125,19 @@ import GenreButton from "../components/Search/GenreButton.vue";
             test(hour) {
                 if (hour === null) return "—";
                 return hour;
-            }
+            },
+          addToFavorites(form) {
+              apiAddToFavoritesList(form.favorite_id, form.restaurant_id);
+          },
+          async submitVisit(form) {
+            await apiCreateVisit(
+              "618b311822b4a0000478ab1b",
+              form.restaurant_id,
+              form.comment,
+              form.rating,
+              form.date
+            );
+          },
         }
     }
 </script>
