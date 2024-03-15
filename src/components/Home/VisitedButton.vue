@@ -1,9 +1,10 @@
 <template>
     <div>
-        <i class="fa-solid fa-map-pin fa-xl p-2 text-light d-inline-block" style="line-height: 25px;"
-        @click.stop="onClick"
-        data-bs-toggle="modal"
-        :data-bs-target="'#visit-modal-' + id"></i>
+        <i class="fa-solid fa-map-pin fa-xl p-2 text-light d-inline-block"
+            style="line-height: 25px;"
+            data-bs-toggle="modal"
+            :data-bs-target="'#visit-modal-' + id">
+        </i>
     </div>
 </template>
 
@@ -14,13 +15,6 @@ export default {
             id: {
                 type: Number,
                 required: true
-            }
-        },
-        methods: {
-            onClick() {
-                if (!this.active) {
-                    this.active = !this.active
-                }
             }
         }
     }

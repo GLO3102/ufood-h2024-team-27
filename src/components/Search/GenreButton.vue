@@ -1,14 +1,22 @@
 <template>
     <div>
-        <input type="checkbox" class="btn-check" autocomplete="off"
+        <template v-if="readOnly">
+            <span class="btn rounded-pill btn-light"
+                style="text-transform: capitalize;">
+                <i class="fa-solid" :class="this.icons[genre] || 'fa-question'"></i> {{ genre }}
+            </span>
+        </template>
+        <template v-else>
+            <input type="checkbox" class="btn-check" autocomplete="off"
             :id="'genre-button-' + index"
             :value="genre"
             v-model="value"/>
-        <label class="btn rounded-pill btn-light"
-            :for="'genre-button-' + index"
-            style="text-transform: capitalize;">
-            <i class="fa-solid" :class="this.icons[genre] || 'fa-question'"></i> {{ genre }}
-        </label>
+            <label class="btn rounded-pill btn-light"
+                :for="'genre-button-' + index"
+                style="text-transform: capitalize;">
+                <i class="fa-solid" :class="this.icons[genre] || 'fa-question'"></i> {{ genre }}
+            </label>
+        </template>
     </div>
 </template>
 
@@ -19,6 +27,10 @@ export default {
         genre: String,
         index: Number,
         modelValue: Array,
+        readOnly: {
+            type: Boolean,
+            default: false
+        }
     },
     emits: ['update:modelValue'],
     computed: {

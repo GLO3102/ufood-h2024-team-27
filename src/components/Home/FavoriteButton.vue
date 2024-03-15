@@ -1,8 +1,10 @@
 <template>
     <div>
-        <i class="fa-heart fa-xl p-2 text-light d-inline-block" style="line-height: 25px;"
-        :class="{'fa-solid': this.active, 'fa-regular': !this.active}"
-        @click.stop="this.active = !this.active"></i>
+        <i class="fa-heart fa-xl p-2 text-light d-inline-block"
+            style="line-height: 25px;"
+            :class="{'fa-solid': this.active, 'fa-regular': !this.active}"
+            @click.stop="this.active = !this.active">
+        </i>
     </div>
 </template>
 

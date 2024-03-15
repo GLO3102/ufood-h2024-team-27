@@ -24,13 +24,12 @@
         class="card-img-top object-fit-cover rounded-4 position-relative"
         style="aspect-ratio: 1/1"
         alt="restaurant thumbnail" draggable=false
-        @click="this.$router.push({name: 'Restaurant', params: {restaurantId: restaurant.id}})">
+        @click="this.$router.push({name: 'Restaurantv2', params: {restaurantId: restaurant.id}})">
         
-        <VisitedButton :id="id" :initial="false" class="position-absolute top-0 start-0 mt-1 ms-1"/>
-
+        <VisitedButton :id="id" class="position-absolute top-0 start-0 mt-1 ms-1"/>
         <FavoriteButton :id="id" :initial="false" class="position-absolute top-0 end-0 mt-1 me-1" />
 
-        <div class="card-body pt-1 pe-1 ps-0 text-truncate" @click="this.$router.push({name: 'Restaurant', params: {restaurantId: restaurant.id}})">
+        <div class="card-body pt-1 pe-1 ps-0 text-truncate" @click="this.$router.push({name: 'Restaurantv2', params: {restaurantId: restaurant.id}})">
           <div class="d-flex justify-content-between">
             <div class="text-truncate fw-bold" style="overflow: hidden">
               <span>{{restaurant.name}}</span>
