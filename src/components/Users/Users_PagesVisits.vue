@@ -1,23 +1,21 @@
 <template>
   <nav aria-label="Page navigation">
     <ul class="pagination">
-      <li class="page-item" :class="{ disabled: currentPage <= 0 }">
+      <li class="page-item" :class="{ 'disabled': currentPage <= 0 }">
         <a
           class="page-link"
           href="#"
-          @click.prevent="changePage(currentPage - 1)"
-        >
-          Previous
+          @click.prevent="changePage(currentPage - 1)">
+          <i class="fa-solid fa-chevron-left"></i>
         </a>
       </li>
      
-      <li class="page-item" :class="{ disabled: currentPage >= totalPages }">
+      <li class="page-item" :class="{ 'disabled': (currentPage + 1) * pageSize >= totalItems }">
         <a
           class="page-link"
           href="#"
-          @click.prevent="changePage(currentPage + 1)"
-        >
-          Next
+          @click.prevent="changePage(currentPage + 1)">
+          <i class="fa-solid fa-chevron-right"></i>
         </a>
       </li>
     </ul>

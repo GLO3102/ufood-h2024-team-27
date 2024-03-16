@@ -24,7 +24,7 @@
                     <div class="container">
                         <div class="row justify-content-center mb-2">
                             <span>Your rating</span>
-                            <Rating :id="'visit-rating-' + id" v-model="rating" :cancel="false" class="col-5">
+                            <Rating :id="'visit-rating-' + id" v-model="rating" :cancel="false" class="col-5 text-secondary">
                                 <template #onicon>
                                     <i class="fa-solid fa-star fa-xl" style="line-height: 25px"></i>
                                 </template>

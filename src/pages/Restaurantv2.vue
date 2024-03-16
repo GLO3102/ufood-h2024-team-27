@@ -24,14 +24,14 @@
         <div class="row mb-4">
             <div class="col-md-6 mb-4">
                 <div class="row">
-                    <button class="btn btn-primary rounded-pill p-2 m-3 mt-0 me-2 col" data-bs-toggle="modal" data-bs-target="#favorite-modal-0">
+                    <button class="btn btn-primary rounded-pill p-3 m-3 mt-0 me-2 col fs-5" data-bs-toggle="modal" data-bs-target="#favorite-modal-0">
                         <i class="fa-solid fa-heart"></i> Add to favorites
                     </button>
-                    <button class="btn btn-primary rounded-pill p-2 m-3 mt-0 ms-2 col" data-bs-toggle="modal" data-bs-target="#visit-modal-0">
+                    <button class="btn btn-primary rounded-pill p-3 m-3 mt-0 ms-2 col fs-5" data-bs-toggle="modal" data-bs-target="#visit-modal-0">
                         <i class="fa-solid fa-map-pin"></i> Add a visit
                     </button>
                 </div>
-                <div class="card rounded-5 p-3 mb-4">
+                <div class="card rounded-5 p-3 py-2 mb-4">
                     <div class="card-body">
                         <h2 class="card-title">Restaurant infos</h2>
                         <div class="d-flex mb-4">
@@ -60,7 +60,7 @@
                 <MapquestMap :restaurant-name="restaurant.name" :restaurant-location="restaurant.location.coordinates"></MapquestMap>
             </div>
             <div class="col-md-6 mb-4">
-                <div class="card rounded-5 p-3 mb-4">
+                <div class="card rounded-5 p-3 py-2 mb-4">
                     <div class="card-body">
                         <h2 class="card-title">Contact us</h2>
                         <h3 class="fs-5">Address</h3>
@@ -78,7 +78,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="card rounded-5 p-3">
+                <div class="card rounded-5 p-3 py-2">
                     <div class="card-body">
                         <h2 class="card-title">Reviews</h2>
                     </div>

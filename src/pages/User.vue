@@ -9,15 +9,11 @@
       @modifyListName="modifyListName"
     />
     <div>
-      <h2>Recently Visited Restaurants</h2>
-
-      <VisitedRestaurants :visitedRestaurants="visitedRestaurants" />
-      <PagesVisits
+      <VisitedRestaurants :visitedRestaurants="visitedRestaurants"
         :total-items="totalVisits"
         :current-page="currentPage"
         :page-size="pageSize"
-        @page-changed="fetchVisits"
-      />
+        @page-changed="fetchVisits"/>
     </div>
   </div>
 </template>
@@ -27,7 +23,6 @@ import UserInfo from "@/components/Users/Users_Info.vue";
 import * as api from "@/api/api.js";
 import FavLists from "@/components/Users/Users_FavLists.vue";
 import VisitedRestaurants from "@/components/Users/Users_VisitedRestaurants.vue";
-import PagesVisits from "@/components/Users/Users_PagesVisits.vue";
 
 export default {
   name: "User",
@@ -35,7 +30,6 @@ export default {
     UserInfo,
     FavLists,
     VisitedRestaurants,
-    PagesVisits,
   },
   data() {
     return {

@@ -1,51 +1,41 @@
 <template>
-  <div class="card">
-    <div class="card-body p-4 p-xxl-5">
-      <div
-        class="bsb-ratings text-warning mb-3"
-        data-bsb-star="5"
-        data-bsb-star-off="0"
-      ></div>
-      <blockquote class="bsb-blockquote-icon mb-3">
-        {{ visit.comment }}
-      </blockquote>
-      <figure class="d-flex align-items-center m-0 p-0">
-        <div class="d-flex justify-content-center">
-          <img
-            v-if="restaurant.pictures && restaurant.pictures.length"
-            :src="restaurant.pictures[0]"
-            class="img-fluid rounded-circle w-150"
-            alt="Restaurant picture"
-          />
-          <img
-            v-else
-            src="default-image-url.jpg"
-            class="img-fluid rounded-circle w-25"
-            alt="Default image"
-          />
-        </div>
-        <figcaption class="ms-3">
-          <h3 class="mb-1 h4">{{ restaurant.name }}</h3>
-          <h4 class="mb-1 h5">
-            {{ visit.rating
-            }}<i class="fa-solid fa-star w-100 pb-4" style="color: #ffd43b"></i>
-          </h4>
-          <h5 class="fs-6 text-secondary mb-0">{{ visit.date }}</h5>
-        </figcaption>
-      </figure>
+  <div v-if="loaded" class="rounded-4 p-3 shadow">
+    <div class="d-flex gap-3 mb-2">
+      <img :src="restaurant.pictures[0]"
+        class="object-fit-cover rounded-4"
+        style="aspect-ratio: 1/1; width: 6rem;"
+        alt="restaurant thumbnail"
+        draggable=false/>
+      <div class="d-flex flex-column justify-content-between">
+        <h3 class="fs-5">{{ restaurant.name }}</h3>
+        <Rating class="text-secondary" v-model="rating" :cancel="false" readonly>
+          <template #onicon>
+              <i class="fa-solid fa-star fa-lg" style="line-height: 25px"></i>
+          </template>
+          <template #officon>
+              <i class="fa-regular fa-star fa-lg" style="line-height: 25px"></i>
+          </template>
+        </Rating>
+        <span>{{ date }}</span>
+      </div>
     </div>
+    <p>
+      {{ visit.comment }}
+    </p>
   </div>
 </template>
 
 <script>
 import * as api from "@/api/api.js";
-// Il va nous rester a regarder pour le restaurant ID, aller le chercher et
-//lutiliser ici. Changer le style et autre egalement
+import Rating from "primevue/rating";
+
 export default {
   name: "VisitedRestaurant",
+  components: {Rating},
   data() {
     return {
       restaurant: Object,
+      loaded: false,
     };
   },
   props: {
@@ -54,11 +44,27 @@ export default {
   async created() {
     try {
       this.restaurant = await api.apiGetRestaurant(this.visit.restaurant_id);
+      this.loaded = true;
     } catch (error) {
       console.log("Error while fetching restaurant", error);
     }
   },
+  computed: {
+    rating() {
+      return this.visit.rating;
+    },
+    date() {
+      return this.visit.date.split("T", 1)[0];
+    }
+  }
 };
 </script>
 
-<style></style>
+<style scoped>
+p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+</style>
