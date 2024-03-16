@@ -5,7 +5,7 @@
                 <div class="modal-header">
                     <h2 class="modal-title fs-5">
                         <i class="fa-solid fa-heart"></i>
-                        Add to favorite list
+                        Add to favorites
                     </h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

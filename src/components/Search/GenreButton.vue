@@ -1,8 +1,7 @@
 <template>
     <div>
         <template v-if="readOnly">
-            <span class="btn rounded-pill btn-light"
-                style="text-transform: capitalize;">
+            <span class="btn rounded-pill btn-light">
                 <i class="fa-solid" :class="this.icons[genre] || 'fa-question'"></i> {{ genre }}
             </span>
         </template>
@@ -12,8 +11,7 @@
             :value="genre"
             v-model="value"/>
             <label class="btn rounded-pill btn-light"
-                :for="'genre-button-' + index"
-                style="text-transform: capitalize;">
+                :for="'genre-button-' + index">
                 <i class="fa-solid" :class="this.icons[genre] || 'fa-question'"></i> {{ genre }}
             </label>
         </template>

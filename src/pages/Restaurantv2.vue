@@ -23,27 +23,15 @@
         </div>
         <div class="row mb-4">
             <div class="col-md-6 mb-4">
-                <div class="card rounded-5">
-                    <div class="card-body">
-                        <h2 class="card-title">Contact us</h2>
-                        <h3 class="fs-5">Address</h3>
-                        <p class="mb-4">{{ restaurant.address }}</p>
-                        <h3 class="fs-5">Phone number</h3>
-                        <p class="mb-4">{{ restaurant.tel }}</p>
-                        <h3 class="fs-5">Opening hours</h3>
-                        <ul class="list-unstyled">
-                            <li v-for="(hours, day) in restaurant.opening_hours" :key="day" class="text-capitalize fw-semibold">
-                                {{ day }}
-                            </li>
-                            <li v-for="(hours, day) in restaurant.opening_hours" :key="day">
-                                {{ test(hours) }}
-                            </li>
-                        </ul>
-                    </div>
+                <div class="row">
+                    <button class="btn btn-primary rounded-pill p-2 m-3 mt-0 me-2 col" data-bs-toggle="modal" data-bs-target="#favorite-modal-0">
+                        <i class="fa-solid fa-heart"></i> Add to favorites
+                    </button>
+                    <button class="btn btn-primary rounded-pill p-2 m-3 mt-0 ms-2 col" data-bs-toggle="modal" data-bs-target="#visit-modal-0">
+                        <i class="fa-solid fa-map-pin"></i> Add a visit
+                    </button>
                 </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="card rounded-5">
+                <div class="card rounded-5 p-3 mb-4">
                     <div class="card-body">
                         <h2 class="card-title">Restaurant infos</h2>
                         <div class="d-flex mb-4">
@@ -61,31 +49,44 @@
                             </div>
                         </div>
                         <h3 class="fs-5">Rating</h3>
-                        <div class="d-flex align-items-center justify-content-center gap-2">
+                        <div class="d-flex align-items-center justify-content-center gap-2 text-secondary">
                             <div class="rating-box">
                                 <div class="rating" :style="'width:' + convertRatingPercentage(restaurant.rating) +'%;'"></div>
                             </div>
-                            <span class="fs-5">{{ restaurant.rating.toFixed(1) }} / 5</span>
+                            <span class="fs-5 fw-semibold">{{ restaurant.rating.toFixed(1) }} / 5</span>
                         </div>
+                    </div>
+                </div>
+                <MapquestMap :restaurant-name="restaurant.name" :restaurant-location="restaurant.location.coordinates"></MapquestMap>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card rounded-5 p-3 mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">Contact us</h2>
+                        <h3 class="fs-5">Address</h3>
+                        <p class="mb-4">{{ restaurant.address }}</p>
+                        <h3 class="fs-5">Phone number</h3>
+                        <p class="mb-4">{{ restaurant.tel }}</p>
+                        <h3 class="fs-5">Opening hours</h3>
+                        <ul class="list-unstyled">
+                            <li v-for="(hours, day) in restaurant.opening_hours" :key="day" class="text-capitalize fw-semibold">
+                                {{ day }}
+                            </li>
+                            <li v-for="(hours, day) in restaurant.opening_hours" :key="day">
+                                {{ test(hours) }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card rounded-5 p-3">
+                    <div class="card-body">
+                        <h2 class="card-title">Reviews</h2>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="card rounded-5">
-                <div class="card-body">
-                    <h2 class="card-title">Reviews</h2>
-                </div>
-            </div>
-        </div>
-
-      <div class="text-center">
-        <button class="btn btn-primary rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#favorite-modal-0">Add to favorites</button>
-        <button class="btn btn-primary rounded-3" data-bs-toggle="modal" data-bs-target="#visit-modal-0">Add a visit</button>
-      </div>
-
-      <FavoriteModal :id="0" :restaurant="restaurant" :favorites="this.favorites" @add="addToFavorites"></FavoriteModal>
-      <VisitModal :id="0"  :restaurant="restaurant" @submit="submitVisit"></VisitModal>
+        <FavoriteModal :id="0" :restaurant="restaurant" :favorites="this.favorites" @add="addToFavorites"></FavoriteModal>
+        <VisitModal :id="0"  :restaurant="restaurant" @submit="submitVisit"></VisitModal>
     </div>
 </template>
 
@@ -94,11 +95,12 @@ import { apiGetRestaurant, apiGetUserFavorites, apiAddToFavoritesList, apiCreate
 import GenreButton from "../components/Search/GenreButton.vue";
 import FavoriteModal from "../components/Favorites/FavoriteModal.vue";
 import VisitModal from "../components/Home/VisitModal.vue";
+import MapquestMap from "../components/MapquestMap.vue";
 
     export default {
         name: "Restaurantv2",
         props: ["restaurantId"],
-        components: { GenreButton, FavoriteModal, VisitModal },
+        components: { GenreButton, FavoriteModal, VisitModal, MapquestMap },
         data() {
             return {
                 restaurant: {},
@@ -179,4 +181,4 @@ ul {
     -webkit-columns: 2;
     -moz-columns: 2;
 }
-</style>
+</style>../components/MapquestMap.vue

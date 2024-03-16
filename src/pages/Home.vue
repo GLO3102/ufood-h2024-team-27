@@ -1,7 +1,7 @@
 <template>
   <div>
-    <header class="container-fluid mb-5">
-      <h1 class="fw-bold text-light mb-0">UFood</h1>
+    <header class="container-fluid mb-5 bg-secondary text-center">
+      <h1 class="fw-bold mb-0">UFood</h1>
       <p class="ps-2 mb-5 fs-2 fw-bold">Eat, Share, Repeat</p>
 
       <MainSearchBar @search="search"/>
@@ -12,12 +12,12 @@
     </header>
     <main class="container-fluid">
       <div class="row mb-5" id="restaurants-section">
-        <h2 class="text-center fs-1 fw-bold">Restaurants</h2>
+        <h2 class="text-center text-dark fs-1 fw-bold">Restaurants</h2>
       </div>
       <RestaurantCards :restaurants="this.restaurants"></RestaurantCards>
 
       <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-light rounded-4"
+        <button type="button" class="btn btn-light rounded-4 m-4"
         v-if="this.total > this.previousParams.limit * (this.previousParams.page + 1)"
         @click="showMore()">Show more results</button>
         <span v-if="this.total === 0" class="fs-4">No restaurant found!</span>
@@ -68,10 +68,6 @@ export default {
 </script>
 
 <style>
-header {
-  background-image: linear-gradient(var(--bs-secondary), var(--bs-primary));
-}
-
 h1 {
   font-size: 6rem !important;
 }

@@ -25,8 +25,8 @@
           style="--bs-scroll-height: 200px"
         >
           <li class="nav-item">
-            <router-link class="nav-link active" to="/">
-              Home <i class="fa-solid fa-house"></i>
+            <router-link class="nav-link" to="/">
+              <i class="fa-solid fa-house"></i> Home
             </router-link>
           </li>
           <li class="nav-item">
@@ -35,13 +35,12 @@
               :to="user.isLoggedIn ? '/user' : '/login'"
               @click="login"
             >
-              {{ user.isLoggedIn ? user.name : "Log In"
-              }}<i class="fa-solid fa-user"></i>
+            <i class="fa-solid fa-user"></i> {{ user.isLoggedIn ? user.name : "Log In"}}
             </router-link>
           </li>
           <li class="nav-item logout" v-if="user.isLoggedIn">
             <router-link class="nav-link" to="/logout" @click="logout">
-              LogOut <i class="fa fa-sign-out" aria-hidden="true"></i>
+              <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
             </router-link>
           </li>
         </ul>
