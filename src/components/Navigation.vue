@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import restaurantsData from "@/assets/restaurants.json";
+
 import usersData from "@/assets/users.json";
 
 export default {
@@ -89,10 +89,10 @@ export default {
     return {
       user: {
         isLoggedIn: false,
-        name: "",
+        name: "My Profile",
       },
       searchQuery: "",
-      items: restaurantsData.items,
+      items: [],
 
       dropdownVisible: false,
     };
@@ -127,8 +127,6 @@ export default {
     },
 
     setUser() {
-      const user = usersData.items[0];
-      this.user.name = `${user.firstname} ${user.lastname}`;
       this.user.isLoggedIn = true;
     },
 

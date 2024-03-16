@@ -46,7 +46,7 @@ export default {
       this.restaurant = await api.apiGetRestaurant(this.visit.restaurant_id);
       this.loaded = true;
     } catch (error) {
-      console.log("Error while fetching restaurant", error);
+      console.error("Error while fetching restaurant", error);
     }
   },
   computed: {

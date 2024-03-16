@@ -1,6 +1,8 @@
 <template>
   <div class="container">
     <UserInfo :userInfo="userInfo" />
+    <div>
+      <Loading v-if="loading" />
     <FavLists
       :listsFavs="listsOfFavs"
       @deleteRestaurant="deleteRestaurant"
@@ -8,12 +10,18 @@
       @deleteList="deleteList"
       @modifyListName="modifyListName"
     />
+    
+  </div>
     <div>
-      <VisitedRestaurants :visitedRestaurants="visitedRestaurants"
+      <Loading v-if="loading" />
+      <VisitedRestaurants
+        :visitedRestaurants="visitedRestaurants"
         :total-items="totalVisits"
         :current-page="currentPage"
         :page-size="pageSize"
-        @page-changed="fetchVisits"/>
+        @page-changed="fetchVisits"
+      />
+      
     </div>
   </div>
 </template>
@@ -23,6 +31,7 @@ import UserInfo from "@/components/Users/Users_Info.vue";
 import * as api from "@/api/api.js";
 import FavLists from "@/components/Users/Users_FavLists.vue";
 import VisitedRestaurants from "@/components/Users/Users_VisitedRestaurants.vue";
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: "User",
@@ -30,6 +39,7 @@ export default {
     UserInfo,
     FavLists,
     VisitedRestaurants,
+    Loading,
   },
   data() {
     return {
@@ -41,6 +51,8 @@ export default {
       currentPage: 0,
       pageSize: 10,
       totalVisits: 0,
+      loadingFavLists: false,
+      loadingVisits: false,
     };
   },
   computed: {},
@@ -54,7 +66,6 @@ export default {
     },
     async deleteRestaurant(restId, listId) {
       try {
-        console.log("Deleting restaurant", restId, "from list", listId);
         await api.apiRemoveFromFavoritesList(listId, restId);
         let list = this.listsOfFavs.find((list) => list.listId === listId);
         if (list) {
@@ -64,6 +75,7 @@ export default {
         }
       } catch (error) {
         console.error("Error while deleting restaurant");
+        alert("Failed to delete restaurant!");
       }
     },
     async createList(listName) {
@@ -78,6 +90,7 @@ export default {
         }
       } catch (error) {
         console.error("Error creating new favorites list:", error);
+        alert("Failed creating new favorites list");
       }
     },
     async deleteList(listId) {
@@ -88,6 +101,7 @@ export default {
         );
       } catch (error) {
         console.error("Error while deleting list", error);
+        alert("Failed to delete favorites list");
       }
     },
     async modifyListName(listId, listName) {
@@ -105,27 +119,29 @@ export default {
         }
       } catch (error) {
         console.error("Error while modifying list name", error);
+        alert("Failed to modify list name");
       }
     },
     async fetchVisits(page) {
       try {
         this.currentPage = page;
-        const response = await api.apiGetVisits(this.userId,page)
+        const response = await api.apiGetVisits(this.userId, page);
         if (response && response.items) {
-          this.visitedRestaurants = response.items
+          this.visitedRestaurants = response.items;
           this.totalVisits = response.total;
         }
       } catch (error) {
         console.error("Error while fetching visits", error);
+        alert("Failed to fetch visits!");
       }
     },
   },
   async created() {
     try {
+      this.loadingFavLists = true;
+      this.loadingVisits= true;
       this.userInfo = await api.apiGetUser(this.userId);
       this.fetchVisits(this.currentPage);
-
-      console.log(this.visitedRestaurants);
       const response = await api.apiGetUserFavorites(this.userId);
 
       if (response && response.items) {
@@ -137,6 +153,10 @@ export default {
       }
     } catch (error) {
       console.error("Error fetching favs", error);
+      alert("Failed to fetch favs!");
+    }finally{
+      this.loadingFavLists = false;
+      this.loadingVisits = false;
     }
   },
 };

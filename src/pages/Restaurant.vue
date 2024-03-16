@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <div class="container text-center mt-4">
       <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="max-width: 75rem;">
         <div class="carousel-inner" v-if="restaurantInfo" >

@@ -4,18 +4,20 @@
       <img
         :src="restaurant.pictures[0]"
         class="object-fit-cover rounded-4"
-        style="aspect-ratio: 1/1; width: 100%;"
+        style="aspect-ratio: 1/1; width: 100%"
         alt="restaurant thumbnail"
         draggable="false"
       />
-      
+
       <div class="d-flex justify-content-between align-items-end">
         <div class="text-truncate fw-bold" style="overflow: hidden">
           <h3 class="fs-5">{{ restaurant.name }}</h3>
         </div>
         <span class="ps-2" style="white-space: nowrap">
-            <BtnDeleteResto @deleteResto="$emit('deleteRestaurant', restaurantId.id)" />
-          </span>
+          <BtnDeleteResto
+            @deleteResto="$emit('deleteRestaurant', restaurantId.id)"
+          />
+        </span>
       </div>
     </div>
   </div>
@@ -23,7 +25,7 @@
 
 <script>
 import * as api from "@/api/api.js";
-import BtnDeleteResto from './Users_DeleteBtnRestaurant.vue';
+import BtnDeleteResto from "./Users_DeleteBtnRestaurant.vue";
 
 export default {
   name: "FavRestaurant",
@@ -45,11 +47,8 @@ export default {
       console.error("Error fetching restaurant details:", error);
     }
   },
-  methods: {
-    
-  }
+  methods: {},
 };
 </script>
 
-<style>
-</style>
+<style></style>

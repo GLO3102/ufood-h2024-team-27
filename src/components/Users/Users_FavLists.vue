@@ -43,7 +43,6 @@ export default {
     },
     modifyListName(listId, listName) {
       this.$emit("modifyListName", listId, listName);
-      console.log(listId, listName);
     },
   },
   emits: ["deleteRestaurant", "createList", "deleteList", "modifyListName"],

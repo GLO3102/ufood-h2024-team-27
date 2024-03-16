@@ -6,10 +6,12 @@
           <i class="fa-solid fa-map-pin"></i>
           Recently visited restaurants
         </h2>
-        <PagesVisits :total-items="totalItems"
+        <PagesVisits
+          :total-items="totalItems"
           :current-page="currentPage"
           :page-size="pageSize"
-          @page-changed="this.$emit('page-changed', $event)">
+          @page-changed="this.$emit('page-changed', $event)"
+        >
         </PagesVisits>
       </div>
       <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
@@ -31,10 +33,11 @@ export default {
     visitedRestaurants: Array,
     totalItems: Number,
     currentPage: Number,
-    pageSize: Number
+    pageSize: Number,
   },
   components: {
-    VisitedRestaurant, PagesVisits
-  }
+    VisitedRestaurant,
+    PagesVisits,
+  },
 };
 </script>

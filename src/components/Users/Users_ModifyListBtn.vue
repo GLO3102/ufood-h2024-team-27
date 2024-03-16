@@ -3,7 +3,10 @@
     @click="emitModification"
     type="button"
     class="btn btn-primary"
+    :class="{'disabled-btn' : !listName}"
+    :disabled="!listName"
     data-bs-dismiss="modal"
+   
   >
     Modify List
   </button>
@@ -24,3 +27,10 @@ export default {
   emits: ["modifyListName"]
 };
 </script>
+
+<style>
+.disabled-btn {
+  opacity: 0.60;
+  cursor: not-allowed;
+}
+</style>

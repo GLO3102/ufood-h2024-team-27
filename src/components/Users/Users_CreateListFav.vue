@@ -44,7 +44,10 @@
             >
               Close
             </button>
-            <CreateListBtn :listName="this.listName" @createList="$emit('createList', this.listName)" />
+            <CreateListBtn
+              :listName="this.listName"
+              @createList="$emit('createList', this.listName)"
+            />
           </div>
         </div>
       </div>
@@ -53,7 +56,7 @@
 </template>
 
 <script>
-import CreateListBtn from './Users_CreateListBtn.vue'
+import CreateListBtn from "./Users_CreateListBtn.vue";
 export default {
   name: "CreateListFav",
   data() {
@@ -86,7 +89,6 @@ export default {
         return;
       }
     },
-    
   },
 };
 </script>

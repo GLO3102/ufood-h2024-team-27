@@ -47,7 +47,11 @@
             >
               Close
             </button>
-            <ModifyListBtn :listId="this.listId" :listName="this.listName" @modifyListName="modifyListName" />
+            <ModifyListBtn
+              :listId="this.listId"
+              :listName="this.listName"
+              @modifyListName="modifyListName"
+            />
           </div>
         </div>
       </div>
