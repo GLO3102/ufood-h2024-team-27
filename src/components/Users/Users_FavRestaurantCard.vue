@@ -1,24 +1,21 @@
 <template>
-  <div>
-    <div v-if="restaurant">
+  <div v-if="restaurant" class="rounded-4 p-3 shadow">
+    <div class="d-flex flex-column gap-3 mb-2">
       <img
         :src="restaurant.pictures[0]"
-        class="card-img-top object-fit-cover rounded-4 position-relative"
-        style="aspect-ratio: 1/1"
+        class="object-fit-cover rounded-4"
+        style="aspect-ratio: 1/1; width: 100%;"
         alt="restaurant thumbnail"
         draggable="false"
       />
       
-      <div class="card-body pt-1 pe-1 ps-0 text-truncate">
-        <div class="d-flex justify-content-between">
-          <div class="text-truncate fw-bold" style="overflow: hidden">
-            <span>{{ restaurant.name }}</span>
-          </div>
-          <span class="ps-2" style="white-space: nowrap">
+      <div class="d-flex justify-content-between align-items-end">
+        <div class="text-truncate fw-bold" style="overflow: hidden">
+          <h3 class="fs-5">{{ restaurant.name }}</h3>
+        </div>
+        <span class="ps-2" style="white-space: nowrap">
             <BtnDeleteResto @deleteResto="$emit('deleteRestaurant', restaurantId.id)" />
           </span>
-        </div>
-      
       </div>
     </div>
   </div>

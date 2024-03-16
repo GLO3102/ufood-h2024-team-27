@@ -1,6 +1,6 @@
 <template>
   <button
-    class="btn btn-danger btn-sm rounded-0"
+    class="btn btn-danger btn-sm"
     type="button"
     data-toggle="tooltip"
     data-placement="top"

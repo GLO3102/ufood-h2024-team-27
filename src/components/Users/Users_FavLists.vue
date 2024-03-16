@@ -1,16 +1,22 @@
 <template>
-  <div>
-    <h2>Your Lists of Favorites :</h2>
-    <CreateList @createList="createList" />
-    <div :key="listFav.listId" v-for="listFav in listsFavs">
-      <FavList
-        :listFav="listFav"
-        @deleteRestaurant="handleDeleteRestaurant"
-        @deleteList="deleteList"
-        @modifyListName="modifyListName"
-      />
+  <section class="card rounded-5 p-3 py-2 mb-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between" style="gap: 10px">
+        <h2>Your Lists of Favorites :</h2>
+        <CreateList @createList="createList" />
+      </div>
+      <div>
+        <div :key="listFav.listId" v-for="listFav in listsFavs.slice().reverse()">
+          <FavList
+            :listFav="listFav"
+            @deleteRestaurant="handleDeleteRestaurant"
+            @deleteList="deleteList"
+            @modifyListName="modifyListName"
+          />
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

@@ -1,8 +1,9 @@
 <template>
   <div>
-    
-    <div v-for="restaurantId in restaurants" :key="restaurantId" class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-3">
-      <FavRestaurant :restaurantId="restaurantId" @deleteRestaurant="$emit('deleteRestaurant', restaurantId.id)" />
+    <div class="row row-cols-1 row-cols-md-4 g-4 mb-1">
+      <div v-for="restaurantId in restaurants" :key="restaurantId" class="col">
+        <FavRestaurant :restaurantId="restaurantId" @deleteRestaurant="$emit('deleteRestaurant', restaurantId.id)" />
+      </div>
     </div>
   </div>
 </template>

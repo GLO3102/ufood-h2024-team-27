@@ -1,7 +1,7 @@
 <template>
   <span>
     <button
-      class="btn btn-success btn-sm rounded-0"
+      class="btn btn-success btn-sm"
       type="button"
       data-placement="top"
       title="Edit"

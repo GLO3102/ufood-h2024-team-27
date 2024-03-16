@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <h3>{{ listFav.name }}</h3>
-
-    <ModifyListName :listId="listFav.listId" @modifyListName="modifyListName" />    
-
-    <DeleteList @deleteList="handleDeleteList" />
+  <div class="card rounded-4 p-3 shadow mb-3">
+    <div class="d-flex align-items-start">
+      <h3 class="me-2">{{ listFav.name }}</h3>
+      <ModifyListName style="margin-right:.125rem" :listId="listFav.listId" @modifyListName="modifyListName"/>    
+      <DeleteList @deleteList="handleDeleteList" />
+    </div>
 
     <FavRestaurants
       :restaurants="listFav.restaurants"
