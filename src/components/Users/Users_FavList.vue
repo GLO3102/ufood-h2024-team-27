@@ -7,17 +7,17 @@
         </h2>
         <div>
           <ModifyListName
-        style="margin-right: 0.125rem"
-        :listId="listFav.listId"
-        @modifyListName="modifyListName"
-        />
-        <DeleteList @deleteList="handleDeleteList" />
+            style="margin-right: 0.125rem"
+            :listId="listFav.listId"
+            @modifyListName="modifyListName"
+          />
+          <DeleteList @deleteList="handleDeleteList" />
         </div>
       </div>
       <FavRestaurants
-      :restaurants="listFav.restaurants"
-      @deleteRestaurant="handleDeleteRestaurant"
-    />
+        :restaurants="listFav.restaurants"
+        @deleteRestaurant="handleDeleteRestaurant"
+      />
     </div>
   </div>
 </template>

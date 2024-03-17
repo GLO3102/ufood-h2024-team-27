@@ -4,7 +4,7 @@
       <img
         :src="restaurant.pictures[0]"
         class="object-fit-cover rounded-4"
-        style="aspect-ratio: 1/1; width: 6rem; cursor: pointer;"
+        style="aspect-ratio: 1/1; width: 6rem; cursor: pointer"
         alt="restaurant thumbnail"
         draggable="false"
         @click="

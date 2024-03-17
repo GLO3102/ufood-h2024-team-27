@@ -1,5 +1,9 @@
 <template>
-  <button class="btn btn-light text-primary" type="button" @click.stop="deleteResto">
+  <button
+    class="btn btn-light text-primary"
+    type="button"
+    @click.stop="deleteResto"
+  >
     <i class="fa fa-trash"></i>
   </button>
 </template>

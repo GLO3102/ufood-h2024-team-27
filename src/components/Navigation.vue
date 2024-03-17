@@ -30,17 +30,17 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link
-              class="nav-link"
-              :to="{name: 'User'}"
-              @click="login"
-            >
+            <router-link class="nav-link" :to="{ name: 'User' }" @click="login">
               <i class="fa-solid fa-user"></i>
               {{ user.isLoggedIn ? user.name : "Log In" }}
             </router-link>
           </li>
           <li class="nav-item logout" v-if="user.isLoggedIn">
-            <router-link class="nav-link" :to="{name: 'Home'}" @click="logout">
+            <router-link
+              class="nav-link"
+              :to="{ name: 'Home' }"
+              @click="logout"
+            >
               <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
             </router-link>
           </li>
