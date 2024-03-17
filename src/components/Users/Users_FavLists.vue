@@ -2,7 +2,10 @@
   <section class="card rounded-5 p-3 py-2 mb-4">
     <div class="card-body">
       <div class="d-flex justify-content-between" style="gap: 10px">
-        <h2>Your Lists of Favorites :</h2>
+        <h2 class="card-title mb-4">
+          <i class="fa-solid fa-heart"></i>
+          List of favorites
+        </h2>
         <CreateList @createList="createList" />
       </div>
       <div>

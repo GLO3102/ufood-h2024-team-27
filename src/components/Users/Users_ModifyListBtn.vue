@@ -7,7 +7,7 @@
     :disabled="!listName"
     data-bs-dismiss="modal"
   >
-    Modify List
+    Modify list
   </button>
 </template>
 

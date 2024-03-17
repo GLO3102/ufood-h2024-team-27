@@ -59,7 +59,7 @@
         draggable="false"
         @click="
           this.$router.push({
-            name: 'Restaurantv2',
+            name: 'Restaurant',
             params: { restaurantId: restaurant.id },
           })
         "
@@ -79,7 +79,7 @@
         class="card-body pt-1 pe-1 ps-0 text-truncate"
         @click="
           this.$router.push({
-            name: 'Restaurantv2',
+            name: 'Restaurant',
             params: { restaurantId: restaurant.id },
           })
         "

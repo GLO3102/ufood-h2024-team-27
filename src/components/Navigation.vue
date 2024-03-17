@@ -32,7 +32,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :to="user.isLoggedIn ? '/user' : '/login'"
+              :to="{name: 'User'}"
               @click="login"
             >
               <i class="fa-solid fa-user"></i>
@@ -40,13 +40,14 @@
             </router-link>
           </li>
           <li class="nav-item logout" v-if="user.isLoggedIn">
-            <router-link class="nav-link" to="/logout" @click="logout">
+            <router-link class="nav-link" :to="{name: 'Home'}" @click="logout">
               <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
             </router-link>
           </li>
         </ul>
         <form class="d-flex" role="search">
           <input
+            id="navbar-search"
             v-model="searchQuery"
             type="text"
             class="form-control mr-2 navbar-search-input rounded-pill"
@@ -82,8 +83,6 @@
 </template>
 
 <script>
-import usersData from "@/assets/users.json";
-
 export default {
   data() {
     return {
@@ -130,12 +129,10 @@ export default {
 
     logout() {
       this.user.isLoggedIn = false;
-      this.$router.push("/");
     },
 
     login() {
       this.user.isLoggedIn = true;
-      this.$router.push("/user");
     },
 
     hideDropDown(event) {

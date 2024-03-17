@@ -5,7 +5,7 @@
     data-toggle="tooltip"
     data-placement="top"
     title="Delete"
-    @click="$emit('deleteList')"
+    @click.prevent="$emit('deleteList')"
   >
     <i class="fa fa-trash"></i>
   </button>

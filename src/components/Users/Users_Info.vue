@@ -65,8 +65,6 @@
 <script>
 export default {
   name: "UserInfo",
-
-  data() {},
   methods: {},
   props: {
     userInfo: Object,

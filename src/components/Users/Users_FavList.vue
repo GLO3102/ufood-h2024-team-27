@@ -1,19 +1,24 @@
 <template>
-  <div class="card rounded-4 p-3 shadow mb-3">
-    <div class="d-flex align-items-start">
-      <h3 class="me-2">{{ listFav.name }}</h3>
-      <ModifyListName
+  <div class="card rounded-4 p-3 mb-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between gap-2">
+        <h2 class="card-title fs-4 mb-4">
+          {{ listFav.name }}
+        </h2>
+        <div>
+          <ModifyListName
         style="margin-right: 0.125rem"
         :listId="listFav.listId"
         @modifyListName="modifyListName"
-      />
-      <DeleteList @deleteList="handleDeleteList" />
-    </div>
-
-    <FavRestaurants
+        />
+        <DeleteList @deleteList="handleDeleteList" />
+        </div>
+      </div>
+      <FavRestaurants
       :restaurants="listFav.restaurants"
       @deleteRestaurant="handleDeleteRestaurant"
     />
+    </div>
   </div>
 </template>
 

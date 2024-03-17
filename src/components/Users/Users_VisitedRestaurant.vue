@@ -4,9 +4,15 @@
       <img
         :src="restaurant.pictures[0]"
         class="object-fit-cover rounded-4"
-        style="aspect-ratio: 1/1; width: 6rem"
+        style="aspect-ratio: 1/1; width: 6rem; cursor: pointer;"
         alt="restaurant thumbnail"
         draggable="false"
+        @click="
+          this.$router.push({
+            name: 'Restaurant',
+            params: { restaurantId: restaurant.id },
+          })
+        "
       />
       <div class="d-flex flex-column justify-content-between">
         <h3 class="fs-5">{{ restaurant.name }}</h3>

@@ -2,12 +2,12 @@
   <button
     @click="$emit('createList')"
     type="button"
-    class="btn btn-primary"
+    class="btn btn-primary rounded-pill"
     data-bs-dismiss="modal"
     :class="{ 'disabled-btn': !listName }"
     :disabled="!listName"
   >
-    Create List
+    Create list
   </button>
 </template>
 

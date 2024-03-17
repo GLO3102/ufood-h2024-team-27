@@ -1,21 +1,7 @@
-/* eslint-disable prettier/prettier */
-// the required api calls, packaged in convenient fashion
-// import with 'import * as Api from "../api.js";' from whatever page you need it
-
 const isUnsecure = true; // update once auth is added
 const optUnsecure = isUnsecure?"unsecure/":""
 
 const URL = "https://ufoodapi.herokuapp.com/"
-
-// dummy user: "6569767db55a58e85c543213"
-// dummy restaurant: "5f31fc6555d7790550c08aff"
-// dummy list: "65d28a21072afacd2082fec4"
-// toDelete list: "65d28add072afacd2082fecc"
-
-/*export async function selfTest(){
-    console.log(await apiRemoveFromFavoritesList("65d28a21072afacd2082fec4","5f31fc6555d7790550c08aff"))
-}*/
-
 
 // POST login (tp3 only)
 // POST logout (tp3 only)

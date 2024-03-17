@@ -2,7 +2,7 @@
   <div class="container">
     <UserInfo :userInfo="userInfo" />
     <div>
-      <Loading v-if="loading" />
+      <Loading v-if="loadingFavLists" />
       <FavLists
         :listsFavs="listsOfFavs"
         @deleteRestaurant="deleteRestaurant"
@@ -12,7 +12,7 @@
       />
     </div>
     <div>
-      <Loading v-if="loading" />
+      <Loading v-if="loadingVisits" />
       <VisitedRestaurants
         :visitedRestaurants="visitedRestaurants"
         :total-items="totalVisits"

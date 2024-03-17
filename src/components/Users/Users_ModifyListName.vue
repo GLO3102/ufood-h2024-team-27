@@ -15,7 +15,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">
-              Modify List Name
+              Modify list name
             </h1>
             <button
               type="button"
@@ -27,8 +27,8 @@
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="modifyListName" class="col-form-label"
-                  >New Name:</label
+                <label for="recipient-name" class="col-form-label"
+                  >New name:</label
                 >
                 <input
                   v-model="listName"
@@ -40,13 +40,6 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
             <ModifyListBtn
               :listId="this.listId"
               :listName="this.listName"

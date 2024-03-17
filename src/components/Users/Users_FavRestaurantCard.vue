@@ -1,5 +1,5 @@
 <template>
-  <div v-if="restaurant" class="rounded-4 p-3 shadow">
+  <div v-if="restaurant" class="rounded-4 p-3 shadow" style="cursor: pointer">
     <div class="d-flex flex-column gap-3 mb-2">
       <img
         :src="restaurant.pictures[0]"
@@ -7,11 +7,23 @@
         style="aspect-ratio: 1/1; width: 100%"
         alt="restaurant thumbnail"
         draggable="false"
+        @click="
+          this.$router.push({
+            name: 'Restaurant',
+            params: { restaurantId: this.restaurantId.id },
+          })
+        "
       />
 
-      <div class="d-flex justify-content-between align-items-end">
+      <div class="d-flex justify-content-between align-items-end"
+      @click="
+          this.$router.push({
+            name: 'Restaurant',
+            params: { restaurantId: this.restaurantId.id },
+          })
+        ">
         <div class="text-truncate fw-bold" style="overflow: hidden">
-          <h3 class="fs-5">{{ restaurant.name }}</h3>
+          <h3 class="fs-6">{{ restaurant.name }}</h3>
         </div>
         <span class="ps-2" style="white-space: nowrap">
           <BtnDeleteResto
