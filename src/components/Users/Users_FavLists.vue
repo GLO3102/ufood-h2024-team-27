@@ -6,7 +6,10 @@
         <CreateList @createList="createList" />
       </div>
       <div>
-        <div :key="listFav.listId" v-for="listFav in listsFavs.slice().reverse()">
+        <div
+          :key="listFav.listId"
+          v-for="listFav in listsFavs.slice().reverse()"
+        >
           <FavList
             :listFav="listFav"
             @deleteRestaurant="handleDeleteRestaurant"

@@ -3,15 +3,14 @@
     <UserInfo :userInfo="userInfo" />
     <div>
       <Loading v-if="loading" />
-    <FavLists
-      :listsFavs="listsOfFavs"
-      @deleteRestaurant="deleteRestaurant"
-      @createList="createList"
-      @deleteList="deleteList"
-      @modifyListName="modifyListName"
-    />
-    
-  </div>
+      <FavLists
+        :listsFavs="listsOfFavs"
+        @deleteRestaurant="deleteRestaurant"
+        @createList="createList"
+        @deleteList="deleteList"
+        @modifyListName="modifyListName"
+      />
+    </div>
     <div>
       <Loading v-if="loading" />
       <VisitedRestaurants
@@ -21,7 +20,6 @@
         :page-size="pageSize"
         @page-changed="fetchVisits"
       />
-      
     </div>
   </div>
 </template>
@@ -31,7 +29,7 @@ import UserInfo from "@/components/Users/Users_Info.vue";
 import * as api from "@/api/api.js";
 import FavLists from "@/components/Users/Users_FavLists.vue";
 import VisitedRestaurants from "@/components/Users/Users_VisitedRestaurants.vue";
-import Loading from '@/components/Loading.vue';
+import Loading from "@/components/Loading.vue";
 
 export default {
   name: "User",
@@ -139,7 +137,7 @@ export default {
   async created() {
     try {
       this.loadingFavLists = true;
-      this.loadingVisits= true;
+      this.loadingVisits = true;
       this.userInfo = await api.apiGetUser(this.userId);
       this.fetchVisits(this.currentPage);
       const response = await api.apiGetUserFavorites(this.userId);
@@ -154,7 +152,7 @@ export default {
     } catch (error) {
       console.error("Error fetching favs", error);
       alert("Failed to fetch favs!");
-    }finally{
+    } finally {
       this.loadingFavLists = false;
       this.loadingVisits = false;
     }

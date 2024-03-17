@@ -18,10 +18,9 @@
     <main class="container-fluid">
       <div class="row mb-5" id="restaurants-section">
         <h2 class="text-center text-dark fs-1 fw-bold">Restaurants</h2>
-        
       </div>
       <div class="text-center" v-if="loading"><Loading /></div>
-      
+
       <RestaurantCards :restaurants="this.restaurants"></RestaurantCards>
 
       <div class="d-flex justify-content-center">
@@ -70,8 +69,8 @@ export default {
       this.restaurants = data.items;
     } catch (error) {
       console.error("Error while fetching restaurants");
-    }finally {
-      this.loading=false;
+    } finally {
+      this.loading = false;
     }
   },
   methods: {

@@ -5,18 +5,17 @@ import "bootstrap/dist/css/bootstrap.css";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.js";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "../src/assets/scss/custom.css";
-import 'leaflet/dist/leaflet.css';
+import "leaflet/dist/leaflet.css";
 import PrimeVue from "primevue/config";
-import 'primevue/resources/themes/aura-light-green/theme.css'
+import "primevue/resources/themes/aura-light-green/theme.css";
 
 const app = createApp(App);
 
 app.use(PrimeVue, {
-    zIndex: {
-        overlay: 1200
-    }
+  zIndex: {
+    overlay: 1200,
+  },
 });
 app.use(bootstrap);
 app.use(router);
 app.mount("#app");
-

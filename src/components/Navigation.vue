@@ -35,7 +35,8 @@
               :to="user.isLoggedIn ? '/user' : '/login'"
               @click="login"
             >
-            <i class="fa-solid fa-user"></i> {{ user.isLoggedIn ? user.name : "Log In"}}
+              <i class="fa-solid fa-user"></i>
+              {{ user.isLoggedIn ? user.name : "Log In" }}
             </router-link>
           </li>
           <li class="nav-item logout" v-if="user.isLoggedIn">
@@ -81,7 +82,6 @@
 </template>
 
 <script>
-
 import usersData from "@/assets/users.json";
 
 export default {
@@ -97,9 +97,7 @@ export default {
       dropdownVisible: false,
     };
   },
-  props: {
-
-  },
+  props: {},
   created() {
     this.setUser();
   },

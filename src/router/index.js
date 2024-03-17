@@ -26,5 +26,7 @@ const routes = [
 export const router = createRouter({
   history: createWebHashHistory(),
   routes,
-  scrollBehavior() {window.scrollTo(0, 0);}
+  scrollBehavior() {
+    window.scrollTo(0, 0);
+  },
 });

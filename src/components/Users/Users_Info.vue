@@ -52,7 +52,7 @@
               <div class="col-12 mt-3">
                 <p class="fw-bold">City</p>
                 <h6 class="fw-normal text-muted">Quebec</h6>
-              <hr class="border border-secondary border-1 opacity-50" /> 
+                <hr class="border border-secondary border-1 opacity-50" />
               </div>
             </div>
           </div>
