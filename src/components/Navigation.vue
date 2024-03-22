@@ -30,7 +30,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'User' }" @click="login">
+            <router-link class="nav-link" :to="{ name: 'Login' }" @click="login">
               <i class="fa-solid fa-user"></i>
               {{ user.isLoggedIn ? user.name : "Log In" }}
             </router-link>
@@ -42,6 +42,15 @@
               @click="logout"
             >
               <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+            </router-link>
+          </li>
+          <li class="nav-item register" v-if="!user.isLoggedIn">
+            <router-link
+              class="nav-link"
+              :to="{ name: 'Register' }"
+              
+            >
+              <i class="fa-solid fa-user-plus" aria-hidden="true"></i> Register
             </router-link>
           </li>
         </ul>
