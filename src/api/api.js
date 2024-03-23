@@ -1,42 +1,62 @@
-const isUnsecure = true; // update once auth is added
+const isUnsecure = false; // update once auth is added
 const optUnsecure = isUnsecure ? "unsecure/" : "";
 
 const URL = "https://ufoodapi.herokuapp.com/";
 
-// POST login (tp3 only)
-// POST logout (tp3 only)
+/*
+    Test user: "wasd bob", "wasd@bob.com", "pass"
+*/
 
-// POST signup (tp3 only)
+// POST login
+export async function apiLogin(email, password){
+  const address = URL + "login";
+  const headers = {
+    "content-type": "application/x-www-form-urlencoded",
+  };
+  const body = `email=${email}&password=${password}`;
+  return await _post(address, headers, body);
+}
+// POST logout
+export async function apiLogout(){
+  const address = URL + "logout";
+  return await _post(address,{},""); // redirect to /login somehow
+}
 
-// GET tokeninfo (tp3 only)
+// POST signup
+export async function apiSignUp(name, email, password){
+  const address = URL + "signup";
+  const headers = {
+    "content-type": "application/x-www-form-urlencoded",
+  };
+  const body = `name=${name}&email=${email}&password=${password}`;
+  return await _post(address, headers, body);
+}
 
-// GET restaurants
-export async function apiGetRestaurants(params = {}) {
-  // send queryparams as object with either string/int or list of string/int for each key
-  const validKeys = [
-    "limit",
-    "page",
-    "q",
-    "genres",
-    "price_range",
-    "lon",
-    "lat",
-  ];
-  const address =
-    URL + optUnsecure + "restaurants" + _toQueryParams(params, validKeys);
-  const headers = { authorization: null }; // add in tp3
+// GET tokeninfo
+export async function apiGetTokenInfo(token) {
+  const address = URL + "tokenInfo";
+  const headers = { authorization: token };
 
   return await _get(address, headers);
 }
+
+// GET restaurants
+export async function apiGetRestaurants(params, token) {
+  // send queryparams as object with either string/int or list of string/int for each key (ex: {a:"A", b:10, c:["B","C"]})
+  const validKeys = ["limit", "page", "q", "genres", "price_range", "lon", "lat"];
+  const address = URL + optUnsecure + "restaurants" + _toQueryParams(params, validKeys);
+  const headers = { authorization: token };
+  return await _get(address, headers);
+}
 // GET restaurants/[id]
-export async function apiGetRestaurant(restaurantId) {
+export async function apiGetRestaurant(restaurantId, token) {
   const address = URL + optUnsecure + "restaurants/" + restaurantId;
-  const headers = { authorization: null }; // add in tp3
+  const headers = { authorization: token };
 
   return await _get(address, headers);
 }
 // GET restaurants/[id]/visits
-export async function apiGetRestaurantVisits(restaurantId, params = {}) {
+export async function apiGetRestaurantVisits(restaurantId, params, token) {
   const validKeys = ["limit", "page"];
   const address =
     URL +
@@ -45,29 +65,29 @@ export async function apiGetRestaurantVisits(restaurantId, params = {}) {
     restaurantId +
     "/visits" +
     _toQueryParams(params, validKeys);
-  const headers = { authorization: null }; // add in tp3
+  const headers = { authorization: token };
 
   return await _get(address, headers);
 }
 
 // GET users
-export async function apiGetUsers(params = {}) {
+export async function apiGetUsers(params, token) {
   const validKeys = ["limit", "page", "q"];
   const address =
     URL + optUnsecure + "users" + _toQueryParams(params, validKeys);
-  const headers = { authorization: null }; // add in tp3
+  const headers = { authorization: token };
 
   return await _get(address, headers);
 }
 // GET users/[id]
-export async function apiGetUser(userId) {
+export async function apiGetUser(userId, token) {
   const address = URL + optUnsecure + "users/" + userId;
-  const headers = { authorization: null }; // add in tp3
+  const headers = { authorization: token };
 
   return await _get(address, headers);
 }
 // GET users/[id]/favorites
-export async function apiGetUserFavorites(userId, params = {}) {
+export async function apiGetUserFavorites(userId, params, token) {
   const validKeys = ["limit", "page"];
   const address =
     URL +
@@ -76,73 +96,50 @@ export async function apiGetUserFavorites(userId, params = {}) {
     userId +
     "/favorites" +
     _toQueryParams(params, validKeys);
-  const headers = { authorization: null }; // add in tp3
+  const headers = { authorization: token };
 
   return await _get(address, headers);
 }
-// POST follow (tp3 only)
-/*export async function apiFollowUser(targetId){
-    const address = URL + optUnsecure + "follow";
-    const headers = {'authorization': null, // add in tp3
-                     'content-type': "application/json"};
-    const body = JSON.stringify({id: targetId});
+// POST follow (untested because I don't know how I would test?)
+export async function apiFollowUser(targetId, token){
+  const address = URL + optUnsecure + "follow";
+  const headers = {'authorization': token,
+                   'content-type': "application/json"};
+  const body = JSON.stringify({id: targetId});
 
-    return await _post(address, headers, body);
-}*/
+  return await _post(address, headers, body);
+}
 // DELETE follow/[id] (tp3 only)
-/*export async function apiUnfollowUser(targetId){
-    const address = URL + optUnsecure + "follow/" + targetId;
-    const headers = {'authorization': null} // add in tp3
+export async function apiUnfollowUser(targetId, token){
+  const address = URL + optUnsecure + "follow/" + targetId;
+  const headers = {'authorization': token}
 
-    return await _delete(address, headers);
-}*/
+  return await _delete(address, headers);
+}
 
-// GET users/[id]/restaurants/visits
-export async function apiGetVisits(userId, page) {
+// GET users/[id]/restaurants/visits // The params argument was there because limit=N is also a valid query param, I don't know what this breaks though
+export async function apiGetVisits(userId, params, token) {
   const validKeys = ["limit", "page"];
-  const address =
-    URL +
-    optUnsecure +
-    "users/" +
-    userId +
-    "/restaurants/visits" +
-    "?page=" +
-    page;
-  const headers = { authorization: null }; // add in tp3
+  const address = URL + optUnsecure + "users/" + userId + "/restaurants/visits" + _toQueryParams(params, validKeys);
+  const headers = { authorization: token };
 
   return await _get(address, headers);
 }
-
-// modified original so i could make it work faster
-//export async function apiGetVisits(userId,params={}){
-//  const validKeys = ["limit","page"]
-// const address = URL + optUnsecure + "users/" + userId + "/restaurants/visits" + "?page=2";
-//const headers = {'authorization': null} // add in tp3
-
-//  return await _get(address, headers);
-//}
 
 // GET users/[id]/restaurants/visits/[id]
-export async function apiGetVisit(userId, visitId) {
+export async function apiGetVisit(userId, visitId, token) {
   const address =
     URL + optUnsecure + "users/" + userId + "/restaurants/visits/" + visitId;
-  const headers = { authorization: null }; // add in tp3
-
+  const headers = { authorization: token };
   return await _get(address, headers);
 }
 // POST users/[id]/restaurants/visits
-export async function apiCreateVisit(
-  userId,
-  restaurantId,
-  comment,
-  rating,
-  date,
-) {
+export async function apiCreateVisit(userId, restaurantId, comment, rating, date, token) {
   // might refactor that into a single {review} object or sth
   const address = URL + optUnsecure + "users/" + userId + "/restaurants/visits";
   const headers = {
-    authorization: null, // add in tp3
-    "content-type": "application/json",
+    authorization: token,
+    "content-type": "application/json"
   };
   const body = JSON.stringify({
     restaurant_id: restaurantId,
@@ -154,11 +151,7 @@ export async function apiCreateVisit(
   return await _post(address, headers, body);
 }
 // GET users/[id]/restaurants/[id]/visits
-export async function apiGetVisitsByRestaurant(
-  userId,
-  restaurantId,
-  params = {},
-) {
+export async function apiGetVisitsByRestaurant(userId, restaurantId, params, token) {
   const validKeys = ["limit", "page"];
   const address =
     URL +
@@ -169,72 +162,64 @@ export async function apiGetVisitsByRestaurant(
     restaurantId +
     "/visits" +
     _toQueryParams(params, validKeys);
-  const headers = { authorization: null }; // add in tp3
-
+  const headers = { authorization: token };
   return await _get(address, headers);
 }
 
 // GET favorites
-export async function apiGetFavoritesLists(params = {}) {
+export async function apiGetFavoritesLists(params, token) {
   const validKeys = ["limit", "page"];
   const address =
     URL + optUnsecure + "favorites" + _toQueryParams(params, validKeys);
-  const headers = { authorization: null }; // add in tp3
+  const headers = { authorization: token };
 
   return await _get(address, headers);
 }
 // GET favorites/[id]
-export async function apiGetFavoritesList(listId) {
+export async function apiGetFavoritesList(listId, token) {
   // see the thing is, lists and users are 100% independant
   const address = URL + optUnsecure + "favorites/" + listId;
-  const headers = { authorization: null }; // add in tp3
+  const headers = { authorization: token };
 
   return await _get(address, headers);
 }
 // POST favorites
-export async function apiCreateFavoritesList(
-  listName,
-  ownerAddress = "marc@ufood.com",
-) {
-  // remember to stop using owner once auth tokens are added
+export async function apiCreateFavoritesList(listName, token) {
   const address = URL + optUnsecure + "favorites";
   const headers = {
-    authorization: null, // add in tp3
+    authorization: token,
     "content-type": "application/json",
   };
-  const body = JSON.stringify({ name: listName, owner: ownerAddress });
+  const owner = JSON.parse(await apiGetTokenInfo(token)).address;
+  const body = JSON.stringify({ name: listName, owner: owner });
 
   return await _post(address, headers, body);
 }
 // PUT favorites/[id]
-export async function apiEditFavoritesList(
-  listId,
-  newListName,
-  newOwnerAddress = "marc@ufood.com",
-) {
-  // remember to stop using owner once auth tokens are added
+export async function apiEditFavoritesList(listId, newListName, token) {
   const address = URL + optUnsecure + "favorites/" + listId;
   const headers = {
-    authorization: null, // add in tp3
+    authorization: token,
     "content-type": "application/json",
   };
-  const body = JSON.stringify({ name: newListName, owner: newOwnerAddress });
+  const owner = JSON.parse(await apiGetTokenInfo(token)).address;
+  const body = JSON.stringify({ name: newListName, owner: owner });
 
   return await _put(address, headers, body);
 }
 // DELETE favorites/[id]
-export async function apiDeleteFavoritesList(listId) {
-  // server returns 500 for now
+export async function apiDeleteFavoritesList(listId, token) {
+  // server should stop returning 500
   const address = URL + optUnsecure + "favorites/" + listId;
-  const headers = { authorization: null }; // add in tp3
+  const headers = { authorization: token };
 
   return await _delete(address, headers);
 }
 // POST favorites/[id]/restaurants
-export async function apiAddToFavoritesList(listId, restaurantId) {
+export async function apiAddToFavoritesList(listId, restaurantId, token) {
   const address = URL + optUnsecure + "favorites/" + listId + "/restaurants";
   const headers = {
-    authorization: null, // add in tp3
+    authorization: token,
     "content-type": "application/json",
   };
   const body = JSON.stringify({ id: restaurantId });
@@ -242,11 +227,11 @@ export async function apiAddToFavoritesList(listId, restaurantId) {
   return await _post(address, headers, body);
 }
 // DELETE favorites/[id]/restaurants/[id]
-export async function apiRemoveFromFavoritesList(listId, restaurantId) {
-  // also returns 500
+export async function apiRemoveFromFavoritesList(listId, restaurantId, token) {
+  // also should no longer return 500
   const address =
     URL + optUnsecure + "favorites/" + listId + "/restaurants/" + restaurantId;
-  const headers = { authorization: null }; // add in tp3
+  const headers = { authorization: token };
 
   return await _delete(address, headers);
 }
