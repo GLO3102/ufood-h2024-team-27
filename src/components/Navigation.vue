@@ -30,9 +30,15 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'Login' }" @click="login">
+            <router-link class="nav-link" :to="{ name: 'Login' }" v-if="!user.isLoggedIn">
               <i class="fa-solid fa-user"></i>
-              {{ user.isLoggedIn ? user.name : "Log In" }}
+              Log In
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{ name: 'User' }" v-if="user.isLoggedIn">
+              <i class="fa-solid fa-user"></i>
+              My Profile
             </router-link>
           </li>
           <li class="nav-item logout" v-if="user.isLoggedIn">
@@ -92,6 +98,7 @@
 </template>
 
 <script>
+import {checkUserLoggedIn, logout} from '@/auth/auth'
 export default {
   data() {
     return {
@@ -106,8 +113,8 @@ export default {
     };
   },
   props: {},
-  created() {
-    this.setUser();
+  created(){
+    this.user.isLoggedIn = checkUserLoggedIn();
   },
   computed: {
     filteredItems() {
@@ -132,17 +139,13 @@ export default {
       // this.$router.push({ path: "/restaurant" });
     },
 
-    setUser() {
-      this.user.isLoggedIn = true;
-    },
-
+  
     logout() {
+      logout();
       this.user.isLoggedIn = false;
+      this.$router.push({name:'Home'});
     },
 
-    login() {
-      this.user.isLoggedIn = true;
-    },
 
     hideDropDown(event) {
       if (
@@ -168,6 +171,7 @@ export default {
   beforeDestroy() {
     document.removeEventListener("click", this.handleClickOutside);
   },
+ 
 };
 </script>
 
@@ -180,3 +184,4 @@ export default {
   width: 100%;
 }
 </style>
+@/auth/auth

@@ -30,6 +30,8 @@ import * as api from "@/api/api.js";
 import FavLists from "@/components/Users/Users_FavLists.vue";
 import VisitedRestaurants from "@/components/Users/Users_VisitedRestaurants.vue";
 import Loading from "@/components/Loading.vue";
+import Cookies from 'js-cookie';
+import {getUserId} from '@/auth/auth.js'
 
 export default {
   name: "User",
@@ -41,7 +43,7 @@ export default {
   },
   data() {
     return {
-      userId: "618b311822b4a0000478ab1b",
+      userId: "",
       userInfo: [],
       visitedRestaurants: [],
       listsOfFavs: [],
@@ -51,6 +53,7 @@ export default {
       totalVisits: 0,
       loadingFavLists: false,
       loadingVisits: false,
+      token : Cookies.get('user_cookie'),
     };
   },
   computed: {},
@@ -64,7 +67,7 @@ export default {
     },
     async deleteRestaurant(restId, listId) {
       try {
-        await api.apiRemoveFromFavoritesList(listId, restId);
+        await api.apiRemoveFromFavoritesList(listId, restId, this.token);
         let list = this.listsOfFavs.find((list) => list.listId === listId);
         if (list) {
           list.restaurants = list.restaurants.filter(
@@ -78,7 +81,7 @@ export default {
     },
     async createList(listName) {
       try {
-        const newList = await api.apiCreateFavoritesList(listName);
+        const newList = await api.apiCreateFavoritesList(listName, this.token);
         if (newList) {
           this.listsOfFavs.push({
             listId: newList.id,
@@ -93,7 +96,7 @@ export default {
     },
     async deleteList(listId) {
       try {
-        await api.apiDeleteFavoritesList(listId);
+        await api.apiDeleteFavoritesList(listId, this.token);
         this.listsOfFavs = this.listsOfFavs.filter(
           (list) => list.listId !== listId,
         );
@@ -104,7 +107,7 @@ export default {
     },
     async modifyListName(listId, listName) {
       try {
-        const modifiedList = await api.apiEditFavoritesList(listId, listName);
+        const modifiedList = await api.apiEditFavoritesList(listId, listName, this.token);
 
         if (modifiedList && modifiedList.id && modifiedList.name) {
           const index = this.listsOfFavs.findIndex(
@@ -123,7 +126,7 @@ export default {
     async fetchVisits(page) {
       try {
         this.currentPage = page;
-        const response = await api.apiGetVisits(this.userId, page);
+        const response = await api.apiGetVisits(this.userId, page, this.token);
         if (response && response.items) {
           this.visitedRestaurants = response.items;
           this.totalVisits = response.total;
@@ -138,10 +141,10 @@ export default {
     try {
       this.loadingFavLists = true;
       this.loadingVisits = true;
-      this.userInfo = await api.apiGetUser(this.userId);
+      this.userId = await getUserId(this.token);
+      this.userInfo = await api.apiGetUser(this.userId, this.token);
       this.fetchVisits(this.currentPage);
-      const response = await api.apiGetUserFavorites(this.userId);
-
+      const response = await api.apiGetUserFavorites(this.userId ,this.token, {});
       if (response && response.items) {
         this.listsOfFavs = response.items.map((item) => ({
           listId: item.id,
@@ -161,3 +164,4 @@ export default {
 </script>
 
 <style></style>
+@/auth/auth.js

@@ -16,6 +16,8 @@
                       type="email"
                       id="email"
                       class="form-control form-control-lg"
+                      v-model="email"
+                 
                     />
                     <label class="form-label" for="email">Your Email</label>
                   </div>
@@ -24,6 +26,7 @@
                     <input
                       type="password"
                       id="password"
+                      v-model="password"
                       class="form-control form-control-lg"
                     />
                     <label class="form-label" for="password">Password</label>
@@ -33,11 +36,12 @@
                     <button
                       type="button"
                       class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                      @click="handleLogin()"
                     >
                       Log in
                     </button>
                   </div>
-
+                  <p class="text-danger" v-if="error">{{ errorMessage }}</p>
                   <p class="text-center text-muted mt-5 mb-0">
                     Dont have an account?
                     <router-link
@@ -57,7 +61,36 @@
 </template>
 
 <script>
+import { login } from '@/auth/auth.js';
+import {ref} from 'vue'
+
 export default {
   name: "Login",
+  data() {
+    return {
+      email: '',
+      password: '',
+      error: false,
+      errorMessage: '',
+    };
+  },
+  methods: {
+    async handleLogin() {
+      try {
+        const data = await login(this.email, this.password);
+        if (data.success){
+          this.$router.push({name: "User"});
+        }else {
+          this.error = true;
+          this.errorMessage = 'Error while logging in, check password and email'
+        }
+      } catch (error) {
+        this.error = true;
+        this.errorMessage = 'Could not log in. Check credentials';
+        console.error(error.message);
+      }
+    }
+  }
 };
 </script>
+@/auth/auth.js

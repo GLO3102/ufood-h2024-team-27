@@ -87,7 +87,7 @@ export async function apiGetUser(userId, token) {
   return await _get(address, headers);
 }
 // GET users/[id]/favorites
-export async function apiGetUserFavorites(userId, params, token) {
+export async function apiGetUserFavorites(userId, token, params) {
   const validKeys = ["limit", "page"];
   const address =
     URL +
@@ -190,7 +190,8 @@ export async function apiCreateFavoritesList(listName, token) {
     authorization: token,
     "content-type": "application/json",
   };
-  const owner = JSON.parse(await apiGetTokenInfo(token)).address;
+  const response = await apiGetTokenInfo(token);
+  const owner = response.address;
   const body = JSON.stringify({ name: listName, owner: owner });
 
   return await _post(address, headers, body);
@@ -202,7 +203,8 @@ export async function apiEditFavoritesList(listId, newListName, token) {
     authorization: token,
     "content-type": "application/json",
   };
-  const owner = JSON.parse(await apiGetTokenInfo(token)).address;
+  const response = await apiGetTokenInfo(token);
+  const owner = response.address;
   const body = JSON.stringify({ name: newListName, owner: owner });
 
   return await _put(address, headers, body);
