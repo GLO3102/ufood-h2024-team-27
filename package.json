@@ -17,6 +17,7 @@
     "core-js": "^3.8.3",
     "js-cookie": "^3.0.5",
     "mapbox-gl": "^3.2.0",
+    "pinia": "^2.1.7",
     "primevue": "^3.49.1",
     "vue": "^3.2.13",
     "vue-router": "^4.1.3"
