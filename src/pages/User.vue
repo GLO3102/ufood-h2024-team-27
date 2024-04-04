@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <UserInfo :userInfo="userInfo" />
+    <UserInfo :userInfo="userInfo" :gravatarUrl="gravatarUrl" />
     <div>
       <div>
   
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import SparkMD5 from 'spark-md5'
 import UserInfo from "@/components/Users/Users_Info.vue";
 import * as api from "@/api/api.js";
 import FavLists from "@/components/Users/Users_FavLists.vue";
@@ -64,6 +65,8 @@ export default {
     return {
       userId: "",
       userInfo: [],
+      userEmail: '',
+      gravatarUrl: '',
       visitedRestaurants: [],
       listsOfFavs: [],
       followings: [],
@@ -81,6 +84,13 @@ export default {
   methods: {
     goHome() {
       this.$router.push("/");
+    },
+
+    getGravatarUrl(email){
+      const trimmedEmail = email.trim().toLowerCase();
+      const hash = SparkMD5.hash(trimmedEmail);
+      const size = 200;
+      return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=retro`;
     },
 
     changeState() {
@@ -175,12 +185,10 @@ export default {
       this.loadingVisits = true;
       this.userId = await getUserId(this.token);
       this.userInfo = await api.apiGetUser(this.userId, this.token);
+      this.userEmail = this.userInfo.email;
+      this.gravatarUrl = this.getGravatarUrl(this.userEmail);
       this.followings =await follow.getFollowings(this.userId, this.token);
       this.followers = await follow.getFollowers(this.userId, this.token);
-      //api.apiFollowUser("657796e4ace10779fd2aee01", this.token)
-      //api.apiFollowUser("621783bcad4a290004b5843b", this.token)
-      //api.apiFollowUser("660f1a236da4a07c232670a6", this.token)
-      
       this.fetchVisits(this.currentPage);
       const response = await api.apiGetUserFavorites(this.userId ,this.token, {});
       if (response && response.items) {

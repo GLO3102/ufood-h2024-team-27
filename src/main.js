@@ -18,6 +18,7 @@ app.use(PrimeVue, {
     overlay: 1200,
   },
 });
+
 app.use(bootstrap);
 app.use(router);
 app.use(pinia);

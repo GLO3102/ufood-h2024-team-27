@@ -7,11 +7,12 @@
         >
           <div class="col-sm-4 bg-primary rounded-left">
             <div class="card-block text-center text-white">
-              <i
-                class="fa-solid fa-user rounded-circle mb-3 mt-5"
-                style="font-size: 150px"
+              <img
+                :src="gravatarUrl"
+                class="rounded-circle mb-3 mt-5"
+                style="width: 150px; height: 150px;"
                 alt="Avatar"
-              ></i>
+              />
               <h5 class="mb-2">
                 <strong
                   >{{ userInfo.name }}
@@ -65,9 +66,15 @@
 <script>
 export default {
   name: "UserInfo",
-  methods: {},
+  methods: {
+
+    created() {
+      console.log(gravatarUrl)
+    }
+  },
   props: {
     userInfo: Object,
+    gravatarUrl: String,
   },
 };
 </script>
