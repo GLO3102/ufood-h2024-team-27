@@ -2,6 +2,19 @@
   <div class="container">
     <UserInfo :userInfo="userInfo" />
     <div>
+      <div>
+  
+          <Followings
+          :followings="followings"
+          @unfollow="unfollow"
+          />
+
+      
+          <Followers
+          :followers="followers"
+          />
+      
+    </div>
       <Loading v-if="loadingFavLists" />
       <FavLists
         :listsFavs="listsOfFavs"
@@ -22,6 +35,7 @@
       />
     </div>
   </div>
+
 </template>
 
 <script>
@@ -30,6 +44,9 @@ import * as api from "@/api/api.js";
 import FavLists from "@/components/Users/Users_FavLists.vue";
 import VisitedRestaurants from "@/components/Users/Users_VisitedRestaurants.vue";
 import Loading from "@/components/Loading.vue";
+import Followings from '../components/Follows/FollowingsList.vue';
+import Followers from '../components/Follows/FollowersList.vue';
+import * as follow from '@/Follows/follow.js'
 import Cookies from 'js-cookie';
 import {getUserId} from '@/auth/auth.js'
 
@@ -40,6 +57,8 @@ export default {
     FavLists,
     VisitedRestaurants,
     Loading,
+    Followings,
+    Followers,
   },
   data() {
     return {
@@ -47,6 +66,8 @@ export default {
       userInfo: [],
       visitedRestaurants: [],
       listsOfFavs: [],
+      followings: [],
+      followers: [],
       state: { isActive: true },
       currentPage: 0,
       pageSize: 10,
@@ -79,6 +100,17 @@ export default {
         alert("Failed to delete restaurant!");
       }
     },
+    async unfollow(unfollowId){
+      try{
+        await follow.unfollow(unfollowId, this.token);
+        this.followings = this.followings.filter((followings) => followings.id !== unfollowId,)
+      }catch(error){
+        console.error("Couldnt unfollow...", error);
+        alert("Couldnt unfollow...");
+      }
+    },
+   
+
     async createList(listName) {
       try {
         const newList = await api.apiCreateFavoritesList(listName, this.token);
@@ -143,6 +175,12 @@ export default {
       this.loadingVisits = true;
       this.userId = await getUserId(this.token);
       this.userInfo = await api.apiGetUser(this.userId, this.token);
+      this.followings =await follow.getFollowings(this.userId, this.token);
+      this.followers = await follow.getFollowers(this.userId, this.token);
+      //api.apiFollowUser("657796e4ace10779fd2aee01", this.token)
+      //api.apiFollowUser("621783bcad4a290004b5843b", this.token)
+      //api.apiFollowUser("660f1a236da4a07c232670a6", this.token)
+      
       this.fetchVisits(this.currentPage);
       const response = await api.apiGetUserFavorites(this.userId ,this.token, {});
       if (response && response.items) {

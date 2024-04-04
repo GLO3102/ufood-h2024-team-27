@@ -60,7 +60,7 @@
                   <p class="text-success" v-if="this.CreatedSuccess">Account created successfully</p>
                   <p class="text-center text-muted mt-5 mb-0">
                     Have already an account?
-                    <a href="/" class="fw-bold text-body"><u>Login here</u></a>
+                    <a href="/#/login" class="fw-bold text-body"><u>Login here</u></a>
                   </p>
                 </form>
               </div>
