@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import * as api from "@/api/api.js";
+import { apiGetRestaurant } from "@/api/apiRestaurants";
 import BtnDeleteResto from "./DeleteBtnRestaurant.vue";
 
 export default {
@@ -56,7 +56,7 @@ export default {
   },
   async created() {
     try {
-      this.restaurant = await api.apiGetRestaurant(this.restaurantId.id);
+      this.restaurant = await apiGetRestaurant(this.restaurantId.id);
     } catch (error) {
       console.error("Error fetching restaurant details:", error);
     }

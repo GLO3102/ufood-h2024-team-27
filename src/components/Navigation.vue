@@ -30,13 +30,21 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'Login' }" v-if="!user.isLoggedIn">
+            <router-link
+              class="nav-link"
+              :to="{ name: 'Login' }"
+              v-if="!user.isLoggedIn"
+            >
               <i class="fa-solid fa-user"></i>
               Log In
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'User' }" v-if="user.isLoggedIn">
+            <router-link
+              class="nav-link"
+              :to="{ name: 'User' }"
+              v-if="user.isLoggedIn"
+            >
               <i class="fa-solid fa-user"></i>
               My Profile
             </router-link>
@@ -51,11 +59,7 @@
             </router-link>
           </li>
           <li class="nav-item register" v-if="!user.isLoggedIn">
-            <router-link
-              class="nav-link"
-              :to="{ name: 'Register' }"
-              
-            >
+            <router-link class="nav-link" :to="{ name: 'Register' }">
               <i class="fa-solid fa-user-plus" aria-hidden="true"></i> Register
             </router-link>
           </li>
@@ -98,7 +102,7 @@
 </template>
 
 <script>
-import {checkUserLoggedIn, logout} from '@/auth/auth'
+import { checkUserLoggedIn, logout } from "@/auth/auth";
 export default {
   data() {
     return {
@@ -113,7 +117,7 @@ export default {
     };
   },
   props: {},
-  created(){
+  created() {
     this.user.isLoggedIn = checkUserLoggedIn();
   },
   computed: {
@@ -139,13 +143,11 @@ export default {
       // this.$router.push({ path: "/restaurant" });
     },
 
-  
     logout() {
       logout();
       this.user.isLoggedIn = false;
-      this.$router.push({name:'Home'});
+      this.$router.push({ name: "Home" });
     },
-
 
     hideDropDown(event) {
       if (
@@ -171,7 +173,6 @@ export default {
   beforeDestroy() {
     document.removeEventListener("click", this.handleClickOutside);
   },
- 
 };
 </script>
 

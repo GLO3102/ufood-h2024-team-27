@@ -139,16 +139,16 @@
 </template>
 
 <script>
-import {
-  apiGetRestaurant,
-  apiGetUserFavorites,
-  apiAddToFavoritesList,
-  apiCreateVisit,
-} from "@/api/api";
+import { apiGetRestaurant } from "@/api/apiRestaurants";
+import { apiAddToFavoritesList } from "@/api/apiFavorites";
+import { apiGetUserFavorites } from "@/api/apiUsers";
+import { apiCreateVisit } from "@/api/apiVisits";
+import { getUserId } from "@/auth/auth";
 import GenreButton from "../components/Search/GenreButton.vue";
 import FavoriteModal from "../components/Favorites/FavoriteModal.vue";
 import VisitModal from "../components/Home/VisitModal.vue";
 import MapquestMap from "../components/MapquestMap.vue";
+import Cookies from "js-cookie";
 
 export default {
   name: "Restaurant",
@@ -159,19 +159,23 @@ export default {
       restaurant: {},
       loaded: false,
       favorites: [],
+      token: Cookies.get("user_cookie"),
+      userId: ""
     };
   },
   async created() {
-    const data = await apiGetRestaurant(this.restaurantId);
+    const data = await apiGetRestaurant(this.restaurantId, this.token);
+    const id = await getUserId(this.token);
+    this.userId = id;
     this.restaurant = data;
-    const favorites = await apiGetUserFavorites("618b311822b4a0000478ab1b");
+    const favorites = await apiGetUserFavorites(this.userId, this.token, {});
     this.favorites = favorites.items;
     this.loaded = true;
   },
   methods: {
     roundedCorner(index) {
-      if (index == 1) return "rounded-top-right-2";
-      if (index == 3) return "rounded-bottom-right-2";
+      if (index === 1) return "rounded-top-right-2";
+      if (index === 3) return "rounded-bottom-right-2";
       return "";
     },
     convertRatingPercentage(rating) {
@@ -182,15 +186,16 @@ export default {
       return hour;
     },
     addToFavorites(form) {
-      apiAddToFavoritesList(form.favorite_id, form.restaurant_id);
+      apiAddToFavoritesList(form.favorite_id, form.restaurant_id, this.token);
     },
     async submitVisit(form) {
       await apiCreateVisit(
-        "618b311822b4a0000478ab1b",
+        this.userId,
         form.restaurant_id,
         form.comment,
         form.rating,
         form.date,
+        this.token
       );
     },
   },

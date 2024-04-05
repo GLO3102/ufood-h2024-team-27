@@ -8,7 +8,7 @@ const URL = "https://ufoodapi.herokuapp.com/";
 */
 
 // POST login
-export async function apiLogin(email, password){
+export async function apiLogin(email, password) {
   const address = URL + "login";
   const headers = {
     "content-type": "application/x-www-form-urlencoded",
@@ -17,13 +17,13 @@ export async function apiLogin(email, password){
   return await _post(address, headers, body);
 }
 // POST logout
-export async function apiLogout(){
+export async function apiLogout() {
   const address = URL + "logout";
-  return await _post(address,{},""); // redirect to /login somehow
+  return await _post(address, {}, ""); // redirect to /login somehow
 }
 
 // POST signup
-export async function apiSignUp(name, email, password){
+export async function apiSignUp(name, email, password) {
   const address = URL + "signup";
   const headers = {
     "content-type": "application/x-www-form-urlencoded",
@@ -43,11 +43,21 @@ export async function apiGetTokenInfo(token) {
 // GET restaurants
 export async function apiGetRestaurants(params, token) {
   // send queryparams as object with either string/int or list of string/int for each key (ex: {a:"A", b:10, c:["B","C"]})
-  const validKeys = ["limit", "page", "q", "genres", "price_range", "lon", "lat"];
-  const address = URL + optUnsecure + "restaurants" + _toQueryParams(params, validKeys);
+  const validKeys = [
+    "limit",
+    "page",
+    "q",
+    "genres",
+    "price_range",
+    "lon",
+    "lat",
+  ];
+  const address =
+    URL + optUnsecure + "restaurants" + _toQueryParams(params, validKeys);
   const headers = { authorization: token };
   return await _get(address, headers);
 }
+
 // GET restaurants/[id]
 export async function apiGetRestaurant(restaurantId, token) {
   const address = URL + optUnsecure + "restaurants/" + restaurantId;
@@ -55,6 +65,7 @@ export async function apiGetRestaurant(restaurantId, token) {
 
   return await _get(address, headers);
 }
+
 // GET restaurants/[id]/visits
 export async function apiGetRestaurantVisits(restaurantId, params, token) {
   const validKeys = ["limit", "page"];
@@ -79,6 +90,7 @@ export async function apiGetUsers(params, token) {
 
   return await _get(address, headers);
 }
+
 // GET users/[id]
 export async function apiGetUser(userId, token) {
   const address = URL + optUnsecure + "users/" + userId;
@@ -86,6 +98,7 @@ export async function apiGetUser(userId, token) {
 
   return await _get(address, headers);
 }
+
 // GET users/[id]/favorites
 export async function apiGetUserFavorites(userId, token, params) {
   const validKeys = ["limit", "page"];
@@ -100,19 +113,19 @@ export async function apiGetUserFavorites(userId, token, params) {
 
   return await _get(address, headers);
 }
+
 // POST follow (untested because I don't know how I would test?)
-export async function apiFollowUser(targetId, token){
+export async function apiFollowUser(targetId, token) {
   const address = URL + optUnsecure + "follow";
-  const headers = {'authorization': token,
-                   'content-type': "application/json"};
-  const body = JSON.stringify({id: targetId});
+  const headers = { authorization: token, "content-type": "application/json" };
+  const body = JSON.stringify({ id: targetId });
 
   return await _post(address, headers, body);
 }
 // DELETE follow/[id] (tp3 only)
-export async function apiUnfollowUser(targetId, token){
+export async function apiUnfollowUser(targetId, token) {
   const address = URL + optUnsecure + "follow/" + targetId;
-  const headers = {'authorization': token}
+  const headers = { authorization: token };
 
   return await _delete(address, headers);
 }
@@ -120,7 +133,13 @@ export async function apiUnfollowUser(targetId, token){
 // GET users/[id]/restaurants/visits // The params argument was there because limit=N is also a valid query param, I don't know what this breaks though
 export async function apiGetVisits(userId, params, token) {
   const validKeys = ["limit", "page"];
-  const address = URL + optUnsecure + "users/" + userId + "/restaurants/visits" + _toQueryParams(params, validKeys);
+  const address =
+    URL +
+    optUnsecure +
+    "users/" +
+    userId +
+    "/restaurants/visits" +
+    _toQueryParams(params, validKeys);
   const headers = { authorization: token };
 
   return await _get(address, headers);
@@ -134,12 +153,19 @@ export async function apiGetVisit(userId, visitId, token) {
   return await _get(address, headers);
 }
 // POST users/[id]/restaurants/visits
-export async function apiCreateVisit(userId, restaurantId, comment, rating, date, token) {
+export async function apiCreateVisit(
+  userId,
+  restaurantId,
+  comment,
+  rating,
+  date,
+  token,
+) {
   // might refactor that into a single {review} object or sth
   const address = URL + optUnsecure + "users/" + userId + "/restaurants/visits";
   const headers = {
     authorization: token,
-    "content-type": "application/json"
+    "content-type": "application/json",
   };
   const body = JSON.stringify({
     restaurant_id: restaurantId,
@@ -150,8 +176,14 @@ export async function apiCreateVisit(userId, restaurantId, comment, rating, date
 
   return await _post(address, headers, body);
 }
+
 // GET users/[id]/restaurants/[id]/visits
-export async function apiGetVisitsByRestaurant(userId, restaurantId, params, token) {
+export async function apiGetVisitsByRestaurant(
+  userId,
+  restaurantId,
+  params,
+  token,
+) {
   const validKeys = ["limit", "page"];
   const address =
     URL +
@@ -175,6 +207,7 @@ export async function apiGetFavoritesLists(params, token) {
 
   return await _get(address, headers);
 }
+
 // GET favorites/[id]
 export async function apiGetFavoritesList(listId, token) {
   // see the thing is, lists and users are 100% independant
@@ -183,6 +216,7 @@ export async function apiGetFavoritesList(listId, token) {
 
   return await _get(address, headers);
 }
+
 // POST favorites
 export async function apiCreateFavoritesList(listName, token) {
   const address = URL + optUnsecure + "favorites";
@@ -196,6 +230,7 @@ export async function apiCreateFavoritesList(listName, token) {
 
   return await _post(address, headers, body);
 }
+
 // PUT favorites/[id]
 export async function apiEditFavoritesList(listId, newListName, token) {
   const address = URL + optUnsecure + "favorites/" + listId;
@@ -217,6 +252,7 @@ export async function apiDeleteFavoritesList(listId, token) {
 
   return await _delete(address, headers);
 }
+
 // POST favorites/[id]/restaurants
 export async function apiAddToFavoritesList(listId, restaurantId, token) {
   const address = URL + optUnsecure + "favorites/" + listId + "/restaurants";
@@ -228,6 +264,7 @@ export async function apiAddToFavoritesList(listId, restaurantId, token) {
 
   return await _post(address, headers, body);
 }
+
 // DELETE favorites/[id]/restaurants/[id]
 export async function apiRemoveFromFavoritesList(listId, restaurantId, token) {
   // also should no longer return 500

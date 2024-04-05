@@ -7,7 +7,7 @@
             <div class="card" style="border-radius: 15px">
               <div class="card-body p-5">
                 <h2 class="text-uppercase text-center mb-5">
-                    Log Into Your Account
+                  Log Into Your Account
                 </h2>
 
                 <form>
@@ -17,7 +17,6 @@
                       id="email"
                       class="form-control form-control-lg"
                       v-model="email"
-                 
                     />
                     <label class="form-label" for="email">Your Email</label>
                   </div>
@@ -61,36 +60,36 @@
 </template>
 
 <script>
-import { login } from '@/auth/auth.js';
-import {ref} from 'vue'
+import { login } from "@/auth/auth.js";
 
 export default {
   name: "Login",
   data() {
     return {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       error: false,
-      errorMessage: '',
+      errorMessage: "",
     };
   },
   methods: {
     async handleLogin() {
       try {
         const data = await login(this.email, this.password);
-        if (data.success){
-          this.$router.push({name: "User"});
-        }else {
+        if (data.success) {
+          this.$router.push({ name: "User" });
+        } else {
           this.error = true;
-          this.errorMessage = 'Error while logging in, check password and email'
+          this.errorMessage =
+            "Error while logging in, check password and email";
         }
       } catch (error) {
         this.error = true;
-        this.errorMessage = 'Could not log in. Check credentials';
+        this.errorMessage = "Could not log in. Check credentials";
         console.error(error.message);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 @/auth/auth.js

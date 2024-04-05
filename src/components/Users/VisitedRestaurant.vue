@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import * as api from "@/api/api.js";
+import { apiGetRestaurant } from "@/api/apiRestaurants.js";
 import Rating from "primevue/rating";
 
 export default {
@@ -56,7 +56,7 @@ export default {
   },
   async created() {
     try {
-      this.restaurant = await api.apiGetRestaurant(this.visit.restaurant_id);
+      this.restaurant = await apiGetRestaurant(this.visit.restaurant_id);
       this.loaded = true;
     } catch (error) {
       console.error("Error while fetching restaurant", error);

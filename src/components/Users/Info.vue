@@ -10,7 +10,7 @@
               <img
                 :src="gravatarUrl"
                 class="rounded-circle mb-3 mt-5"
-                style="width: 150px; height: 150px;"
+                style="width: 150px; height: 150px"
                 alt="Avatar"
               />
               <h5 class="mb-2">
@@ -67,10 +67,9 @@
 export default {
   name: "UserInfo",
   methods: {
-
     created() {
-      console.log(gravatarUrl)
-    }
+      console.log(gravatarUrl);
+    },
   },
   props: {
     userInfo: Object,

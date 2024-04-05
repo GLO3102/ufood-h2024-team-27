@@ -18,9 +18,7 @@
                       v-model="name"
                       class="form-control form-control-lg"
                     />
-                    <label class="form-label" for="name"
-                      >Your Name</label
-                    >
+                    <label class="form-label" for="name">Your Name</label>
                   </div>
 
                   <div class="form-outline mb-4">
@@ -30,9 +28,7 @@
                       v-model="email"
                       class="form-control form-control-lg"
                     />
-                    <label class="form-label" for="email"
-                      >Your Email</label
-                    >
+                    <label class="form-label" for="email">Your Email</label>
                   </div>
 
                   <div class="form-outline mb-4">
@@ -42,11 +38,9 @@
                       v-model="password"
                       class="form-control form-control-lg"
                     />
-                    <label class="form-label" for="password"
-                      >Password</label
-                    >
+                    <label class="form-label" for="password">Password</label>
                   </div>
-             
+
                   <div class="d-flex justify-content-center">
                     <button
                       type="button"
@@ -56,11 +50,17 @@
                       Register
                     </button>
                   </div>
-                  <p class="text-danger" v-if="this.ErrorSignUp">{{ errorMessage }}</p>
-                  <p class="text-success" v-if="this.CreatedSuccess">Account created successfully</p>
+                  <p class="text-danger" v-if="this.ErrorSignUp">
+                    {{ errorMessage }}
+                  </p>
+                  <p class="text-success" v-if="this.CreatedSuccess">
+                    Account created successfully
+                  </p>
                   <p class="text-center text-muted mt-5 mb-0">
                     Have already an account?
-                    <a href="/#/login" class="fw-bold text-body"><u>Login here</u></a>
+                    <a href="/#/login" class="fw-bold text-body"
+                      ><u>Login here</u></a
+                    >
                   </p>
                 </form>
               </div>
@@ -73,15 +73,15 @@
 </template>
 
 <script>
-import * as auth from '@/auth/auth.js'
+import { signUp } from "@/auth/auth.js";
 export default {
   name: "Register",
   data() {
     return {
-      name: '',
-      email: '',
-      password: '',
-      errorMessage: '',
+      name: "",
+      email: "",
+      password: "",
+      errorMessage: "",
       ErrorSignUp: false,
       CreatedSuccess: false,
       isSubmitting: false,
@@ -89,35 +89,34 @@ export default {
   },
   methods: {
     async register() {
-    this.isSubmitting = true;
-    this.ErrorSignUp = false;
-    try {
-      const success = await auth.signUp(this.name, this.email, this.password);
-      if (success) {
-        this.CreatedSuccess = true;
-        this.resetForm(); 
-        setTimeout(() => {
-          this.CreatedSuccess = false;
-        }, 5000);
-      } else {
-        this.ErrorSignUp = true; 
-        this.errorMessage = 'Signup failed, please try again.';
+      this.isSubmitting = true;
+      this.ErrorSignUp = false;
+      try {
+        const success = await signUp(this.name, this.email, this.password);
+        if (success) {
+          this.CreatedSuccess = true;
+          this.resetForm();
+          setTimeout(() => {
+            this.CreatedSuccess = false;
+          }, 5000);
+        } else {
+          this.ErrorSignUp = true;
+          this.errorMessage = "Signup failed, please try again.";
+        }
+      } catch (error) {
+        this.ErrorSignUp = true;
+        this.errorMessage = "Error while signing up, check credentials";
+      } finally {
+        this.isSubmitting = false;
       }
-    } catch (error) {
-      this.ErrorSignUp = true;
-      this.errorMessage = 'Error while signing up, check credentials';
-    } finally {
-      this.isSubmitting = false;
-    }
+    },
+    resetForm() {
+      this.name = "";
+      this.email = "";
+      this.password = "";
+    },
   },
-  resetForm() {
-    this.name = '';
-    this.email = '';
-    this.password = '';
-  },
-},
 };
 </script>
 
-<style>
-</style>
+<style></style>

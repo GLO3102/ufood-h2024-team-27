@@ -1,6 +1,5 @@
 export const URL = "https://ufoodapi.herokuapp.com/";
 
-
 async function _fetch(method, address, headers, body = {}) {
   let opts = { method: method, headers: headers };
   if (!["GET", "DELETE"].includes(method)) opts.body = body;
@@ -12,23 +11,23 @@ async function _fetch(method, address, headers, body = {}) {
   return jsonResponse;
 }
 
-export async function _post(address, headers, body) {
+export async function post(address, headers, body) {
   return _fetch("POST", address, headers, body);
 }
 
-export async function _get(address, headers) {
+export async function get(address, headers) {
   return _fetch("GET", address, headers);
 }
 
-export async function _delete(address, headers) {
+export async function del(address, headers) {
   return _fetch("DELETE", address, headers);
 }
 
-export async function _put(address, headers, body) {
+export async function put(address, headers, body) {
   return _fetch("PUT", address, headers, body);
 }
 
-export function _toQueryParams(obj, validKeys) {
+export function toQueryParams(obj, validKeys) {
   let output = "";
   let keysArr = Object.keys(obj).filter((key) => validKeys.includes(key));
   if (keysArr.length) output += "?";

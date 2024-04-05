@@ -1,7 +1,5 @@
-import { URL, _post, _get } from "./apiUtils.js";
+import { URL, post, get } from "./apiUtils.js";
 
-
-// POST login
 export async function apiLogin(email, password) {
   const address = URL + "login";
   const headers = {
@@ -9,17 +7,15 @@ export async function apiLogin(email, password) {
   };
   const body = `email=${email}&password=${password}`;
 
-  return await _post(address, headers, body);
+  return await post(address, headers, body);
 }
 
-// POST logout
 export async function apiLogout() {
   const address = URL + "logout";
 
-  return await _post(address, {}, "");
+  return await post(address, {}, "");
 }
 
-// POST signup
 export async function apiSignUp(name, email, password) {
   const address = URL + "signup";
   const headers = {
@@ -27,13 +23,12 @@ export async function apiSignUp(name, email, password) {
   };
   const body = `name=${name}&email=${email}&password=${password}`;
 
-  return await _post(address, headers, body);
+  return await post(address, headers, body);
 }
 
-// GET tokeninfo
 export async function apiGetTokenInfo(token) {
   const address = URL + "tokenInfo";
   const headers = { authorization: token };
 
-  return await _get(address, headers);
+  return await get(address, headers);
 }

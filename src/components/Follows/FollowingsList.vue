@@ -8,14 +8,8 @@
         </h2>
       </div>
       <div>
-        <div
-          :key="following.id"
-          v-for="following in followings"
-        >
-          <Following
-            :following="following"
-            @unfollow="handleUnfollow"
-          />
+        <div :key="following.id" v-for="following in followings">
+          <Following :following="following" @unfollow="handleUnfollow" />
         </div>
       </div>
     </div>
@@ -23,7 +17,7 @@
 </template>
 
 <script>
-import Following from './Following.vue';
+import Following from "./Following.vue";
 export default {
   name: "Followings",
   components: { Following },

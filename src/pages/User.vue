@@ -3,18 +3,10 @@
     <UserInfo :userInfo="userInfo" :gravatarUrl="gravatarUrl" />
     <div>
       <div>
-  
-          <Followings
-          :followings="followings"
-          @unfollow="unfollow"
-          />
+        <Followings :followings="followings" @unfollow="unfollow" />
 
-      
-          <Followers
-          :followers="followers"
-          />
-      
-    </div>
+        <Followers :followers="followers" />
+      </div>
       <Loading v-if="loadingFavLists" />
       <FavLists
         :listsFavs="listsOfFavs"
@@ -35,21 +27,27 @@
       />
     </div>
   </div>
-
 </template>
 
 <script>
-import SparkMD5 from 'spark-md5'
+import SparkMD5 from "spark-md5";
 import UserInfo from "@/components/Users/Info.vue";
-import * as api from "@/api/api.js";
 import FavLists from "@/components/Users/FavLists.vue";
 import VisitedRestaurants from "@/components/Users/VisitedRestaurants.vue";
 import Loading from "@/components/Loading.vue";
-import Followings from '../components/Follows/FollowingsList.vue';
-import Followers from '../components/Follows/FollowersList.vue';
-import * as follow from '@/Follows/follow.js'
-import Cookies from 'js-cookie';
-import {getUserId} from '@/auth/auth.js'
+import Followings from "../components/Follows/FollowingsList.vue";
+import Followers from "../components/Follows/FollowersList.vue";
+import * as follow from "@/Follows/follow.js";
+import Cookies from "js-cookie";
+import { getUserId } from "@/auth/auth.js";
+import {
+  apiRemoveFromFavoritesList,
+  apiCreateFavoritesList,
+  apiDeleteFavoritesList,
+  apiEditFavoritesList,
+} from "@/api/apiFavorites";
+import { apiGetVisits } from "@/api/apiVisits";
+import { apiGetUser, apiGetUserFavorites } from "@/api/apiUsers";
 
 export default {
   name: "User",
@@ -65,8 +63,8 @@ export default {
     return {
       userId: "",
       userInfo: [],
-      userEmail: '',
-      gravatarUrl: '',
+      userEmail: "",
+      gravatarUrl: "",
       visitedRestaurants: [],
       listsOfFavs: [],
       followings: [],
@@ -77,7 +75,7 @@ export default {
       totalVisits: 0,
       loadingFavLists: false,
       loadingVisits: false,
-      token : Cookies.get('user_cookie'),
+      token: Cookies.get("user_cookie"),
     };
   },
   computed: {},
@@ -86,7 +84,7 @@ export default {
       this.$router.push("/");
     },
 
-    getGravatarUrl(email){
+    getGravatarUrl(email) {
       const trimmedEmail = email.trim().toLowerCase();
       const hash = SparkMD5.hash(trimmedEmail);
       const size = 200;
@@ -98,7 +96,7 @@ export default {
     },
     async deleteRestaurant(restId, listId) {
       try {
-        await api.apiRemoveFromFavoritesList(listId, restId, this.token);
+        await apiRemoveFromFavoritesList(listId, restId, this.token);
         let list = this.listsOfFavs.find((list) => list.listId === listId);
         if (list) {
           list.restaurants = list.restaurants.filter(
@@ -110,20 +108,21 @@ export default {
         alert("Failed to delete restaurant!");
       }
     },
-    async unfollow(unfollowId){
-      try{
+    async unfollow(unfollowId) {
+      try {
         await follow.unfollow(unfollowId, this.token);
-        this.followings = this.followings.filter((followings) => followings.id !== unfollowId,)
-      }catch(error){
+        this.followings = this.followings.filter(
+          (followings) => followings.id !== unfollowId,
+        );
+      } catch (error) {
         console.error("Could not unfollow...", error);
         alert("Could not unfollow...");
       }
     },
-   
 
     async createList(listName) {
       try {
-        const newList = await api.apiCreateFavoritesList(listName, this.token);
+        const newList = await apiCreateFavoritesList(listName, this.token);
         if (newList) {
           this.listsOfFavs.push({
             listId: newList.id,
@@ -138,7 +137,7 @@ export default {
     },
     async deleteList(listId) {
       try {
-        await api.apiDeleteFavoritesList(listId, this.token);
+        await apiDeleteFavoritesList(listId, this.token);
         this.listsOfFavs = this.listsOfFavs.filter(
           (list) => list.listId !== listId,
         );
@@ -149,7 +148,11 @@ export default {
     },
     async modifyListName(listId, listName) {
       try {
-        const modifiedList = await api.apiEditFavoritesList(listId, listName, this.token);
+        const modifiedList = await apiEditFavoritesList(
+          listId,
+          listName,
+          this.token,
+        );
 
         if (modifiedList && modifiedList.id && modifiedList.name) {
           const index = this.listsOfFavs.findIndex(
@@ -168,7 +171,7 @@ export default {
     async fetchVisits(page) {
       try {
         this.currentPage = page;
-        const response = await api.apiGetVisits(this.userId, page, this.token);
+        const response = await apiGetVisits(this.userId, page, this.token);
         if (response && response.items) {
           this.visitedRestaurants = response.items;
           this.totalVisits = response.total;
@@ -184,13 +187,13 @@ export default {
       this.loadingFavLists = true;
       this.loadingVisits = true;
       this.userId = await getUserId(this.token);
-      this.userInfo = await api.apiGetUser(this.userId, this.token);
+      this.userInfo = await apiGetUser(this.userId, this.token);
       this.userEmail = this.userInfo.email;
       this.gravatarUrl = this.getGravatarUrl(this.userEmail);
       this.followings = await follow.getFollowings(this.userId, this.token);
       this.followers = await follow.getFollowers(this.userId, this.token);
       this.fetchVisits(this.currentPage);
-      const response = await api.apiGetUserFavorites(this.userId, this.token, {});
+      const response = await apiGetUserFavorites(this.userId, this.token, {});
       if (response && response.items) {
         this.listsOfFavs = response.items.map((item) => ({
           listId: item.id,
@@ -208,6 +211,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
-@/auth/auth.js

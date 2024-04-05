@@ -44,8 +44,9 @@
 <script>
 import RestaurantCards from "@/components/Home/RestaurantCards.vue";
 import MainSearchBar from "@/components/Search/MainSearchBar.vue";
-import { apiGetRestaurants } from "@/api/api";
+import { apiGetRestaurants } from "@/api/apiRestaurants";
 import Loading from "@/components/Loading.vue";
+import Cookies from "js-cookie";
 
 export default {
   components: {
@@ -59,12 +60,13 @@ export default {
       total: null,
       previousParams: { limit: 24, page: 0 },
       loading: false,
+      token: Cookies.get("user_cookie"),
     };
   },
   async created() {
     try {
       this.loading = true;
-      const data = await apiGetRestaurants(this.previousParams);
+      const data = await apiGetRestaurants(this.previousParams, this.token);
       this.total = data.total;
       this.restaurants = data.items;
     } catch (error) {
@@ -79,13 +81,13 @@ export default {
       params.page = 0;
       this.previousParams = params;
 
-      const data = await apiGetRestaurants(params);
+      const data = await apiGetRestaurants(params, this.token);
       this.restaurants = data.items;
       this.total = data.total;
     },
     async showMore() {
       this.previousParams.page += 1;
-      const data = await apiGetRestaurants(this.previousParams);
+      const data = await apiGetRestaurants(this.previousParams, this.token);
       this.restaurants = [...this.restaurants, ...data.items];
     },
   },
