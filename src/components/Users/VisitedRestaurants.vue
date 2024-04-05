@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import VisitedRestaurant from "./Users_VisitedRestaurant.vue";
-import PagesVisits from "./Users_PagesVisits.vue";
+import VisitedRestaurant from "./VisitedRestaurant.vue";
+import PagesVisits from "./PagesVisits.vue";
 
 export default {
   name: "VisitedRestaurants",

@@ -23,9 +23,9 @@
 </template>
 
 <script>
-import FavRestaurants from "./Users_FavRestaurantCards.vue";
-import DeleteList from "./Users_DeleteFavList.vue";
-import ModifyListName from "./Users_ModifyListName.vue";
+import FavRestaurants from "./FavRestaurantCards.vue";
+import DeleteList from "./DeleteFavList.vue";
+import ModifyListName from "./ModifyListName.vue";
 
 export default {
   name: "FavList",

@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import CreateList from "@/components/Users/Users_CreateListFav.vue";
-import FavList from "@/components/Users/Users_FavList.vue";
+import CreateList from "@/components/Users/CreateListFav.vue";
+import FavList from "@/components/Users/FavList.vue";
 export default {
   name: "FavLists",
   components: { CreateList, FavList },

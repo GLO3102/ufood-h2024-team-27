@@ -40,10 +40,10 @@
 
 <script>
 import SparkMD5 from 'spark-md5'
-import UserInfo from "@/components/Users/Users_Info.vue";
+import UserInfo from "@/components/Users/Info.vue";
 import * as api from "@/api/api.js";
-import FavLists from "@/components/Users/Users_FavLists.vue";
-import VisitedRestaurants from "@/components/Users/Users_VisitedRestaurants.vue";
+import FavLists from "@/components/Users/FavLists.vue";
+import VisitedRestaurants from "@/components/Users/VisitedRestaurants.vue";
 import Loading from "@/components/Loading.vue";
 import Followings from '../components/Follows/FollowingsList.vue';
 import Followers from '../components/Follows/FollowersList.vue';
@@ -115,8 +115,8 @@ export default {
         await follow.unfollow(unfollowId, this.token);
         this.followings = this.followings.filter((followings) => followings.id !== unfollowId,)
       }catch(error){
-        console.error("Couldnt unfollow...", error);
-        alert("Couldnt unfollow...");
+        console.error("Could not unfollow...", error);
+        alert("Could not unfollow...");
       }
     },
    
@@ -187,10 +187,10 @@ export default {
       this.userInfo = await api.apiGetUser(this.userId, this.token);
       this.userEmail = this.userInfo.email;
       this.gravatarUrl = this.getGravatarUrl(this.userEmail);
-      this.followings =await follow.getFollowings(this.userId, this.token);
+      this.followings = await follow.getFollowings(this.userId, this.token);
       this.followers = await follow.getFollowers(this.userId, this.token);
       this.fetchVisits(this.currentPage);
-      const response = await api.apiGetUserFavorites(this.userId ,this.token, {});
+      const response = await api.apiGetUserFavorites(this.userId, this.token, {});
       if (response && response.items) {
         this.listsOfFavs = response.items.map((item) => ({
           listId: item.id,

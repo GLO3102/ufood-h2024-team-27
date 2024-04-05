@@ -1,19 +1,22 @@
 <template>
-  <div>
+  <span>
     <button
+      class="btn btn-success btn-sm"
       type="button"
-      class="btn btn-primary rounded-pill"
+      data-placement="top"
+      title="Edit"
       data-bs-toggle="modal"
-      data-bs-target="#listModal"
+      :data-bs-target="'#modifyListModal' + this.listId"
     >
-      Create a new list
+      <i class="fa fa-edit"></i>
     </button>
-
-    <div class="modal fade" id="listModal" tabindex="-1">
+    <div class="modal fade" :id="'modifyListModal' + this.listId" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">New list</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Modify list name
+            </h1>
             <button
               type="button"
               class="btn-close"
@@ -24,43 +27,48 @@
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="create-list" class="col-form-label"
-                  >List name:</label
+                <label for="recipient-name" class="col-form-label"
+                  >New name:</label
                 >
                 <input
                   v-model="listName"
                   type="text"
                   class="form-control"
-                  id="create-list"
+                  id="recipient-name"
                 />
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <CreateListBtn
+            <ModifyListBtn
+              :listId="this.listId"
               :listName="this.listName"
-              @createList="$emit('createList', this.listName)"
+              @modifyListName="modifyListName"
             />
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </span>
 </template>
 
 <script>
-import CreateListBtn from "./Users_CreateListBtn.vue";
+import ModifyListBtn from "./ModifyListBtn.vue";
 export default {
-  name: "CreateListFav",
+  name: "ModifyListName",
+  components: {
+    ModifyListBtn,
+  },
+  emits: ["modifyListName"],
+  props: {
+    listId: String,
+  },
   data() {
     return {
       name: "",
       nameState: null,
       listName: "",
     };
-  },
-  components: {
-    CreateListBtn,
   },
   methods: {
     checkFormValidity() {
@@ -81,6 +89,9 @@ export default {
       if (!this.checkFormValidity()) {
         return;
       }
+    },
+    modifyListName(listId, listName) {
+      this.$emit("modifyListName", listId, listName);
     },
   },
 };

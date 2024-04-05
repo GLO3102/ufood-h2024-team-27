@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import FavRestaurant from "./Users_FavRestaurantCard.vue";
+import FavRestaurant from "./FavRestaurantCard.vue";
 
 export default {
   name: "FavRestaurants",
