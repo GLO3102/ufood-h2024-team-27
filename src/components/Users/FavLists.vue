@@ -14,6 +14,7 @@
           v-for="listFav in listsFavs.slice().reverse()"
         >
           <FavList
+            :token="token"
             :listFav="listFav"
             @deleteRestaurant="handleDeleteRestaurant"
             @deleteList="deleteList"
@@ -36,6 +37,7 @@ export default {
   },
   props: {
     listsFavs: Array,
+    token: String,
   },
   methods: {
     handleDeleteRestaurant(restId, listId) {

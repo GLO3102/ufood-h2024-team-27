@@ -4,6 +4,7 @@
       <div v-for="restaurantId in restaurants" :key="restaurantId" class="col">
         <FavRestaurant
           :restaurantId="restaurantId"
+          :token="token"
           @deleteRestaurant="$emit('deleteRestaurant', restaurantId.id)"
         />
       </div>
@@ -21,6 +22,7 @@ export default {
   },
   props: {
     restaurants: Array,
+    token: String,
   },
   methods: {},
   emits: ["deleteRestaurant"],

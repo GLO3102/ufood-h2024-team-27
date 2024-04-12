@@ -45,6 +45,7 @@ export default {
   name: "FavRestaurant",
   props: {
     restaurantId: Object,
+    token: String,
   },
   components: {
     BtnDeleteResto,
@@ -56,7 +57,7 @@ export default {
   },
   async created() {
     try {
-      this.restaurant = await apiGetRestaurant(this.restaurantId.id);
+      this.restaurant = await apiGetRestaurant(this.restaurantId.id, this.token);
     } catch (error) {
       console.error("Error fetching restaurant details:", error);
     }

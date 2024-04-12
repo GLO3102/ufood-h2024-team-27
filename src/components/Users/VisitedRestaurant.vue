@@ -48,15 +48,17 @@ export default {
   data() {
     return {
       restaurant: Object,
+
       loaded: false,
     };
   },
   props: {
     visit: Object,
+    token: String,
   },
   async created() {
     try {
-      this.restaurant = await apiGetRestaurant(this.visit.restaurant_id);
+      this.restaurant = await apiGetRestaurant(this.visit.restaurant_id, this.token);
       this.loaded = true;
     } catch (error) {
       console.error("Error while fetching restaurant", error);

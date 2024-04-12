@@ -9,6 +9,7 @@
       </div>
       <Loading v-if="loadingFavLists" />
       <FavLists
+        :token="token"
         :listsFavs="listsOfFavs"
         @deleteRestaurant="deleteRestaurant"
         @createList="createList"
@@ -19,6 +20,7 @@
     <div>
       <Loading v-if="loadingVisits" />
       <VisitedRestaurants
+        :token="token"
         :visitedRestaurants="visitedRestaurants"
         :total-items="totalVisits"
         :current-page="currentPage"
@@ -170,8 +172,11 @@ export default {
     },
     async fetchVisits(page) {
       try {
-        this.currentPage = page;
-        const response = await apiGetVisits(this.userId, page, this.token);
+        
+        const paramPage = {
+          page : page,
+        }
+        const response = await apiGetVisits(this.userId, paramPage, this.token);
         if (response && response.items) {
           this.visitedRestaurants = response.items;
           this.totalVisits = response.total;

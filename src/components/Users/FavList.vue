@@ -15,6 +15,7 @@
         </div>
       </div>
       <FavRestaurants
+        :token="token"
         :restaurants="listFav.restaurants"
         @deleteRestaurant="handleDeleteRestaurant"
       />
@@ -32,6 +33,7 @@ export default {
   components: { FavRestaurants, DeleteList, ModifyListName },
   props: {
     listFav: Object,
+    token: String,
   },
   methods: {
     handleDeleteRestaurant(restId) {

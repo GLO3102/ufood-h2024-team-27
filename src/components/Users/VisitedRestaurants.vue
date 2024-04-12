@@ -16,7 +16,7 @@
       </div>
       <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
         <div class="col" v-for="visit in visitedRestaurants" :key="visit.id">
-          <VisitedRestaurant :visit="visit" />
+          <VisitedRestaurant :visit="visit" :token="token" />
         </div>
       </div>
     </div>
@@ -34,6 +34,7 @@ export default {
     totalItems: Number,
     currentPage: Number,
     pageSize: Number,
+    token: String,
   },
   components: {
     VisitedRestaurant,
