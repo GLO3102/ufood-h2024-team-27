@@ -172,10 +172,9 @@ export default {
     },
     async fetchVisits(page) {
       try {
-        
         const paramPage = {
-          page : page,
-        }
+          page: page,
+        };
         const response = await apiGetVisits(this.userId, paramPage, this.token);
         if (response && response.items) {
           this.visitedRestaurants = response.items;
