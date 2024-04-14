@@ -5,14 +5,6 @@
         <h2 class="card-title fs-4 mb-4">
           {{ listFav.name }}
         </h2>
-        <div>
-          <ModifyListName
-            style="margin-right: 0.125rem"
-            :listId="listFav.listId"
-            @modifyListName="modifyListName"
-          />
-          <DeleteList @deleteList="handleDeleteList" />
-        </div>
       </div>
       <FavRestaurants
         :token="token"
@@ -24,13 +16,12 @@
 </template>
 
 <script>
-import FavRestaurants from "./FavRestaurantCards.vue";
-import DeleteList from "./DeleteFavList.vue";
-import ModifyListName from "./ModifyListName.vue";
+import FavRestaurants from "./FavRestaurantCards_NoEdit.vue";
+
 
 export default {
   name: "FavList",
-  components: { FavRestaurants, DeleteList, ModifyListName },
+  components: { FavRestaurants },
   props: {
     listFav: Object,
     token: String,

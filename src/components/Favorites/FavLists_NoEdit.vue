@@ -4,9 +4,8 @@
       <div class="d-flex justify-content-between" style="gap: 10px">
         <h2 class="card-title mb-4">
           <i class="fa-solid fa-heart"></i>
-          List of favorites
+          Lists of favorites
         </h2>
-        <CreateList @createList="createList" />
       </div>
       <div>
         <div
@@ -27,11 +26,10 @@
 </template>
 
 <script>
-import CreateList from "@/components/Users/CreateListFav.vue";
-import FavList from "@/components/Users/FavList.vue";
+import FavList from "@/components/Favorites/FavList_NoEdit.vue";
 export default {
   name: "FavLists",
-  components: { CreateList, FavList },
+  components: { FavList },
   data() {
     return {};
   },

@@ -160,7 +160,7 @@ export default {
       loaded: false,
       favorites: [],
       token: Cookies.get("user_cookie"),
-      userId: ""
+      userId: "",
     };
   },
   async created() {
@@ -195,7 +195,7 @@ export default {
         form.comment,
         form.rating,
         form.date,
-        this.token
+        this.token,
       );
     },
   },
@@ -240,4 +240,3 @@ ul {
   -moz-columns: 2;
 }
 </style>
-../components/MapquestMap.vue

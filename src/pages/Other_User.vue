@@ -33,26 +33,21 @@
 
 <script>
 import SparkMD5 from "spark-md5";
-import UserInfo from "@/components/Users/Info.vue";
-import FavLists from "@/components/Favorites/FavLists.vue";
+import UserInfo from "@/components/Users/Info_NoEdit.vue";
+import FavLists from "@/components/Favorites/FavLists_NoEdit.vue";
 import VisitedRestaurants from "@/components/Users/VisitedRestaurants.vue";
 import Loading from "@/components/Loading.vue";
-import Followings from "../components/Follows/FollowingsList.vue";
-import Followers from "../components/Follows/FollowersList.vue";
+import Followings from "../components/Follows/FollowingsList_Other.vue";
+import Followers from "../components/Follows/FollowersList_Other.vue";
 import * as follow from "@/Follows/follow.js";
 import Cookies from "js-cookie";
 import { getUserId } from "@/auth/auth.js";
-import {
-  apiRemoveFromFavoritesList,
-  apiCreateFavoritesList,
-  apiDeleteFavoritesList,
-  apiEditFavoritesList,
-} from "@/api/apiFavorites";
 import { apiGetVisits } from "@/api/apiVisits";
 import { apiGetUser, apiGetUserFavorites } from "@/api/apiUsers";
 
 export default {
   name: "User",
+  props: ["userId"],
   components: {
     UserInfo,
     FavLists,
@@ -63,7 +58,7 @@ export default {
   },
   data() {
     return {
-      userId: "",
+      thisUserId: "",
       userInfo: [],
       userEmail: "",
       gravatarUrl: "",
@@ -96,80 +91,15 @@ export default {
     changeState() {
       this.state.isActive = !this.state.isActive;
     },
-    async deleteRestaurant(restId, listId) {
-      try {
-        await apiRemoveFromFavoritesList(listId, restId, this.token);
-        let list = this.listsOfFavs.find((list) => list.listId === listId);
-        if (list) {
-          list.restaurants = list.restaurants.filter(
-            (restaurant) => restaurant.id !== restId,
-          );
-        }
-      } catch (error) {
-        console.error("Error while deleting restaurant");
-        alert("Failed to delete restaurant!");
-      }
-    },
     async unfollow(unfollowId) {
       try {
         await follow.unfollow(unfollowId, this.token);
-        this.followings = this.followings.filter(
-          (followings) => followings.id !== unfollowId,
-        );
       } catch (error) {
         console.error("Could not unfollow...", error);
         alert("Could not unfollow...");
       }
     },
 
-    async createList(listName) {
-      try {
-        const newList = await apiCreateFavoritesList(listName, this.token);
-        if (newList) {
-          this.listsOfFavs.push({
-            listId: newList.id,
-            name: newList.name,
-            restaurants: [],
-          });
-        }
-      } catch (error) {
-        console.error("Error creating new favorites list:", error);
-        alert("Failed creating new favorites list");
-      }
-    },
-    async deleteList(listId) {
-      try {
-        await apiDeleteFavoritesList(listId, this.token);
-        this.listsOfFavs = this.listsOfFavs.filter(
-          (list) => list.listId !== listId,
-        );
-      } catch (error) {
-        console.error("Error while deleting list", error);
-        alert("Failed to delete favorites list");
-      }
-    },
-    async modifyListName(listId, listName) {
-      try {
-        const modifiedList = await apiEditFavoritesList(
-          listId,
-          listName,
-          this.token,
-        );
-
-        if (modifiedList && modifiedList.id && modifiedList.name) {
-          const index = this.listsOfFavs.findIndex(
-            (list) => list.listId === listId,
-          );
-
-          if (index !== -1) {
-            this.listsOfFavs[index].name = modifiedList.name;
-          }
-        }
-      } catch (error) {
-        console.error("Error while modifying list name", error);
-        alert("Failed to modify list name");
-      }
-    },
     async fetchVisits(page) {
       try {
         const paramPage = {
@@ -188,10 +118,11 @@ export default {
   },
   async created() {
     try {
+      console.log(this.userId)
       this.loadingFavLists = true;
       this.loadingVisits = true;
-      this.userId = await getUserId(this.token);
-      this.userInfo = await apiGetUser(this.userId, this.token);
+      this.thisUserId = await getUserId(this.token); // this (the current logged in user) id
+      this.userInfo = await apiGetUser(this.userId, this.token); // from here on, the other user's stuff
       this.userEmail = this.userInfo.email;
       this.gravatarUrl = this.getGravatarUrl(this.userEmail);
       this.followings = await follow.getFollowings(this.userId, this.token);

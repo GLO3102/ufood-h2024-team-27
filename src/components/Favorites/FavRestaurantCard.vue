@@ -39,7 +39,7 @@
 
 <script>
 import { apiGetRestaurant } from "@/api/apiRestaurants";
-import BtnDeleteResto from "./DeleteBtnRestaurant.vue";
+import BtnDeleteResto from "../Users/DeleteBtnRestaurant.vue";
 
 export default {
   name: "FavRestaurant",
