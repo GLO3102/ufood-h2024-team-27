@@ -1,24 +1,11 @@
 <template>
   <div>
-    <header class="container-fluid mb-5 bg-secondary text-center">
-      <h1 class="fw-bold mb-0">UFood</h1>
-      <p class="ps-2 mb-5 fs-2 fw-bold">Eat, Share, Repeat</p>
-
-      <MainSearchBar @search="search" />
-
-      <div class="row justify-content-end">
-        <img
-          src="../assets/ufood_alligator_export.svg"
-          class="img-fluid"
-          alt="Ufood Alligator"
-          style="max-width: 20rem"
-        />
-      </div>
-    </header>
     <main class="container-fluid" style="width: 75%">
-      <div class="row mb-5" id="users-section">
-        <h2 class="text-center text-dark fs-1 fw-bold">Users</h2>
+      <div class="row mb-0 mt-4" id="users-section">
+        <h2 class="text-center text-dark fs-1 fw-bold mb-3">Users</h2>
+        <SocialSearchBar @search="search" />
       </div>
+
       <div class="text-center" v-if="loading"><Loading /></div>
 
       <UserCards :users="this.users"></UserCards>
@@ -43,7 +30,7 @@
 
 <script>
 import UserCards from "@/components/Social/UserCards.vue";
-import MainSearchBar from "@/components/Search/MainSearchBar.vue";
+import SocialSearchBar from "@/components/Social/SocialSearchBar.vue";
 import { apiGetUsers } from "@/api/apiUsers";
 import Loading from "@/components/Loading.vue";
 import Cookies from "js-cookie";
@@ -51,7 +38,7 @@ import Cookies from "js-cookie";
 export default {
   components: {
     UserCards,
-    MainSearchBar,
+    SocialSearchBar,
     Loading,
   },
   data() {
@@ -81,9 +68,15 @@ export default {
       params.page = 0;
       this.previousParams = params;
 
-      const data = await apiGetUsers(params, this.token);
-      this.users = data.items;
-      this.total = data.total;
+      try {
+        const data = await apiGetUsers(params, this.token);
+        this.users = data.items;
+        this.total = data.total;
+      } catch (error) {
+        // crash occurs if we search for "*" or "\" followed by seemingly anything, and it's not our fault this time!
+        console.error("An error has occured: ", error);
+        alert("An internal server error has occured; Please try again later.");
+      }
     },
     async showMore() {
       this.previousParams.page += 1;
@@ -99,7 +92,7 @@ h1 {
   font-size: 6rem !important;
 }
 
-#button-search-home {
+#button-search-social {
   margin-left: -60px;
   width: 55px;
   height: 55px;
@@ -107,6 +100,7 @@ h1 {
   margin-top: 4px;
 }
 
+/* is this completely useless or? */
 #users-section {
   background-image: linear-gradient(
     to left,
