@@ -25,6 +25,10 @@
               <i class="fa-solid fa-star w-100 pb-4" style="color: #ffd43b">{{
                 userInfo.rating
               }}</i>
+              <FollowButton
+                :isFollowing="isFollowing"
+                @toggle-follow="$emit('toggle-follow')"
+              ></FollowButton>
             </div>
           </div>
           <div class="col-sm-8 bg-white rounded-4">
@@ -65,8 +69,12 @@
 </template>
 
 <script>
+import FollowButton from "./FollowButton.vue";
+
 export default {
   name: "UserInfo",
+  components: { FollowButton },
+  emits: ["toggle-follow"],
   methods: {
     created() {
       console.log(gravatarUrl);
@@ -75,6 +83,7 @@ export default {
   props: {
     userInfo: Object,
     gravatarUrl: String,
+    isFollowing: Boolean,
   },
 };
 </script>

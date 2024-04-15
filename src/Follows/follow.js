@@ -1,4 +1,4 @@
-import { apiGetUser, apiUnfollowUser } from "@/api/apiUsers.js";
+import { apiGetUser, apiUnfollowUser, apiFollowUser } from "@/api/apiUsers.js";
 
 export async function getFollowings(userId, token) {
   try {
@@ -24,6 +24,15 @@ export async function getFollowers(userId, token) {
     } else {
       throw new Error("Couldnt fetch followers");
     }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export async function follow(followId, token) {
+  try {
+    await apiFollowUser(followId, token);
   } catch (error) {
     console.error(error);
     throw error;

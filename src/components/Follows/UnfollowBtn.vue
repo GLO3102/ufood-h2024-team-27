@@ -7,7 +7,7 @@
     title="Delete"
     @click.prevent="$emit('unfollow')"
   >
-    Unfollow<i class="fa-solid fa-user-minus"></i>
+    Unfollow <i class="fa-solid fa-user-minus"></i>
   </button>
 </template>
 

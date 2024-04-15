@@ -1,9 +1,14 @@
 <template>
   <div class="container">
-    <UserInfo :userInfo="userInfo" :gravatarUrl="gravatarUrl" />
+    <UserInfo
+      :userInfo="userInfo"
+      :gravatarUrl="gravatarUrl"
+      :isFollowing="thisIsFollowing"
+      @toggle-follow="toggleFollow"
+    />
     <div>
       <div>
-        <Followings :followings="followings" @unfollow="unfollow" />
+        <Followings :followings="followings" />
 
         <Followers :followers="followers" />
       </div>
@@ -59,6 +64,7 @@ export default {
   data() {
     return {
       thisUserId: "",
+      thisIsFollowing: false,
       userInfo: [],
       userEmail: "",
       gravatarUrl: "",
@@ -91,13 +97,34 @@ export default {
     changeState() {
       this.state.isActive = !this.state.isActive;
     },
-    async unfollow(unfollowId) {
-      try {
-        await follow.unfollow(unfollowId, this.token);
-      } catch (error) {
-        console.error("Could not unfollow...", error);
-        alert("Could not unfollow...");
+
+    async toggleFollow() {
+      if (!this.thisIsFollowing) {
+        try {
+          await follow.follow(this.userId, this.token);
+          this.thisIsFollowing = true;
+        } catch (error) {
+          console.error("Could not follow...", error);
+          alert("Could not follow...");
+        }
+      } else {
+        try {
+          await follow.unfollow(this.userId, this.token);
+          this.thisIsFollowing = false;
+        } catch (error) {
+          console.error("Could not unfollow...", error);
+          alert("Could not unfollow...");
+        }
       }
+      this.followers = await follow.getFollowers(this.userId, this.token);
+    },
+
+    async isFollowing() {
+      let thisFollows = await follow.getFollowings(this.thisUserId, this.token);
+      for (const user of thisFollows) {
+        if (user.id == this.userId) return true;
+      }
+      return false;
     },
 
     async fetchVisits(page) {
@@ -121,6 +148,7 @@ export default {
       this.loadingFavLists = true;
       this.loadingVisits = true;
       this.thisUserId = await getUserId(this.token); // this (the current logged in user) id
+      this.thisIsFollowing = await this.isFollowing();
       this.userInfo = await apiGetUser(this.userId, this.token); // from here on, the other user's stuff
       this.userEmail = this.userInfo.email;
       this.gravatarUrl = this.getGravatarUrl(this.userEmail);

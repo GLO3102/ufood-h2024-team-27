@@ -16,13 +16,6 @@
         draggable="false"
         alt="Avatar"
       />
-      <!--
-      <FollowButton
-        :id="id"
-        :initial="false"
-        class="position-absolute top-0 end-0 mt-1 me-1"
-      />
-      -->
       <div class="card-body pt-1 pe-1 ps-0 text-truncate">
         <div class="d-flex justify-content-center">
           <div class="text-truncate fw-bold" style="overflow: hidden">
@@ -36,7 +29,6 @@
 
 <script>
 import SparkMD5 from "spark-md5";
-import FollowButton from "./FollowButton.vue";
 
 export default {
   name: "UserCard",
@@ -52,7 +44,6 @@ export default {
       gravatarUrl: "",
     };
   },
-  components: { /*FollowButton*/ },
   methods: {
     getGravatarUrl(email) {
       const trimmedEmail = email.trim().toLowerCase();
