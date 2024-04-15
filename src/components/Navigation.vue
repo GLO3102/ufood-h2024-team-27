@@ -30,21 +30,18 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link
-              class="nav-link"
-              :to="{ name: 'Login' }"
-              v-if="!user.isLoggedIn"
-            >
+            <router-link class="nav-link" :to="{ name: 'Social' }">
+              <i class="fa-solid fa-users"></i> Social
+            </router-link>
+          </li>
+          <li class="nav-item" v-if="!user.isLoggedIn">
+            <router-link class="nav-link" :to="{ name: 'Login' }">
               <i class="fa-solid fa-user"></i>
               Log In
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link
-              class="nav-link"
-              :to="{ name: 'User' }"
-              v-if="user.isLoggedIn"
-            >
+          <li class="nav-item" v-if="user.isLoggedIn">
+            <router-link class="nav-link" :to="{ name: 'User' }">
               <i class="fa-solid fa-user"></i>
               My Profile
             </router-link>
