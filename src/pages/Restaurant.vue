@@ -202,7 +202,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .rounded-top-right-2 {
   border-top-right-radius: 2rem;
 }

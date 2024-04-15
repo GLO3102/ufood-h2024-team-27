@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div 
+    <div
       class="card rounded-4 border-2"
       style="cursor: pointer"
       @click="
@@ -8,7 +8,8 @@
           name: 'Other_User',
           params: { userId: user.id },
         })
-      ">
+      "
+    >
       <img
         :src="gravatarUrl"
         class="rounded-circle object-fit-cover position-relative"
