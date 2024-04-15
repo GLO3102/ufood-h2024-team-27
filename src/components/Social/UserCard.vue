@@ -16,12 +16,13 @@
         draggable="false"
         alt="Avatar"
       />
-
+      <!--
       <FollowButton
         :id="id"
         :initial="false"
         class="position-absolute top-0 end-0 mt-1 me-1"
       />
+      -->
       <div class="card-body pt-1 pe-1 ps-0 text-truncate">
         <div class="d-flex justify-content-center">
           <div class="text-truncate fw-bold" style="overflow: hidden">
@@ -51,7 +52,7 @@ export default {
       gravatarUrl: "",
     };
   },
-  components: { FollowButton },
+  components: { /*FollowButton*/ },
   methods: {
     getGravatarUrl(email) {
       const trimmedEmail = email.trim().toLowerCase();
@@ -59,7 +60,7 @@ export default {
       const size = 200;
       return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=retro`;
     },
-
+    /*
     async follow(userId) {
       try {
         await follow.follow(userId, this.token);
@@ -77,6 +78,7 @@ export default {
         alert("Could not unfollow...");
       }
     },
+    */
   },
   async created() {
     this.gravatarUrl = this.getGravatarUrl(this.user.email);
