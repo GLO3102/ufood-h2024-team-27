@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import Restaurant from "../pages/Restaurant";
 import User from "../pages/User";
 import Other_User from "../pages/Other_User.vue";
+import Social from "../pages/Social.vue";
 import Register from "../pages/Register.vue";
 import Login from "../pages/Login.vue";
 
@@ -28,6 +29,11 @@ const routes = [
     name: "Other_User",
     component: Other_User,
     props: true,
+  },
+  {
+    path: "/social",
+    name: "Social",
+    component: Social,
   },
   {
     path: "/register",

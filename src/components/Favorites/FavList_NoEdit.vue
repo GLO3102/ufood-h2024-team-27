@@ -18,7 +18,6 @@
 <script>
 import FavRestaurants from "./FavRestaurantCards_NoEdit.vue";
 
-
 export default {
   name: "FavList",
   components: { FavRestaurants },

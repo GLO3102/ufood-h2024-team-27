@@ -57,7 +57,10 @@ export default {
   },
   async created() {
     try {
-      this.restaurant = await apiGetRestaurant(this.restaurantId.id, this.token);
+      this.restaurant = await apiGetRestaurant(
+        this.restaurantId.id,
+        this.token,
+      );
     } catch (error) {
       console.error("Error fetching restaurant details:", error);
     }

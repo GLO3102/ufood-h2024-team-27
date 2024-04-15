@@ -118,7 +118,6 @@ export default {
   },
   async created() {
     try {
-      console.log(this.userId)
       this.loadingFavLists = true;
       this.loadingVisits = true;
       this.thisUserId = await getUserId(this.token); // this (the current logged in user) id
