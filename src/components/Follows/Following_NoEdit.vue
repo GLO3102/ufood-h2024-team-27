@@ -5,28 +5,16 @@
         <h2 class="card-title fs-4 mb-4">
           {{ following.name }}
         </h2>
-        <div>
-          <Unfollow @unfollow="handleUnfollow" />
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Unfollow from "./UnfollowBtn.vue";
-
 export default {
   name: "Following",
-  components: { Unfollow },
   props: {
     following: Object,
   },
-  methods: {
-    handleUnfollow() {
-      this.$emit("unfollow", this.following.id);
-    },
-  },
-  emits: ["unfollow"],
 };
 </script>
