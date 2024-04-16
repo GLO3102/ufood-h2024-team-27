@@ -84,8 +84,7 @@
                 ></div>
               </div>
               <span class="fs-5 fw-semibold"
-                >{{ restaurant.rating.toFixed(1) }} / 5</span
-              >
+                >{{ restaurant.rating.toFixed(1) }} / 5</span>
             </div>
           </div>
         </div>
@@ -135,6 +134,10 @@
       :restaurant="restaurant"
       @submit="submitVisit"
     ></VisitModal>
+    <RelatedRestaurants
+    :genre="restaurant.genres[0]"
+    :current-restaurant-id="restaurant.id">
+    </RelatedRestaurants>
   </div>
 </template>
 
@@ -148,12 +151,13 @@ import GenreButton from "../components/Search/GenreButton.vue";
 import FavoriteModal from "../components/Favorites/FavoriteModal.vue";
 import VisitModal from "../components/Home/VisitModal.vue";
 import MapquestMap from "../components/MapquestMap.vue";
+import RelatedRestaurants from "../components/Restaurant/RelatedRestaurants.vue";
 import Cookies from "js-cookie";
 
 export default {
   name: "Restaurant",
   props: ["restaurantId"],
-  components: { GenreButton, FavoriteModal, VisitModal, MapquestMap },
+  components: { GenreButton, FavoriteModal, VisitModal, MapquestMap, RelatedRestaurants },
   data() {
     return {
       restaurant: {},
