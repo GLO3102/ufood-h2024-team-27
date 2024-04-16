@@ -84,7 +84,8 @@
                 ></div>
               </div>
               <span class="fs-5 fw-semibold"
-                >{{ restaurant.rating.toFixed(1) }} / 5</span>
+                >{{ restaurant.rating.toFixed(1) }} / 5</span
+              >
             </div>
           </div>
         </div>
@@ -135,8 +136,9 @@
       @submit="submitVisit"
     ></VisitModal>
     <RelatedRestaurants
-    :genre="restaurant.genres[0]"
-    :current-restaurant-id="restaurant.id">
+      :genre="restaurant.genres[0]"
+      :current-restaurant-id="restaurant.id"
+    >
     </RelatedRestaurants>
   </div>
 </template>
