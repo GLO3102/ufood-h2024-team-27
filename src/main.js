@@ -9,7 +9,7 @@ import "../src/assets/scss/custom.css";
 import "leaflet/dist/leaflet.css";
 import PrimeVue from "primevue/config";
 import "primevue/resources/themes/aura-light-green/theme.css";
-import VueCookies from 'vue-cookies';
+import VueCookies from "vue-cookies";
 
 const pinia = createPinia();
 const app = createApp(App);

@@ -157,7 +157,13 @@ import Cookies from "js-cookie";
 export default {
   name: "Restaurant",
   props: ["restaurantId"],
-  components: { GenreButton, FavoriteModal, VisitModal, MapquestMap, RelatedRestaurants },
+  components: {
+    GenreButton,
+    FavoriteModal,
+    VisitModal,
+    MapquestMap,
+    RelatedRestaurants,
+  },
   data() {
     return {
       restaurant: {},
