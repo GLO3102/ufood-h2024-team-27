@@ -1,29 +1,63 @@
 <template>
-  <div class="container">
+  <div class="col-12">
     <div class="card rounded-5 p-3 py-2">
       <div class="card-body">
         <h2 class="card-title">Related Restaurants</h2>
       </div>
+
       <div
-        class="col-md-4"
-        v-for="restaurant in relatedRestaurants"
-        :key="restaurant.id"
+        class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-2 justify-content-center"
       >
-        <div class="card rounded-5 p-3 py-2">
-          <img
-            :src="restaurant.pictures[0]"
-            class="card-img-top"
-            alt="Image du restaurant"
-          />
-          <div class="card-body">
-            <h5 class="card-title">{{ restaurant.name }}</h5>
-            <p class="card-text">{{ restaurant.description }}</p>
-            <router-link
-              :to="`/restaurant/${restaurant.id}`"
-              class="btn btn-primary"
-              >Voir plus</router-link
-            >
-            <!-- Pour l'instant in faut faire un refresh manuel -->
+        <div
+          class="col"
+          v-for="restaurant in relatedRestaurants"
+          :key="restaurant.id"
+        >
+          <div
+            class="card rounded-4 p-2"
+            style="cursor: pointer"
+            @click="
+              this.$router.push({
+                name: 'Restaurant',
+                params: { restaurantId: restaurant.id },
+              })
+            "
+          >
+            <img
+              :src="restaurant.pictures[0]"
+              class="card-img-top object-fit-cover rounded-4 position-relative"
+              style="aspect-ratio: 1/1"
+              alt="restaurant thumbnail"
+              draggable="false"
+            />
+            <div class="card-body pt-1 pb-1 pe-1 ps-0 text-truncate">
+              <div class="d-flex justify-content-between">
+                <div class="text-truncate fw-bold" style="overflow: hidden">
+                  <span>{{ restaurant.name }}</span>
+                </div>
+                <span class="ps-2" style="white-space: nowrap">
+                  {{ roundRating(restaurant.rating) }}
+                  <i class="fa-solid fa-star fa-sm"></i>
+                </span>
+              </div>
+
+              <div class="d-flex justify-content-between">
+                <div class="text-truncate" style="overflow: hidden">
+                  {{
+                    restaurant.genres
+                      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                      .join(", ")
+                  }}
+                </div>
+                <span class="ps-2" style="white-space: nowrap">
+                  <i
+                    v-for="icon in restaurant.price_range"
+                    :key="icon"
+                    class="fa-solid fa-dollar-sign"
+                  ></i>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -68,6 +102,9 @@ export default {
       this.relatedRestaurants = this.relatedRestaurants.filter(
         (restaurant) => restaurant.id !== this.currentRestaurantId,
       );
+    },
+    roundRating(rating) {
+      return Math.round(rating * 10) / 10;
     },
   },
 };

@@ -179,6 +179,7 @@ export default {
         if (response && response.items) {
           this.visitedRestaurants = response.items;
           this.totalVisits = response.total;
+          this.currentPage = page;
         }
       } catch (error) {
         console.error("Error while fetching visits", error);
