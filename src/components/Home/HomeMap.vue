@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div class="col">
     <GoogleMap
       id="home-map"
       api-key=""
       style="aspect-ratio: 16/9; width: 100%"
       :center="userCoords"
-      :zoom="13"
+      :zoom="11"
+      :disableDefaultUi="true"
+      :zoomControl="true"
     >
       <MapMarker
         :options="{
@@ -135,6 +137,12 @@ export default {
 
 #home-map > .mapdiv {
   border-radius: 1.5rem;
+  border: 0;
+}
+@media (max-width: 768px) {
+  #home-map {
+    aspect-ratio: 1/1 !important;
+  }
 }
 
 button.gm-ui-hover-effect {

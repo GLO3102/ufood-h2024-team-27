@@ -89,10 +89,11 @@
             </div>
           </div>
         </div>
-        <MapquestMap
+        <RestaurantMap v-if="userCoords"
           :restaurant-name="restaurant.name"
-          :restaurant-location="restaurant.location.coordinates"
-        ></MapquestMap>
+          :restaurant-coords="{lat: restaurant.location.coordinates[1], lng: restaurant.location.coordinates[0]}"
+          :user-coords="userCoords"
+        />
       </div>
       <div class="col-md-6 mb-4">
         <div class="card rounded-5 p-3 py-2 mb-4">
@@ -151,8 +152,8 @@ import { getUserId } from "@/auth/auth";
 import GenreButton from "../components/Search/GenreButton.vue";
 import FavoriteModal from "../components/Favorites/FavoriteModal.vue";
 import VisitModal from "../components/Home/VisitModal.vue";
-import MapquestMap from "../components/MapquestMap.vue";
 import RelatedRestaurants from "../components/Restaurant/RelatedRestaurants.vue";
+import RestaurantMap from "../components/Restaurant/RestaurantMap.vue";
 import Cookies from "js-cookie";
 
 export default {
@@ -162,8 +163,8 @@ export default {
     GenreButton,
     FavoriteModal,
     VisitModal,
-    MapquestMap,
     RelatedRestaurants,
+    RestaurantMap
   },
   data() {
     return {
@@ -172,6 +173,7 @@ export default {
       favorites: [],
       token: Cookies.get("user_cookie"),
       userId: "",
+      userCoords: null,
     };
   },
   async created() {
@@ -181,6 +183,7 @@ export default {
     this.restaurant = data;
     const favorites = await apiGetUserFavorites(this.userId, this.token, {});
     this.favorites = favorites.items;
+    this.getUserLocation();
     this.loaded = true;
   },
   methods: {
@@ -198,6 +201,14 @@ export default {
     },
     addToFavorites(form) {
       apiAddToFavoritesList(form.favorite_id, form.restaurant_id, this.token);
+    },
+    getUserLocation() {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.userCoords = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+      });
     },
     async submitVisit(form) {
       await apiCreateVisit(
