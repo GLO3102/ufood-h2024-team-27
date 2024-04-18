@@ -124,6 +124,11 @@
         </div>
       </div>
     </div>
+    <RelatedRestaurants
+      :genre="restaurant.genres[0]"
+      :current-restaurant-id="restaurant.id"
+    >
+    </RelatedRestaurants>
     <FavoriteModal
       :id="0"
       :restaurant="restaurant"
@@ -135,11 +140,6 @@
       :restaurant="restaurant"
       @submit="submitVisit"
     ></VisitModal>
-    <RelatedRestaurants
-      :genre="restaurant.genres[0]"
-      :current-restaurant-id="restaurant.id"
-    >
-    </RelatedRestaurants>
   </div>
 </template>
 
