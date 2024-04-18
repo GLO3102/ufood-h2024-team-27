@@ -34,7 +34,7 @@ export function toQueryParams(obj, validKeys) {
   keysArr.forEach((key) => {
     output += key + "=";
     const value = Array.isArray(obj[key]) ? obj[key].join() : obj[key];
-    output += value + "&";
+    output += encodeURIComponent(value) + "&";
   });
   return output;
 }
