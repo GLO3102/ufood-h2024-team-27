@@ -120,7 +120,7 @@
 import FavoriteButton from "./FavoriteButton.vue";
 import VisitedButton from "./VisitedButton.vue";
 import VisitModal from "./VisitModal.vue";
-import { apiCreateVisit } from "@/api/api.js";
+import { apiCreateVisit } from "@/api/apiRestaurants";
 
 export default {
   name: "RestaurantCard",

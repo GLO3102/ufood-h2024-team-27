@@ -3,126 +3,35 @@
     <div class="row text-center">
       <h1 class="fs-1 fw-bold p-4">{{ restaurant.name }}</h1>
     </div>
-    <div class="rounded d-flex z-1 rounded-5 mb-4">
-      <div class="w-50">
-        <img
-          :src="restaurant.pictures[0]"
-          class="w-100 p-1 object-fit-cover rounded-start-5"
-          style="aspect-ratio: 1/1"
-          alt="restaurant thumbnail"
-          draggable="false"
-        />
-      </div>
-      <div class="w-50 flex-wrap">
-        <div class="d-flex flex-wrap">
-          <img
-            v-for="(picture, index) in restaurant.pictures.slice(1, 5)"
-            :key="index"
-            :src="picture"
-            class="w-50 p-1 object-fit-cover"
-            :class="roundedCorner(index)"
-            style="aspect-ratio: 1/1"
-            draggable="false"
-          />
-        </div>
-      </div>
-    </div>
+    <ImagesCluster :pictures="restaurant.pictures" />
     <div class="row mb-4">
       <div class="col-md-6 mb-4">
-        <div class="row">
-          <button
-            class="btn btn-primary rounded-pill p-2 m-3 mt-0 me-2 col"
-            data-bs-toggle="modal"
-            data-bs-target="#favorite-modal-0"
-          >
-            <i class="fa-solid fa-heart"></i> Add to favorites
-          </button>
-          <button
-            class="btn btn-primary rounded-pill p-2 m-3 mt-0 ms-2 col"
-            data-bs-toggle="modal"
-            data-bs-target="#visit-modal-0"
-          >
-            <i class="fa-solid fa-map-pin"></i> Add a visit
-          </button>
-        </div>
-        <div class="card rounded-5 p-3 py-2 mb-4">
-          <div class="card-body">
-            <h2 class="card-title">Restaurant infos</h2>
-            <div class="d-flex mb-4">
-              <div class="w-75">
-                <h3 class="fs-5">Genres</h3>
-                <div class="d-flex flex-wrap gap-2">
-                  <GenreButton
-                    v-for="genre in restaurant.genres"
-                    :key="genre"
-                    :genre="genre"
-                    read-only
-                  />
-                </div>
-              </div>
-              <div class="w-25">
-                <h3 class="fs-5">Price range</h3>
-                <span class="btn rounded-pill btn-light" disabled>
-                  <i
-                    v-for="i in restaurant.price_range"
-                    :key="i"
-                    class="fa-solid fa-dollar-sign"
-                  ></i>
-                </span>
-              </div>
-            </div>
-            <h3 class="fs-5">Rating</h3>
-            <div
-              class="d-flex align-items-center justify-content-center gap-2 text-secondary"
-            >
-              <div class="rating-box">
-                <div
-                  class="rating"
-                  :style="
-                    'width:' + convertRatingPercentage(restaurant.rating) + '%;'
-                  "
-                ></div>
-              </div>
-              <span class="fs-5 fw-semibold"
-                >{{ restaurant.rating.toFixed(1) }} / 5</span
-              >
-            </div>
-          </div>
-        </div>
-        <RestaurantMap v-if="userCoords"
+        <VisitsAndFavoritesButtons />
+
+        <Infos
+          :genres="restaurant.genres"
+          :price-range="restaurant.price_range"
+          :rating="restaurant.rating"
+        />
+
+        <RestaurantMap
+          v-if="userCoords"
           :restaurant-name="restaurant.name"
-          :restaurant-coords="{lat: restaurant.location.coordinates[1], lng: restaurant.location.coordinates[0]}"
+          :restaurant-coords="{
+            lat: restaurant.location.coordinates[1],
+            lng: restaurant.location.coordinates[0],
+          }"
           :user-coords="userCoords"
         />
       </div>
       <div class="col-md-6 mb-4">
-        <div class="card rounded-5 p-3 py-2 mb-4">
-          <div class="card-body">
-            <h2 class="card-title">Contact us</h2>
-            <h3 class="fs-5">Address</h3>
-            <p class="mb-4">{{ restaurant.address }}</p>
-            <h3 class="fs-5">Phone number</h3>
-            <p class="mb-4">{{ restaurant.tel }}</p>
-            <h3 class="fs-5">Opening hours</h3>
-            <ul class="list-unstyled">
-              <li
-                v-for="(hours, day) in restaurant.opening_hours"
-                :key="day"
-                class="text-capitalize fw-semibold"
-              >
-                {{ day }}
-              </li>
-              <li v-for="(hours, day) in restaurant.opening_hours" :key="day">
-                {{ test(hours) }}
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="card rounded-5 p-3 py-2">
-          <div class="card-body">
-            <h2 class="card-title">Reviews</h2>
-          </div>
-        </div>
+        <ContactUs
+          :address="restaurant.address"
+          :tel="restaurant.tel"
+          :opening-hours="restaurant.opening_hours"
+        />
+
+        <Reviews :reviews="reviews" />
       </div>
       <RelatedRestaurants
         :genre="restaurant.genres[0]"
@@ -144,27 +53,35 @@
 </template>
 
 <script>
-import { apiGetRestaurant } from "@/api/apiRestaurants";
+import { apiGetRestaurant, apiGetRestaurantVisits } from "@/api/apiRestaurants";
 import { apiAddToFavoritesList } from "@/api/apiFavorites";
 import { apiGetUserFavorites } from "@/api/apiUsers";
 import { apiCreateVisit } from "@/api/apiVisits";
 import { getUserId } from "@/auth/auth";
-import GenreButton from "../components/Search/GenreButton.vue";
 import FavoriteModal from "../components/Favorites/FavoriteModal.vue";
 import VisitModal from "../components/Home/VisitModal.vue";
 import RelatedRestaurants from "../components/Restaurant/RelatedRestaurants.vue";
 import RestaurantMap from "../components/Restaurant/RestaurantMap.vue";
+import ImagesCluster from "../components/Restaurant/ImagesCluster.vue";
+import VisitsAndFavoritesButtons from "../components/Restaurant/VisitsAndFavoritesButtons.vue";
+import Infos from "../components/Restaurant/Infos.vue";
+import ContactUs from "../components/Restaurant/ContactUs.vue";
+import Reviews from "../components/Restaurant/Reviews.vue";
 import Cookies from "js-cookie";
 
 export default {
   name: "Restaurant",
   props: ["restaurantId"],
   components: {
-    GenreButton,
     FavoriteModal,
     VisitModal,
+    ImagesCluster,
+    VisitsAndFavoritesButtons,
+    Infos,
+    RestaurantMap,
+    ContactUs,
+    Reviews,
     RelatedRestaurants,
-    RestaurantMap
   },
   data() {
     return {
@@ -174,31 +91,29 @@ export default {
       token: Cookies.get("user_cookie"),
       userId: "",
       userCoords: null,
+      reviews: [],
     };
   },
   async created() {
-    const data = await apiGetRestaurant(this.restaurantId, this.token);
-    const id = await getUserId(this.token);
-    this.userId = id;
-    this.restaurant = data;
+    this.restaurant = await apiGetRestaurant(this.restaurantId, this.token);
+
+    this.userId = await getUserId(this.token);
+
     const favorites = await apiGetUserFavorites(this.userId, this.token, {});
     this.favorites = favorites.items;
+
+    const reviews = await apiGetRestaurantVisits(
+      this.restaurantId,
+      { limit: 3 },
+      this.token,
+    );
+    this.reviews = reviews.items;
+
     this.getUserLocation();
+
     this.loaded = true;
   },
   methods: {
-    roundedCorner(index) {
-      if (index === 1) return "rounded-top-right-2";
-      if (index === 3) return "rounded-bottom-right-2";
-      return "";
-    },
-    convertRatingPercentage(rating) {
-      return Math.round((rating / 5) * 100);
-    },
-    test(hour) {
-      if (hour === null) return "—";
-      return hour;
-    },
     addToFavorites(form) {
       apiAddToFavoritesList(form.favorite_id, form.restaurant_id, this.token);
     },
@@ -223,42 +138,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.rounded-top-right-2 {
-  border-top-right-radius: 2rem;
-}
-
-.rounded-bottom-right-2 {
-  border-bottom-right-radius: 2rem;
-}
-
-.rating-box {
-  position: relative;
-  vertical-align: middle;
-  font-size: 2rem;
-  font-family: FontAwesome;
-  display: inline-block;
-
-  &:before {
-    content: "\f006 \f006 \f006 \f006 \f006";
-  }
-
-  .rating {
-    position: absolute;
-    left: 0;
-    top: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    &:before {
-      content: "\f005 \f005 \f005 \f005 \f005";
-    }
-  }
-}
-
-ul {
-  columns: 2;
-  -webkit-columns: 2;
-  -moz-columns: 2;
-}
-</style>
