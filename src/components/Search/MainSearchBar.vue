@@ -17,7 +17,7 @@
             class="form-control fs-5 z-0 rounded-end-pill py-3 pe-5"
             id="home-search-bar"
             aria-label="Search bar"
-            placeholder="Search..."
+            placeholder="Search a restaurant..."
             autocomplete="off"
             @keyup.enter="search"
           />

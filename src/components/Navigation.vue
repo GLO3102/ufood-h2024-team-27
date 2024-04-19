@@ -61,37 +61,22 @@
             </router-link>
           </li>
         </ul>
-        <form class="d-flex" role="search">
+        <form v-if="this.$route.name !== 'Home'" class="d-flex" role="search">
           <input
             id="navbar-search"
-            v-model="searchQuery"
+            v-model="search"
             type="text"
             class="form-control mr-2 navbar-search-input rounded-pill"
-            placeholder="Find a restaurant..."
+            placeholder="Search a restaurant..."
             aria-label="Search anything"
-            @focus="dropdownVisible = true"
-            @blur="hideDropdown"
-            ref="searchInput"
           />
           <button
             class="btn btn-outline-none my-2 my-sm-0 navbar-search-btn"
             type="submit"
+            @click="searchRestaurants"
           >
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
-          <div
-            v-if="filteredItems.length && searchQuery && dropdownVisible"
-            class="dropdown-menu show w-100"
-          >
-            <a
-              v-for="item in filteredItems"
-              :key="item.id"
-              class="dropdown-item"
-              @click="selectItem(item)"
-            >
-              {{ item.name }}
-            </a>
-          </div>
         </form>
       </div>
     </div>
@@ -100,86 +85,35 @@
 
 <script>
 import { checkUserLoggedIn, logout } from "@/auth/auth";
+import { useSearchStore } from "@/stores/searchStore";
 export default {
+  setup() {
+    const searchStore = useSearchStore();
+    return { searchStore };
+  },
   data() {
     return {
       user: {
         isLoggedIn: false,
         name: "My Profile",
       },
-      searchQuery: "",
-      items: [],
-
-      dropdownVisible: false,
+      search: "",
     };
   },
-  props: {},
   created() {
     this.user.isLoggedIn = checkUserLoggedIn();
   },
-  computed: {
-    filteredItems() {
-      return this.items.filter((restaurant) =>
-        restaurant.name.toLowerCase().includes(this.searchQuery.toLowerCase()),
-      );
-    },
-  },
-
-  watch: {
-    searchQuery(newValue) {
-      this.dropdownVisible = newValue.length > 0;
-    },
-  },
   methods: {
-    selectItem(item) {
-      //this.$router.push({ path: `/restaurants/${item.id}` });
-      this.$router.push({
-        name: "Restaurant",
-        params: { restaurantId: item.id },
-      });
-      // this.$router.push({ path: "/restaurant" });
+    searchRestaurants() {
+      this.searchStore.modifySearch(this.search);
+      this.$router.push({ name: "Home" });
+      this.search = "";
     },
-
     logout() {
       logout();
       this.user.isLoggedIn = false;
       this.$router.push({ name: "Home" });
     },
-
-    hideDropDown(event) {
-      if (
-        event.relatedTarget &&
-        this.$refs.searchInput.contains(event.relatedTarget)
-      ) {
-        return;
-      }
-      this.dropdownVisible = false;
-    },
-    handleClickOutside(event) {
-      if (
-        this.$refs.searchInput &&
-        !this.$refs.searchInput.contains(event.target)
-      ) {
-        this.dropdownVisible = false;
-      }
-    },
-  },
-  mounted() {
-    document.addEventListener("click", this.handleClickOutside);
-  },
-  beforeDestroy() {
-    document.removeEventListener("click", this.handleClickOutside);
   },
 };
 </script>
-
-<style>
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1050;
-  width: 100%;
-}
-</style>
-@/auth/auth

@@ -4,7 +4,7 @@
       <h1 class="fw-bold mb-0">UFood</h1>
       <p class="ps-2 mb-5 fs-2 fw-bold">Eat, Share, Repeat</p>
 
-      <MainSearchBar @search="search" />
+      <MainSearchBar @search="searchRestaurants" />
 
       <div class="row justify-content-end">
         <img
@@ -70,8 +70,13 @@ import { apiGetRestaurants } from "@/api/apiRestaurants";
 import Loading from "@/components/Loading.vue";
 import Cookies from "js-cookie";
 import HomeMap from "@/components/Home/HomeMap.vue";
+import { useSearchStore } from "@/stores/searchStore";
 
 export default {
+  setup() {
+    const searchStore = useSearchStore();
+    return { searchStore };
+  },
   components: {
     RestaurantCards,
     MainSearchBar,
@@ -92,7 +97,16 @@ export default {
   async created() {
     try {
       this.loading = true;
-      const data = await apiGetRestaurants(this.previousParams, this.token);
+      let data;
+      if (this.searchStore.search !== "") {
+        data = await apiGetRestaurants(
+          { ...this.previousParams, q: this.searchStore.search },
+          this.token,
+        );
+      } else {
+        data = await apiGetRestaurants(this.previousParams, this.token);
+      }
+      this.searchStore.modifySearch("");
       this.total = data.total;
       this.restaurants = data.items;
     } catch (error) {
@@ -103,7 +117,7 @@ export default {
     this.getUserLocation();
   },
   methods: {
-    async search(params) {
+    async searchRestaurants(params) {
       params.limit = 24;
       params.page = 0;
       this.previousParams = params;
@@ -138,12 +152,16 @@ export default {
       let data;
 
       if (newValue) {
-        data = await apiGetRestaurants(
-          { ...params, lat: this.userCoords.lat, lon: this.userCoords.lng },
-          this.token,
-        );
-      } else {
+        params.lat = this.userCoords.lat;
+        params.lon = this.userCoords.lng;
+      }
+      try {
+        this.loading = true;
         data = await apiGetRestaurants(params, this.token);
+      } catch (error) {
+        console.error("Error while fetching restaurants");
+      } finally {
+        this.loading = false;
       }
       this.restaurants = data.items;
       this.previousParams = params;
