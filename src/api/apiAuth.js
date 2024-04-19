@@ -13,7 +13,9 @@ export async function apiLogin(email, password) {
 export async function apiLogout() {
   const address = URL + "logout";
 
-  return await post(address, {}, "");
+  return await fetch(address, {
+    method: "POST"
+  });
 }
 
 export async function apiSignUp(name, email, password) {

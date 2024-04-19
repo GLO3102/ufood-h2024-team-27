@@ -69,11 +69,6 @@
         :id="id"
         class="position-absolute top-0 start-0 mt-1 ms-1"
       />
-      <FavoriteButton
-        :id="id"
-        :initial="false"
-        class="position-absolute top-0 end-0 mt-1 me-1"
-      />
 
       <div
         class="card-body pt-1 pe-1 ps-0 text-truncate"
@@ -117,10 +112,9 @@
 </template>
 
 <script>
-import FavoriteButton from "./FavoriteButton.vue";
 import VisitedButton from "./VisitedButton.vue";
 import VisitModal from "./VisitModal.vue";
-import { apiCreateVisit } from "@/api/apiRestaurants";
+import { apiCreateVisit } from "@/api/apiVisits";
 
 export default {
   name: "RestaurantCard",
@@ -146,7 +140,7 @@ export default {
       );
     },
   },
-  components: { FavoriteButton, VisitedButton, VisitModal },
+  components: { VisitedButton, VisitModal },
 };
 </script>
 

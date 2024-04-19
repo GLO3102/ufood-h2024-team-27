@@ -1,14 +1,11 @@
-import { apiLogin, apiGetTokenInfo, apiSignUp } from "@/api/apiAuth.js";
-import { router } from "@/router";
+import { apiLogin, apiGetTokenInfo, apiSignUp, apiLogout } from "@/api/apiAuth.js";
 import Cookies from "js-cookie";
 
 export async function login(email, password) {
   try {
     const response = await apiLogin(email, password);
-
     if (response.token) {
       Cookies.set("user_cookie", response.token);
-      router.push("/user");
     } else {
       throw new Error("Authentication failed");
     }
@@ -42,7 +39,9 @@ export function checkUserLoggedIn() {
 }
 
 export function logout() {
+  apiLogout();
   Cookies.remove("user_cookie");
+
 }
 
 export async function signUp(name, email, password) {

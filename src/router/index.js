@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "../pages/Home";
-import Restaurant from "../pages/Restaurant";
-import User from "../pages/User";
+import Home from "../pages/Home.vue";
+import Restaurant from "../pages/Restaurant.vue";
+import User from "../pages/User.vue";
 import Other_User from "../pages/Other_User.vue";
 import Social from "../pages/Social.vue";
 import Register from "../pages/Register.vue";

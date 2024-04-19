@@ -10,7 +10,7 @@
                   Log Into Your Account
                 </h2>
 
-                <form @submit="handleLogin">
+                <form @submit.prevent="handleLogin">
                   <div class="form-outline mb-4">
                     <label class="form-label" for="email">Email</label>
                     <input
@@ -83,14 +83,8 @@ export default {
   methods: {
     async handleLogin() {
       try {
-        const data = await login(this.email, this.password);
-        if (data.success) {
-          this.$router.push({ name: "User" });
-        } else {
-          this.error = true;
-          this.errorMessage =
-            "Error while logging in, check password and email";
-        }
+        await login(this.email, this.password);
+        this.$router.push({ name: "User" });
       } catch (error) {
         this.error = true;
         this.errorMessage = "Could not log in. Check credentials";
@@ -100,4 +94,3 @@ export default {
   },
 };
 </script>
-@/auth/auth.js

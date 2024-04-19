@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row justify-content-center align-items-center mb-5">
-      <div class="col-5">
+      <div class="col-8">
         <div class="input-group mb-0">
           <input
             type="text"

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row d-flex justify-content-center">
-      <div class="col-md-8 mt-3 pt-3 pb-5">
+      <div class="col-md-10 mt-3 pt-3 pb-5">
         <div
           class="row z-depth-3 shadow-lg mb-1 mt-3 border border-5 rounded-4 border-primary"
         >

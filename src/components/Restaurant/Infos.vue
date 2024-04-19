@@ -51,7 +51,7 @@ export default {
   },
   props: {
     genres: Array,
-    priceRange: Array,
+    priceRange: Number,
     rating: Number,
   },
   methods: {

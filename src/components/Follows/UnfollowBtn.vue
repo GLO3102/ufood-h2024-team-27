@@ -5,9 +5,9 @@
     data-toggle="tooltip"
     data-placement="top"
     title="Delete"
-    @click.prevent="$emit('unfollow')"
+    @click.stop="$emit('unfollow')"
   >
-    Unfollow <i class="fa-solid fa-user-minus"></i>
+    <i class="fa-solid fa-user-minus"></i>
   </button>
 </template>
 

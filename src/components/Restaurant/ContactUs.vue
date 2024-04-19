@@ -29,7 +29,7 @@ export default {
   props: {
     address: String,
     tel: String,
-    openingHours: Array,
+    openingHours: Object,
   },
   methods: {
     displayHour(hour) {

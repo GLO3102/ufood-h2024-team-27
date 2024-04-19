@@ -7,7 +7,7 @@
           Following this user
         </h2>
       </div>
-      <div>
+      <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-3">
         <div :key="follower.id" v-for="follower in followers">
           <Follower :follower="follower" />
         </div>

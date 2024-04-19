@@ -18,7 +18,7 @@
         alt="Avatar"
       />
       <div class="card-body pt-1 pe-1 ps-0 text-truncate">
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center gap-2">
           <div class="text-truncate fw-bold" style="overflow: hidden">
             <span>{{ following.name }}</span>
           </div>
