@@ -10,54 +10,67 @@
                   Create an account
                 </h2>
 
-                <form>
+                <form @submit="register">
                   <div class="form-outline mb-4">
+                    <label class="form-label" for="name">Username</label>
                     <input
                       type="text"
                       id="name"
                       v-model="name"
                       class="form-control form-control-lg"
+                      required
+                      maxlength="25"
+                      pattern="^\S+$"
+                      oninvalid="this.setCustomValidity('Username must be provided not contain spaces')"
+                      oninput="this.setCustomValidity('')"
                     />
-                    <label class="form-label" for="name">Your Name</label>
                   </div>
-
                   <div class="form-outline mb-4">
+                    <label class="form-label" for="email">Email</label>
                     <input
-                      type="email"
+                      type="text"
                       id="email"
                       v-model="email"
                       class="form-control form-control-lg"
+                      required
+                      maxlength="50"
+                      pattern="^\S+@\S+\.\S+$"
+                      oninvalid="this.setCustomValidity('Email must be of format x@y.z')"
+                      oninput="this.setCustomValidity('')"
                     />
-                    <label class="form-label" for="email">Your Email</label>
                   </div>
-
                   <div class="form-outline mb-4">
+                    <label class="form-label" for="password">Password</label>
                     <input
                       type="password"
                       id="password"
                       v-model="password"
                       class="form-control form-control-lg"
+                      required
+                      pattern="^(?!.* )(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]).{8,30}$"
+                      oninvalid="this.setCustomValidity('Password must be 8-30 characters long and include at least one uppercase letter, one lowercase letter and one number')"
+                      oninput="this.setCustomValidity('')"
                     />
-                    <label class="form-label" for="password">Password</label>
                   </div>
-
-                  <div class="d-flex justify-content-center">
+                  <div class="d-flex justify-content-center mb-2">
                     <button
-                      type="button"
+                      type="submit"
                       class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
-                      @click="register"
                     >
                       Register
                     </button>
                   </div>
-                  <p class="text-danger" v-if="this.ErrorSignUp">
+                  <p class="text-danger text-center" v-if="this.ErrorSignUp">
                     {{ errorMessage }}
                   </p>
-                  <p class="text-success" v-if="this.CreatedSuccess">
+                  <p
+                    class="text-success text-center"
+                    v-if="this.CreatedSuccess"
+                  >
                     Account created successfully
                   </p>
                   <p class="text-center text-muted mt-5 mb-0">
-                    Have already an account?
+                    Already have an account?
                     <a href="/#/login" class="fw-bold text-body"
                       ><u>Login here</u></a
                     >

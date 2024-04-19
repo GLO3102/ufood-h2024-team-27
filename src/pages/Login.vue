@@ -10,37 +10,45 @@
                   Log Into Your Account
                 </h2>
 
-                <form>
+                <form @submit="handleLogin">
                   <div class="form-outline mb-4">
+                    <label class="form-label" for="email">Email</label>
                     <input
-                      type="email"
+                      type="text"
                       id="email"
                       class="form-control form-control-lg"
                       v-model="email"
+                      required
+                      maxlength="50"
+                      pattern="^\S+@\S+\.\S+$"
+                      oninvalid="this.setCustomValidity('Email must be of valid format (x@y.z)')"
+                      oninput="this.setCustomValidity('')"
                     />
-                    <label class="form-label" for="email">Your Email</label>
                   </div>
 
                   <div class="form-outline mb-4">
+                    <label class="form-label" for="password">Password</label>
                     <input
                       type="password"
                       id="password"
                       v-model="password"
                       class="form-control form-control-lg"
+                      required
+                      maxlength="30"
                     />
-                    <label class="form-label" for="password">Password</label>
                   </div>
 
-                  <div class="d-flex justify-content-center">
+                  <div class="d-flex justify-content-center mb-2">
                     <button
-                      type="button"
+                      type="submit"
                       class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
-                      @click="handleLogin()"
                     >
                       Log in
                     </button>
                   </div>
-                  <p class="text-danger" v-if="error">{{ errorMessage }}</p>
+                  <p class="text-danger text-center" v-if="error">
+                    {{ errorMessage }}
+                  </p>
                   <p class="text-center text-muted mt-5 mb-0">
                     Don't have an account?
                     <router-link
