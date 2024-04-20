@@ -43,7 +43,11 @@
           :user-coords="this.userCoords"
         />
       </div>
-      <RestaurantCards v-else :restaurants="this.restaurants" />
+      <RestaurantCards
+        v-else
+        :restaurants="this.restaurants"
+        @submit-visit="submitVisit"
+      />
       <div class="d-flex justify-content-center">
         <button
           type="button"
@@ -72,6 +76,8 @@ import Loading from "@/components/Loading.vue";
 import Cookies from "js-cookie";
 import HomeMap from "@/components/Home/HomeMap.vue";
 import { useSearchStore } from "@/stores/searchStore";
+import { apiCreateVisit } from "@/api/apiVisits";
+import { getUserId } from "@/auth/auth";
 
 export default {
   setup() {
@@ -136,6 +142,17 @@ export default {
       this.previousParams.page += 1;
       const data = await apiGetRestaurants(this.previousParams, this.token);
       this.restaurants = [...this.restaurants, ...data.items];
+    },
+    async submitVisit(form) {
+      const userId = await getUserId(this.token);
+      await apiCreateVisit(
+        userId,
+        form.restaurant_id,
+        form.comment,
+        form.rating,
+        form.date,
+        this.token,
+      );
     },
     getUserLocation() {
       navigator.geolocation.getCurrentPosition((position) => {

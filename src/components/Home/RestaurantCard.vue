@@ -114,7 +114,6 @@
 <script>
 import VisitedButton from "./VisitedButton.vue";
 import VisitModal from "./VisitModal.vue";
-import { apiCreateVisit } from "@/api/apiVisits";
 
 export default {
   name: "RestaurantCard",
@@ -130,17 +129,12 @@ export default {
     roundRating(rating) {
       return Math.round(rating * 10) / 10;
     },
-    async submitVisit(form) {
-      await apiCreateVisit(
-        "618b311822b4a0000478ab1b",
-        form.restaurant_id,
-        form.comment,
-        form.rating,
-        form.date,
-      );
+    submitVisit(form) {
+      this.$emit("submitVisit", form);
     },
   },
   components: { VisitedButton, VisitModal },
+  emits: ["submitVisit"],
 };
 </script>
 

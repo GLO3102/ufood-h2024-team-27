@@ -5,6 +5,7 @@
         :restaurant="restaurant"
         :id="index"
         :carousel="carousel"
+        @submit-visit="submitVisit"
       />
     </div>
   </div>
@@ -25,6 +26,12 @@ export default {
       default: false,
     },
   },
+  methods: {
+    submitVisit(form) {
+      this.$emit("submitVisit", form);
+    },
+  },
   components: { RestaurantCard },
+  emits: ["submitVisit"],
 };
 </script>
