@@ -1,4 +1,9 @@
-import { apiLogin, apiGetTokenInfo, apiSignUp, apiLogout } from "@/api/apiAuth.js";
+import {
+  apiLogin,
+  apiGetTokenInfo,
+  apiSignUp,
+  apiLogout,
+} from "@/api/apiAuth.js";
 import Cookies from "js-cookie";
 
 export async function login(email, password) {

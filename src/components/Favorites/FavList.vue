@@ -35,7 +35,7 @@ export default {
   props: {
     listFav: Object,
     token: String,
-    readOnly: Boolean
+    readOnly: Boolean,
   },
   methods: {
     handleDeleteRestaurant(restId) {

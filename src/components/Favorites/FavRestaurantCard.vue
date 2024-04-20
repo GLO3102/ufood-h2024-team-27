@@ -45,7 +45,7 @@ export default {
   props: {
     restaurantId: Object,
     token: String,
-    readOnly: Boolean
+    readOnly: Boolean,
   },
   components: {
     BtnDeleteResto,

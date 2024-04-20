@@ -14,7 +14,7 @@ export async function apiLogout() {
   const address = URL + "logout";
 
   return await fetch(address, {
-    method: "POST"
+    method: "POST",
   });
 }
 

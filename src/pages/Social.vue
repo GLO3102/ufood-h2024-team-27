@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main class="container-fluid" style="width: 75%">
+    <main v-if="token" class="container-fluid" style="width: 75%">
       <div class="row mb-0 mt-4" id="users-section">
         <h2 class="text-center text-dark fs-1 fw-bold mb-3">Users</h2>
         <SocialSearchBar @search="search" />
@@ -25,10 +25,12 @@
         <span v-if="this.total === 0" class="fs-4">No user found!</span>
       </div>
     </main>
+    <NotLoggedIn v-else class="mt-5" />
   </div>
 </template>
 
 <script>
+import NotLoggedIn from "@/components/NotLoggedIn.vue";
 import UserCards from "@/components/Social/UserCards.vue";
 import SocialSearchBar from "@/components/Social/SocialSearchBar.vue";
 import { apiGetUsers } from "@/api/apiUsers";
@@ -37,6 +39,7 @@ import Cookies from "js-cookie";
 
 export default {
   components: {
+    NotLoggedIn,
     UserCards,
     SocialSearchBar,
     Loading,

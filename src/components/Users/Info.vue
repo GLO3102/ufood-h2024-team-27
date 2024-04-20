@@ -23,7 +23,8 @@
               <i class="fa-solid fa-star w-100 pb-4" style="color: #ffd43b">{{
                 userInfo.rating
               }}</i>
-              <FollowButton v-if="other"
+              <FollowButton
+                v-if="other"
                 :isFollowing="isFollowing"
                 @toggle-follow="$emit('toggle-follow')"
               ></FollowButton>
@@ -74,7 +75,7 @@ export default {
     userInfo: Object,
     gravatarUrl: String,
     isFollowing: Boolean,
-    other: Boolean
+    other: Boolean,
   },
 };
 </script>

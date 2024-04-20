@@ -41,9 +41,9 @@
                   <div class="d-flex justify-content-center mb-2">
                     <button
                       type="submit"
-                      class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                      class="btn btn-primary p-3 px-4 fs-5 rounded-4"
                     >
-                      Log in
+                      <i class="fa-solid fa-user"></i> Log in
                     </button>
                   </div>
                   <p class="text-danger text-center" v-if="error">
@@ -84,7 +84,9 @@ export default {
     async handleLogin() {
       try {
         await login(this.email, this.password);
-        this.$router.push({ name: "Home" }).then(() => {this.$router.go(0)})
+        this.$router.push({ name: "Home" }).then(() => {
+          this.$router.go(0);
+        });
       } catch (error) {
         this.error = true;
         this.errorMessage = "Could not log in. Check credentials";

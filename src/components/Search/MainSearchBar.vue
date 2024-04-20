@@ -136,7 +136,6 @@ export default {
   },
   methods: {
     resetFilters() {
-      console.log(this.checkedPrices);
       this.checkedGenres = [];
       this.checkedPrices = [];
       this.search();

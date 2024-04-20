@@ -40,7 +40,7 @@ export default {
   components: { Unfollow },
   props: {
     following: Object,
-    readOnly: Boolean
+    readOnly: Boolean,
   },
   data() {
     return {

@@ -24,7 +24,7 @@ export default {
   props: {
     restaurants: Array,
     token: String,
-    readOnly: Boolean
+    readOnly: Boolean,
   },
   methods: {},
   emits: ["deleteRestaurant"],

@@ -55,9 +55,9 @@
                   <div class="d-flex justify-content-center mb-2">
                     <button
                       type="submit"
-                      class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                      class="btn btn-primary p-3 px-4 fs-5 rounded-4"
                     >
-                      Register
+                      <i class="fa-solid fa-user-plus"></i> Register
                     </button>
                   </div>
                   <p class="text-danger text-center" v-if="this.ErrorSignUp">

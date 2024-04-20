@@ -15,7 +15,11 @@
         class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-3"
       >
         <div :key="following.id" v-for="following in followings">
-          <Following :following="following" :read-only="other" @unfollow="handleUnfollow" />
+          <Following
+            :following="following"
+            :read-only="other"
+            @unfollow="handleUnfollow"
+          />
         </div>
       </div>
     </div>
@@ -32,7 +36,7 @@ export default {
   },
   props: {
     followings: Array,
-    other: Boolean
+    other: Boolean,
   },
   methods: {
     handleUnfollow(followingId) {

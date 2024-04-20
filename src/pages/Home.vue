@@ -59,7 +59,7 @@
         <span v-if="this.total === 0" class="fs-4">No restaurant found!</span>
       </div>
     </main>
-    <NotLoggedIn v-if="!token"/>
+    <NotLoggedIn v-if="!token" />
   </div>
 </template>
 
@@ -128,7 +128,7 @@ export default {
         const data = await apiGetRestaurants(params, this.token);
         this.restaurants = data.items;
         this.total = data.total;
-      } catch(error) {
+      } catch (error) {
         console.error("Error while fetching restaurants");
       }
     },
