@@ -4,7 +4,7 @@
       <h1 class="fw-bold mb-0">UFood</h1>
       <p class="ps-2 mb-5 fs-2 fw-bold">Eat, Share, Repeat</p>
 
-      <MainSearchBar @search="searchRestaurants" />
+      <MainSearchBar v-if="token" @search="searchRestaurants" />
 
       <div class="row justify-content-end">
         <img
@@ -15,7 +15,7 @@
         />
       </div>
     </header>
-    <main class="container-fluid mb-5">
+    <main v-if="token" class="container-fluid mb-5">
       <div class="row justify-content-end mb-5" id="restaurants-section">
         <div class="col-4 d-flex justify-content-center">
           <h2 class="text-center text-dark fs-1 fw-bold">Restaurants</h2>
@@ -37,7 +37,6 @@
         </div>
       </div>
       <div class="text-center" v-if="loading"><Loading /></div>
-      {{ this.restaurants.items }}
       <div v-if="mapMode && !loading" class="row justify-content-centered">
         <HomeMap
           :restaurants="this.restaurants"
@@ -60,10 +59,12 @@
         <span v-if="this.total === 0" class="fs-4">No restaurant found!</span>
       </div>
     </main>
+    <NotLoggedIn v-if="!token"/>
   </div>
 </template>
 
 <script>
+import NotLoggedIn from "@/components/NotLoggedIn.vue";
 import RestaurantCards from "@/components/Home/RestaurantCards.vue";
 import MainSearchBar from "@/components/Search/MainSearchBar.vue";
 import { apiGetRestaurants } from "@/api/apiRestaurants";
@@ -78,6 +79,7 @@ export default {
     return { searchStore };
   },
   components: {
+    NotLoggedIn,
     RestaurantCards,
     MainSearchBar,
     Loading,
@@ -97,16 +99,13 @@ export default {
   async created() {
     try {
       this.loading = true;
-      let data;
+      const params = this.previousParams;
       if (this.searchStore.search !== "") {
-        data = await apiGetRestaurants(
-          { ...this.previousParams, q: this.searchStore.search },
-          this.token,
-        );
-      } else {
-        data = await apiGetRestaurants(this.previousParams, this.token);
+        params.q = this.searchStore.search;
+        this.searchStore.modifySearch("");
       }
-      this.searchStore.modifySearch("");
+
+      const data = await apiGetRestaurants(params, this.token);
       this.total = data.total;
       this.restaurants = data.items;
     } catch (error) {
@@ -125,9 +124,13 @@ export default {
         params = { ...params, ...this.userCoords };
       }
 
-      const data = await apiGetRestaurants(params, this.token);
-      this.restaurants = data.items;
-      this.total = data.total;
+      try {
+        const data = await apiGetRestaurants(params, this.token);
+        this.restaurants = data.items;
+        this.total = data.total;
+      } catch(error) {
+        console.error("Error while fetching restaurants");
+      }
     },
     async showMore() {
       this.previousParams.page += 1;
@@ -158,14 +161,14 @@ export default {
       try {
         this.loading = true;
         data = await apiGetRestaurants(params, this.token);
+        this.restaurants = data.items;
+        this.previousParams = params;
+        this.total = data.total;
       } catch (error) {
         console.error("Error while fetching restaurants");
       } finally {
         this.loading = false;
       }
-      this.restaurants = data.items;
-      this.previousParams = params;
-      this.total = data.total;
       this.loading = false;
     },
   },

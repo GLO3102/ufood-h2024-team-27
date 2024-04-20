@@ -112,7 +112,7 @@ export default {
     logout() {
       logout();
       this.user.isLoggedIn = false;
-      this.$router.push({ name: "Home" });
+      this.$router.push({ name: "Home" }).then(() => {this.$router.go(0)});
     },
   },
 };

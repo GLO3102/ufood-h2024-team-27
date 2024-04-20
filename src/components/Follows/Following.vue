@@ -5,7 +5,7 @@
       style="cursor: pointer"
       @click="
         this.$router.push({
-          name: 'Other_User',
+          name: 'OtherUser',
           params: { userId: following.id },
         })
       "
@@ -22,7 +22,7 @@
           <div class="text-truncate fw-bold" style="overflow: hidden">
             <span>{{ following.name }}</span>
           </div>
-          <div>
+          <div v-if="!readOnly">
             <Unfollow @unfollow="handleUnfollow" />
           </div>
         </div>
@@ -40,6 +40,7 @@ export default {
   components: { Unfollow },
   props: {
     following: Object,
+    readOnly: Boolean
   },
   data() {
     return {

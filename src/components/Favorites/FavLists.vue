@@ -6,7 +6,7 @@
           <i class="fa-solid fa-heart"></i>
           Lists of favorites
         </h2>
-        <CreateList @createList="createList" />
+        <CreateList v-if="!readOnly" @createList="createList" />
       </div>
       <div>
         <div
@@ -16,6 +16,7 @@
           <FavList
             :token="token"
             :listFav="listFav"
+            :read-only="readOnly"
             @deleteRestaurant="handleDeleteRestaurant"
             @deleteList="deleteList"
             @modifyListName="modifyListName"
@@ -38,6 +39,7 @@ export default {
   props: {
     listsFavs: Array,
     token: String,
+    readOnly: Boolean
   },
   methods: {
     handleDeleteRestaurant(restId, listId) {

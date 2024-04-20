@@ -14,7 +14,6 @@
           })
         "
       />
-
       <div
         class="d-flex justify-content-between align-items-end"
         @click="
@@ -27,7 +26,7 @@
         <div class="text-truncate fw-bold" style="overflow: hidden">
           <h3 class="fs-6">{{ restaurant.name }}</h3>
         </div>
-        <span class="ps-2" style="white-space: nowrap">
+        <span v-if="!readOnly" class="ps-2" style="white-space: nowrap">
           <BtnDeleteResto
             @deleteResto="$emit('deleteRestaurant', restaurantId.id)"
           />
@@ -46,6 +45,7 @@ export default {
   props: {
     restaurantId: Object,
     token: String,
+    readOnly: Boolean
   },
   components: {
     BtnDeleteResto,

@@ -5,7 +5,7 @@
         <h2 class="card-title fs-4 mb-4">
           {{ listFav.name }}
         </h2>
-        <div>
+        <div v-if="!readOnly">
           <ModifyListName
             style="margin-right: 0.125rem"
             :listId="listFav.listId"
@@ -17,6 +17,7 @@
       <FavRestaurants
         :token="token"
         :restaurants="listFav.restaurants"
+        :read-only="readOnly"
         @deleteRestaurant="handleDeleteRestaurant"
       />
     </div>
@@ -34,6 +35,7 @@ export default {
   props: {
     listFav: Object,
     token: String,
+    readOnly: Boolean
   },
   methods: {
     handleDeleteRestaurant(restId) {

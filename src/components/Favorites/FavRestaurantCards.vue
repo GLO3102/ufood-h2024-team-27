@@ -5,6 +5,7 @@
         <FavRestaurant
           :restaurantId="restaurantId"
           :token="token"
+          :read-only="readOnly"
           @deleteRestaurant="$emit('deleteRestaurant', restaurantId.id)"
         />
       </div>
@@ -23,6 +24,7 @@ export default {
   props: {
     restaurants: Array,
     token: String,
+    readOnly: Boolean
   },
   methods: {},
   emits: ["deleteRestaurant"],

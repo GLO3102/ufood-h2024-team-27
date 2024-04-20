@@ -5,7 +5,7 @@
       style="cursor: pointer"
       @click="
         this.$router.push({
-          name: 'Other_User',
+          name: 'OtherUser',
           params: { userId: user.id },
         })
       "

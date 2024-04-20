@@ -84,7 +84,7 @@ export default {
     async handleLogin() {
       try {
         await login(this.email, this.password);
-        this.$router.push({ name: "User" });
+        this.$router.push({ name: "Home" }).then(() => {this.$router.go(0)})
       } catch (error) {
         this.error = true;
         this.errorMessage = "Could not log in. Check credentials";

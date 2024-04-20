@@ -4,22 +4,20 @@
       :userInfo="userInfo"
       :gravatarUrl="gravatarUrl"
       :isFollowing="thisIsFollowing"
+      :other="true"
       @toggle-follow="toggleFollow"
     />
     <div>
       <div>
-        <Followings :followings="followings" />
+        <Followings :followings="followings" :other="true"/>
 
-        <Followers :followers="followers" />
+        <Followers :followers="followers" :other="true"/>
       </div>
       <Loading v-if="loadingFavLists" />
       <FavLists
         :token="token"
         :listsFavs="listsOfFavs"
-        @deleteRestaurant="deleteRestaurant"
-        @createList="createList"
-        @deleteList="deleteList"
-        @modifyListName="modifyListName"
+        :read-only="true"
       />
     </div>
     <div>
@@ -38,12 +36,12 @@
 
 <script>
 import SparkMD5 from "spark-md5";
-import UserInfo from "@/components/Users/Info_NoEdit.vue";
-import FavLists from "@/components/Favorites/FavLists_NoEdit.vue";
+import UserInfo from "@/components/Users/Info.vue";
+import FavLists from "@/components/Favorites/FavLists.vue";
 import VisitedRestaurants from "@/components/Users/VisitedRestaurants.vue";
 import Loading from "@/components/Loading.vue";
-import Followings from "../components/Follows/FollowingsList_Other.vue";
-import Followers from "../components/Follows/FollowersList_Other.vue";
+import Followings from "../components/Follows/FollowingsList.vue";
+import Followers from "../components/Follows/FollowersList.vue";
 import * as follow from "@/Follows/follow.js";
 import Cookies from "js-cookie";
 import { getUserId } from "@/auth/auth.js";
@@ -51,7 +49,7 @@ import { apiGetVisits } from "@/api/apiVisits";
 import { apiGetUser, apiGetUserFavorites } from "@/api/apiUsers";
 
 export default {
-  name: "User",
+  name: "OtherUser",
   props: ["userId"],
   components: {
     UserInfo,
@@ -136,6 +134,7 @@ export default {
         if (response && response.items) {
           this.visitedRestaurants = response.items;
           this.totalVisits = response.total;
+          this.currentPage = page
         }
       } catch (error) {
         console.error("Error while fetching visits", error);

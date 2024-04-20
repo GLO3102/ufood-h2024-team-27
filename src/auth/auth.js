@@ -41,7 +41,6 @@ export function checkUserLoggedIn() {
 export function logout() {
   apiLogout();
   Cookies.remove("user_cookie");
-
 }
 
 export async function signUp(name, email, password) {

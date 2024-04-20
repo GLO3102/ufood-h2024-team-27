@@ -23,7 +23,10 @@
               <i class="fa-solid fa-star w-100 pb-4" style="color: #ffd43b">{{
                 userInfo.rating
               }}</i>
-              <i class="far fa-edit fa-2x mb-4"></i>
+              <FollowButton v-if="other"
+                :isFollowing="isFollowing"
+                @toggle-follow="$emit('toggle-follow')"
+              ></FollowButton>
             </div>
           </div>
           <div class="col-sm-8 bg-white rounded-4">
@@ -32,24 +35,16 @@
 
             <div class="row">
               <div class="col-6 mt-3 ml-2">
-                <p class="fw-bold">Name</p>
+                <p class="fw-bold">Userame</p>
                 <h6 class="fw-normal text-muted">{{ userInfo.name }}</h6>
               </div>
-              <!-- <div class="col-6 mt-3">
-                <p class="fw-bold">Last Name</p>
-                <h6 class="fw-normal text-muted"></h6>
-              </div>-->
             </div>
 
             <div class="row">
-              <div class="col-6 mt-3">
+              <div v-if="!other" class="col-6 mt-3">
                 <p class="fw-bold">Email</p>
                 <h6 class="fw-normal text-muted">{{ userInfo.email }}</h6>
               </div>
-              <!--   <div class="col-6 mt-3">
-                <p class="fw-bold">Phone</p>
-                <h6 class="fw-normal text-muted"></h6>
-              </div>-->
               <div class="col-12 mt-3">
                 <p class="fw-bold">City</p>
                 <h6 class="fw-normal text-muted">Quebec</h6>
@@ -64,8 +59,12 @@
 </template>
 
 <script>
+import FollowButton from "../Follows/FollowButton.vue";
+
 export default {
   name: "UserInfo",
+  components: { FollowButton },
+  emits: ["toggle-follow"],
   methods: {
     created() {
       console.log(gravatarUrl);
@@ -74,6 +73,8 @@ export default {
   props: {
     userInfo: Object,
     gravatarUrl: String,
+    isFollowing: Boolean,
+    other: Boolean
   },
 };
 </script>

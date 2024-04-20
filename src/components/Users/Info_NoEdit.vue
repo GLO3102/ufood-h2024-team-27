@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import FollowButton from "./FollowButton.vue";
+import FollowButton from "../Follows/FollowButton.vue";
 
 export default {
   name: "UserInfo",
