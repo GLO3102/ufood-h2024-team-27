@@ -110,12 +110,12 @@ export default {
         params.q = this.searchStore.search;
         this.searchStore.modifySearch("");
       }
-
       const data = await apiGetRestaurants(params, this.token);
       this.total = data.total;
       this.restaurants = data.items;
     } catch (error) {
       console.error("Error while fetching restaurants");
+      await this.$router.push({ name: "Login" });
     } finally {
       this.loading = false;
     }

@@ -61,6 +61,7 @@ export default {
       this.users = data.items;
     } catch (error) {
       console.error("Error while fetching users");
+      await this.$router.push({ name: "Login" });
     } finally {
       this.loading = false;
     }

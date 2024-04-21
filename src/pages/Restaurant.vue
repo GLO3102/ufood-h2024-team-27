@@ -95,23 +95,27 @@ export default {
     };
   },
   async created() {
-    this.restaurant = await apiGetRestaurant(this.restaurantId, this.token);
+    this.loaded = false;
+    try {
+      this.restaurant = await apiGetRestaurant(this.restaurantId, this.token);
+      this.userId = await getUserId(this.token);
 
-    this.userId = await getUserId(this.token);
+      const favorites = await apiGetUserFavorites(this.userId, this.token, {});
+      this.favorites = favorites.items;
 
-    const favorites = await apiGetUserFavorites(this.userId, this.token, {});
-    this.favorites = favorites.items;
+      const reviews = await apiGetRestaurantVisits(
+        this.restaurantId,
+        { limit: 3 },
+        this.token,
+      );
+      this.reviews = reviews.items;
 
-    const reviews = await apiGetRestaurantVisits(
-      this.restaurantId,
-      { limit: 3 },
-      this.token,
-    );
-    this.reviews = reviews.items;
-
-    this.getUserLocation();
-
-    this.loaded = true;
+      this.getUserLocation();
+    } catch (error) {
+      await this.$router.push({ name: "Login" });
+    } finally {
+      this.loaded = true;
+    }
   },
   methods: {
     addToFavorites(form) {
