@@ -15,7 +15,6 @@ export async function login(email, password) {
       throw new Error("Authentication failed");
     }
   } catch (error) {
-    console.error(error);
     throw error;
   }
 }
@@ -29,7 +28,6 @@ export async function getUserId(token) {
       throw new Error("Could not fetch token info");
     }
   } catch (error) {
-    console.error(error);
     throw error;
   }
 }
@@ -58,7 +56,6 @@ export async function signUp(name, email, password) {
       throw new Error(response.statusText || "Authentication failed");
     }
   } catch (error) {
-    console.error(error);
     throw error;
   }
 }

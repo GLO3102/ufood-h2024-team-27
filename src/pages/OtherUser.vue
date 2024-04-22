@@ -159,8 +159,9 @@ export default {
         }));
       }
     } catch (error) {
-      console.error("Error fetching favs", error);
-      alert("Failed to fetch favs!");
+      if (error.message === "401") {
+        await this.$router.push({ name: "Login" });
+      }
     } finally {
       this.loadingFavLists = false;
       this.loadingVisits = false;

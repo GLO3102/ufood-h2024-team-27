@@ -60,8 +60,9 @@ export default {
       this.total = data.total;
       this.users = data.items;
     } catch (error) {
-      console.error("Error while fetching users");
-      await this.$router.push({ name: "Login" });
+      if (error.message === "401") {
+        await this.$router.push({ name: "Login" });
+      }
     } finally {
       this.loading = false;
     }
@@ -77,7 +78,6 @@ export default {
         this.users = data.items;
         this.total = data.total;
       } catch (error) {
-        // crash occurs if we search for "*" or "\" followed by seemingly anything, and it's not our fault this time!
         console.error("An error has occured: ", error);
         alert("An internal server error has occured; Please try again later.");
       }

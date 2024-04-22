@@ -1,6 +1,6 @@
 <template>
   <button
-    @click="$emit('toggle-Follow')"
+    @click="$emit('toggle-follow')"
     type="button"
     class="btn btn-primary rounded-pill p-2 m-3 mt-0 me-2 col"
     :class="{

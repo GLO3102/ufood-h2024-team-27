@@ -114,8 +114,9 @@ export default {
       this.total = data.total;
       this.restaurants = data.items;
     } catch (error) {
-      console.error("Error while fetching restaurants");
-      await this.$router.push({ name: "Login" });
+      if (error.message === "401") {
+        await this.$router.push({ name: "Login" });
+      }
     } finally {
       this.loading = false;
     }
@@ -134,6 +135,7 @@ export default {
         const data = await apiGetRestaurants(params, this.token);
         this.restaurants = data.items;
         this.total = data.total;
+        this.previousParams = params;
       } catch (error) {
         console.error("Error while fetching restaurants");
       }

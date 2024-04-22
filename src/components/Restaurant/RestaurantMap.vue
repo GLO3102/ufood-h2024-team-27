@@ -31,7 +31,7 @@ export default {
   methods: {
     drawRoute() {
       const loader = new Loader({
-        apiKey: "",
+        apiKey: "AIzaSyD-RlodHUWxhZx-evhtdH9-PkBXa6g-qyU",
         version: "weekly",
         libraries: ["routes", "maps", "marker"],
       });

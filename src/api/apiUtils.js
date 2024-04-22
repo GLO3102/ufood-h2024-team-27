@@ -5,7 +5,7 @@ async function _fetch(method, address, headers, body = {}) {
   if (!["GET", "DELETE"].includes(method)) opts.body = body;
   const response = await fetch(address, opts);
 
-  if (!response.ok) throw new APIError(await response.text());
+  if (!response.ok) throw new APIError(response.status);
 
   const jsonResponse = await response.json();
   return jsonResponse;

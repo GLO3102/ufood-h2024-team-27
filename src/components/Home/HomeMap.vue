@@ -2,7 +2,7 @@
   <div class="col">
     <GoogleMap
       id="home-map"
-      api-key=""
+      api-key="AIzaSyD-RlodHUWxhZx-evhtdH9-PkBXa6g-qyU"
       style="aspect-ratio: 16/9; width: 100%"
       :center="userCoords"
       :zoom="11"
@@ -84,6 +84,7 @@
 
 <script>
 import { GoogleMap, Marker as MapMarker, InfoWindow } from "vue3-google-map";
+
 export default {
   name: "HomeMap",
   components: {

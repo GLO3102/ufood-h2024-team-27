@@ -112,7 +112,9 @@ export default {
 
       this.getUserLocation();
     } catch (error) {
-      await this.$router.push({ name: "Login" });
+      if (error.message === "401") {
+        await this.$router.push({ name: "Login" });
+      }
     } finally {
       this.loaded = true;
     }
